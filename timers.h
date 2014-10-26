@@ -8,6 +8,7 @@
  *********************************************
  */
 
+// merge conflict
 bool setup_loop_speed(int freq);
 
 bool setup_timer();
