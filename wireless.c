@@ -2,20 +2,13 @@
  *********************************************
  *
  *	Project: Penn
- * 	Script: wireless.h
- *  Author: Mike Lautman, Justin Yim
+ * 	Script: wireless.c
+ *  Author: Justin Yim
  *********************************************
  *********************************************
  */
 
-#ifndef ___wireless___
-#define ___wireeless___
-
 #include "wireless.h"
-#include <avr/io.h>
-#include <stdlib.h>
-
-
 
 ////////////////////////////////////////////////
 // NOTES:
@@ -26,7 +19,7 @@
 ////////////////////////////////////////////////
 
 // Wireless packet length (refer to notes)
-int rf_packet_len;
+rf_packet_len = 15;
 
 ////////////////////////////////////////////////
 // INIT_CONNECTION
@@ -41,7 +34,9 @@ int rf_packet_len;
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan);
+bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan) {
+    return (bool)m_rf_open(receiver_chan, receiver_addr, rf_packet_len);
+}
 
 
 ////////////////////////////////////////////////
@@ -56,7 +51,9 @@ bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan);
 // RESPONSE:
 //      true:   connection is good
 //      false:  connection is bad
-bool test_connection();
+bool test_connection() {
+    return false;
+}
 
 
 ////////////////////////////////////////////////
@@ -73,7 +70,9 @@ bool test_connection();
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(unsigned char packet_type, unsigned long time_stamp, char*data);
+bool send_packet(unsigned char packet_type, unsigned long time_stamp, char*data) {
+    return false;
+}
 
 
 ////////////////////////////////////////////////
@@ -88,12 +87,11 @@ bool send_packet(unsigned char packet_type, unsigned long time_stamp, char*data)
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool read_packet(char* data);
+bool read_packet(char* data) {
+    return false;
+}
 
 
-////////////////////////////////////////////////
-// Note:
-//      Interrupt for data reading implemented in wireless.c
+ISR (INT2_vect) {
 
-
-#endif
+}
