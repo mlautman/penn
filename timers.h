@@ -21,6 +21,7 @@
 //   - success or failure
 bool set_loop_speed(int freq);
 
+
 ////////////////////////////////////////////////
 // LOOP_READY
 //
@@ -76,6 +77,7 @@ bool clear_stopWatch();
 unsigned long stopWatch_now(void);
 
 
+
 ////////////////////////////////////////////////
 // STOPWATCH_GETDELTA
 //
@@ -83,15 +85,11 @@ unsigned long stopWatch_now(void);
 //   - get difference between start and stopWatch_now
 //
 // Parameters:
-//   - unsigned long : start = start time
+//   - unsigned long start  : deltaStart
 //
 // Returns
-//   - time delta.
-//
-// NOTES: DO NOT USE. THIS IS HERE FOR FUTURE
-// unsigned long stopWatch_getDelta(unsigned long start);
-
-
+//   - time delta : stopWatch_now - deltaStart
+unsigned long stopWatch_getDelta(unsigned long deltaStart);
 
 
 
