@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2E4CB3EE-D654-4FFA-BA21-77763B9EB2FF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>penn</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FDBD512BAE6155D732452AAA490B0C5CF7535C2E</key>
+		<string>https://github.com/mlautman/penn.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>penn.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FDBD512BAE6155D732452AAA490B0C5CF7535C2E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/mlautman/penn.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FDBD512BAE6155D732452AAA490B0C5CF7535C2E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FDBD512BAE6155D732452AAA490B0C5CF7535C2E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>penn</string>
+		</dict>
+	</array>
+</dict>
+</plist>

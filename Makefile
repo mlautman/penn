@@ -12,7 +12,7 @@
 # to include code supplied by maevarm, add a .o target
 # tag to the parents line (e.g. "PARENTS = "m_bus.o")
 # --------------------------------------------------------
-MAIN       = main.o
+MAIN       = penn.o
 CHILDREN   =
 PARENTS    = m_bus.o m_rf.o m_usb.o m_imu.o
 
