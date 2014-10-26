@@ -8,6 +8,15 @@
  *********************************************
  */
 
+#ifndef ___wireless___
+#define ___wireeless___
+
+#include "wireless.h"
+#include <avr/io.h>
+#include <stdlib.h>
+
+
+
 ////////////////////////////////////////////////
 // NOTES:
 // 
@@ -19,28 +28,11 @@
 // Wireless packet length (refer to notes)
 int rf_packet_len;
 
-
-
-////////////////////////////////////////////////
-// INIT_WIRELESS
-//
-// FUNCTIONALITY:
-//      Intialize m_rf wireless board I2C interface
-//
-// PARAMETERS: 
-//      none
-//
-// RESPONSE: 
-//      true:   success
-//      false:  failure
-bool init_wireless();
-
-
 ////////////////////////////////////////////////
 // INIT_CONNECTION
 //
 // FUNCTIONALITY:
-//      Set wireless board channel and address for communication
+//      Initialize m_rf wireless board channel and address for communication
 //
 // PARAMETERS:
 //      receiver_addr:  unsigned int 0x00 to 0xFF
@@ -49,7 +41,7 @@ bool init_wireless();
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool init_connection(unsigned char receiver_addr, unsigned char receiver_chan);
+bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan);
 
 
 ////////////////////////////////////////////////
@@ -62,7 +54,7 @@ bool init_connection(unsigned char receiver_addr, unsigned char receiver_chan);
 //      none
 //
 // RESPONSE:
-//      true:   connection isgood
+//      true:   connection is good
 //      false:  connection is bad
 bool test_connection();
 
@@ -102,3 +94,6 @@ bool read_packet(char* data);
 ////////////////////////////////////////////////
 // Note:
 //      Interrupt for data reading implemented in wireless.c
+
+
+#endif

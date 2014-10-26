@@ -8,6 +8,8 @@
  *********************************************
  */
 
+#include "wireless.h"
+
 ////////////////////////////////////////////////
 // NOTES:
 // 
@@ -19,29 +21,11 @@
 // Wireless packet length (refer to notes)
 rf_packet_len = 15;
 
-
-////////////////////////////////////////////////
-// INIT_WIRELESS
-//
-// FUNCTIONALITY:
-//      Intialize m_rf wireless board I2C interface
-//
-// PARAMETERS: 
-//      none
-//
-// RESPONSE: 
-//      true:   success
-//      false:  failure
-bool init_wireless(){
-    return false;
-}
-
-
 ////////////////////////////////////////////////
 // INIT_CONNECTION
 //
 // FUNCTIONALITY:
-//      Set wireless board channel and address for communication
+//      Initialize m_rf wireless board channel and address for communication
 //
 // PARAMETERS:
 //      receiver_addr:  unsigned int 0x00 to 0xFF
@@ -50,8 +34,8 @@ bool init_wireless(){
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool init_connection(unsigned char receiver_addr, unsigned char receiver_chan) {
-    return false;
+bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan) {
+    return (bool)m_rf_open(receiver_chan, receiver_addr, rf_packet_len);
 }
 
 
@@ -65,7 +49,7 @@ bool init_connection(unsigned char receiver_addr, unsigned char receiver_chan) {
 //      none
 //
 // RESPONSE:
-//      true:   connection isgood
+//      true:   connection is good
 //      false:  connection is bad
 bool test_connection() {
     return false;
