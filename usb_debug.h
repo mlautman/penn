@@ -46,7 +46,7 @@ bool usb_debug(bool activate);
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_send_setupMask(char setup_mask);
+bool usb_debug_send_setupMask();
 
 
 ////////////////////////////////////////////////
@@ -57,10 +57,11 @@ bool usb_debug_send_setupMask(char setup_mask);
 //
 // Parameters
 //   - int* imu_data
+//   - char dataLen : lenght of rf_data
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_imu_tx(int* imu_data);
+bool usb_debug_imu_tx(int* imu_data, char dataLen);
 
 
 ////////////////////////////////////////////////
@@ -70,11 +71,12 @@ bool usb_debug_imu_tx(int* imu_data);
 //   - Sends rf packets values over usb instead of wireless
 //
 // Parameters
-//   - char* rf_data
+//   - char* rf_data : data that would normally be sent over rf
+//   - char dataLen : lenght of rf_data
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_rf_data(char* data);
+bool usb_debug_rf_data(char* data, char dataLen);
 
 
 ////////////////////////////////////////////////
