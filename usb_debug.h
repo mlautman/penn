@@ -8,6 +8,8 @@
  *********************************************
  */
 
+#ifndef __USB_DEBUG__PENN__
+#define __USB_DEBUG__PENN__
 
 ////////////////////////////////////////////////
 // USB_DEBUG
@@ -88,3 +90,4 @@ bool usb_debug_rf_data(char* data);
 //   - success/failure of transmission
 bool usb_debug_rf_drop_count(unsigned int drop_cnt);
 
+#endif
