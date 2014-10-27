@@ -8,6 +8,9 @@
  *********************************************
  */
 
+ #ifndef __TIMERS__PENN__
+ #define __TIMERS__PENN__
+
 ////////////////////////////////////////////////
 // SET_LOOP_SPEED
 //
@@ -91,5 +94,6 @@ unsigned long stopWatch_now(void);
 //   - time delta : stopWatch_now - deltaStart
 unsigned long stopWatch_getDelta(unsigned long deltaStart);
 
+#endif
 
 
