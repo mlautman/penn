@@ -11,8 +11,32 @@
  #ifndef __TIMERS__PENN__
  #define __TIMERS__PENN__
 
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+//
+// LOOP Stuff
+//
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
 ////////////////////////////////////////////////
-// SET_LOOP_SPEED
+// LOOP_ISSET
+//
+// Functionality :
+//   - check to see if the loop is set and running
+//
+// Parameters
+//   -
+//
+// Returns
+//   - success or failure
+bool loop_isSet(void);
+
+
+////////////////////////////////////////////////
+// SET_LOOP
 //
 // Functionality :
 //   - setup main timer (timer_3) to run at loop_frequency
@@ -22,7 +46,21 @@
 //
 // Returns
 //   - success or failure
-bool set_loop_speed(int freq);
+bool set_loop_speed(int16_t freq);
+
+
+////////////////////////////////////////////////
+// LOOP_ISSET
+//
+// Functionality :
+//   - check to see if the loop is set and running
+//
+// Parameters
+//   -
+//
+// Returns
+//   - success or failure
+bool loop_isSet(void);
 
 
 ////////////////////////////////////////////////
@@ -39,6 +77,31 @@ bool set_loop_speed(int freq);
 bool loop_ready(void);
 
 
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+//
+// STOPWATCH Stuff
+//
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////
+// STOPWATCH_ISSET
+//
+// Functionality :
+//   - check to see if the loop is set and running
+//
+// Parameters
+//   -
+//
+// Returns
+//   - success or failure
+bool stopwatch_isSet(void);
+
+
 ////////////////////////////////////////////////
 // CONFIG_STOPWATCH
 //
@@ -50,7 +113,7 @@ bool loop_ready(void);
 //
 // Returns
 //   - success or failure
-bool config_stopWatch();
+bool config_stopWatch(void);
 
 
 ////////////////////////////////////////////////
@@ -63,7 +126,7 @@ bool config_stopWatch();
 //
 // Returns
 //   - success or failure
-bool clear_stopWatch();
+bool clear_stopWatch(void);
 
 
 
@@ -76,8 +139,8 @@ bool clear_stopWatch();
 // Parameters:
 //
 // Returns
-//   - unsigned long (NEEDS UNITS!!!)
-unsigned long stopWatch_now(void);
+//   - uint32_t (NEEDS UNITS!!!)
+uint32_t stopWatch_now(void);
 
 
 
@@ -88,11 +151,11 @@ unsigned long stopWatch_now(void);
 //   - get difference between start and stopWatch_now
 //
 // Parameters:
-//   - unsigned long start  : deltaStart
+//   - uint32_t start  : deltaStart
 //
 // Returns
 //   - time delta : stopWatch_now - deltaStart
-unsigned long stopWatch_getDelta(unsigned long deltaStart);
+uint32_t stopWatch_getDelta(uint32_t deltaStart);
 
 #endif
 

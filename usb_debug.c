@@ -60,7 +60,6 @@ bool usb_debug(bool activate){
 bool usb_debug_send_setupMask(void){
     // TODO need a wireless_isInit() method
     // TODO need a imu_isInit() method
-    // TODO need a loop_isSet() method
     unsigned char wireless_init = (wireless_isInit()? 1 : 0);
     unsigned char wireless_isConnected = (test_connection()?1:0);
     unsigned char imu_init = (imu_isInit()?1:0);
