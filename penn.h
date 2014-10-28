@@ -113,7 +113,7 @@ bool tx_rf_packet(unsigned long time_stamp, char* imu_data);
 //	 - if usb_debug is enabled, sets up usb com and blocks
 //
 // bool setup(bool usb_debug, int loop_frequency, char imu_scale, char gyro_scale);
-bool setup(void);
+uint8_t setup(void);
 
 ////////////////////////////////////////////////
 // RUN

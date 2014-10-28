@@ -23,11 +23,14 @@
 //   - usb_debug state
 bool usb_debug(bool activate){
     if (activate){
+        m_red(ON);
         m_usb_init();
+        while(!m_usb_isconnected());
         bool isConn = m_usb_isconnected();
         return isConn;
+        m_red(OFF);
     } else {
-        return TRUE;
+        return FALSE;
     }
 }
 
@@ -59,13 +62,14 @@ bool usb_debug_send_setupMask(void){
     unsigned char imu_init = (imu_isInit()?1:0);
     unsigned char loop_timer_running = loop_isSet()?1:0;
     unsigned char stopWatch_running = stopwatch_isSet()?1:0;
-    unsigned char setupMask = 0;
-    setupMask |= wireless_isConnected;
-    setupMask |= imu_init<<1;
-    setupMask |= loop_timer_running<<2;
-    setupMask |= stopWatch_running<<3;
 
-    return m_usb_tx_char(setupMask);
+    unsigned char setupMask = 0;
+    setupMask += (wireless_isConnected ? 1:0);
+    setupMask += (imu_init ? 1:0)<<1;
+    setupMask += (loop_timer_running ? 1:0)<<2;
+    setupMask += (stopWatch_running ? 1:0)<<3;
+    m_usb_tx_char(setupMask);
+    return setupMask;
 }
 
 

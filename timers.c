@@ -14,8 +14,6 @@
 
 bool set_clock_speed();
 
-
-
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 //
@@ -38,7 +36,7 @@ static int8_t clock_prescaler = 0;
 bool set_clock_speed(void){
     // Set the system clock to clock speed
     m_clockdivide(clock_prescaler);
-    return CLKPR == clock_prescaler;
+    return true;
 }
 
 
@@ -80,7 +78,8 @@ bool loop_isSet(void){
 //
 // Returns
 //   - success or failure
-bool set_loop(void){
+
+bool set_loop_speed(int16_t freq){
     // Set the system clock to 16MHz
     set_clock_speed();
 
@@ -88,7 +87,7 @@ bool set_loop(void){
     int16_t timer_prescaler = 64;
     clear(TCCR3B, CS32);
     set(TCCR3B, CS31);
-    set(TCCR3B, CS30);
+    clear(TCCR3B, CS30);
 
     // put timer 3 into Mode 4 (Up to OCR3A)
     clear(TCCR3B, WGM33);
@@ -97,7 +96,7 @@ bool set_loop(void){
     clear(TCCR3A, WGM30);
 
     // set OCR3A to be equal to 250 since we will always want a frequency of 1000KHz
-    OCR3A = (int8_t)((base_clock_speed >> clock_prescaler)/(uint32_t )timer_prescaler/1000);
+    OCR3A = 1000;//(int8_t)((250000/(uint32_t)freq);
     return true;
 }
 
@@ -116,9 +115,9 @@ bool set_loop(void){
 //   - ready or not as boolean
 
 bool loop_ready(void){
-    bool flag = check(TIFR3, TOV3);
+    bool flag = check(TIFR3, OCF3A);
     if (flag){
-        set(TIFR3, TOV3);
+        set(TIFR3, OCF3A);
     }
     return flag;
 }
