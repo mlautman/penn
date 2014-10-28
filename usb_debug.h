@@ -12,7 +12,9 @@
 #define __USB_DEBUG__PENN__
 
 #include "m_general.h"
+#include "timers.h"
 #include "m_usb.h"
+#include "imu.h"
 #include "wireless.h"
 
 ////////////////////////////////////////////////

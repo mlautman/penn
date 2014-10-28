@@ -26,8 +26,8 @@ bool usb_debug(bool activate){
         m_usb_init();
         bool isConn = m_usb_isconnected();
         return isConn;
-    } else{
-        return True;
+    } else {
+        return TRUE;
     }
 }
 
@@ -38,11 +38,11 @@ bool usb_debug(bool activate){
 // Functionality :
 //   - send success or failure of setup ops muxed into single value
 //  [
-//      wireless_init,
 //      wireless_isConnected,
 //      imu_init,
 //      loop_timer,
 //      stopWatch_timer,
+//      N/A,
 //      N/A,
 //      N/A,
 //      N/A,
@@ -55,19 +55,15 @@ bool usb_debug(bool activate){
 //   - success/failure of transmission
 
 bool usb_debug_send_setupMask(void){
-    // TODO need a wireless_isInit() method
-    // TODO need a imu_isInit() method
-    unsigned char wireless_init = (wireless_isInit()? 1 : 0);
     unsigned char wireless_isConnected = (test_connection()?1:0);
     unsigned char imu_init = (imu_isInit()?1:0);
     unsigned char loop_timer_running = loop_isSet()?1:0;
-
+    unsigned char stopWatch_running = stopwatch_isSet()?1:0;
     unsigned char setupMask = 0;
-    setupMask |= wireless_init;
-    setupMask |= wireless_isConnected<<1;
-    setupMask |= imu_init;
-    setupMask |= loop_timer_running;
-    setupMask |= stopWatch_timer_running;
+    setupMask |= wireless_isConnected;
+    setupMask |= imu_init<<1;
+    setupMask |= loop_timer_running<<2;
+    setupMask |= stopWatch_running<<3;
 
     return m_usb_tx_char(setupMask);
 }
@@ -95,7 +91,7 @@ bool usb_debug_imu_tx(int* imu_data, char dataLen){
         txSuccess &= m_usb_tx_char('\t');
         txSuccess &= m_usb_tx_char(imu_data[i]);
     }
-    m_usb_tstring("\n\r");
+    m_usb_tx_string("\n\r");
     return txSuccess;
 }
 
@@ -122,7 +118,7 @@ bool usb_debug_rf_data(char* data, char dataLen){
         txSuccess &= m_usb_tx_char('\t');
         txSuccess &= m_usb_tx_char(data[i]);
     }
-    m_usb_tstring("\n\r");
+    m_usb_tx_string("\n\r");
     return txSuccess;
 }
 

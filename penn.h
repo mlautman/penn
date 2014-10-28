@@ -5,8 +5,8 @@
  * 	Script: penn.h
  *  Author: Mike Lautman
  *********************************************
- *********************************************
- */
+*********************************************
+*/
 
 #ifndef __penn__
 #define __penn__
@@ -17,16 +17,13 @@
 #include "m_usb.h"
 #include "m_general.h"
 #include "m_rf.h"
+#include "wireless.h"
+#include "imu.h"
+#include "timers.h"
+#include "usb_debug.h"
 #include <stdlib.h>
 
-#define		ADCpins		2
-#define 	p_length 	12
-#define 	chan		1
-#define	 	RX_add 		0x25
-#define 	TX_add 		0x17
 
-
-bool usb_debug;
 
 ////////////////////////////////////////////////
 //

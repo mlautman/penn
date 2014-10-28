@@ -10,13 +10,7 @@
 
 #include "penn.h"
 
-#define		ADCpins		2
-#define 	p_length 	12
-#define 	chan		1
-#define	 	RX_add 		0x25
-#define 	TX_add 		0x17
-
-char* receive_buffer[p_length];
+char* receive_buffer;
 
 
 volatile bool new_packet = false;
@@ -26,7 +20,9 @@ bool setup(void){
 	return false;
 }
 
+int i;
 void run(){
+	i++;
 }
 
 int main(void) {
@@ -42,16 +38,3 @@ int main(void) {
 	}
 }
 
-
-
-////////////////////////////////////////////////////
-//
-//	Interupt methods (rf)
-//
-////////////////////////////////////////////////////
-
-ISR(INT2_vect){
-	m_red(2);
-	m_rf_read(receive_buffer , p_length);
-	new_packet = true;
-}
