@@ -8,25 +8,24 @@
  *********************************************
  */
 
-#ifndef ___wireless___
-#define ___wireeless___
+#ifndef __WIRELESS__PENN__
+#define __WIRELESS__PENN__
 
-#include "wireless.h"
 #include <avr/io.h>
 #include <stdlib.h>
-
+#include "m_general.h"
+#include "m_rf.h"
+// includes stdbool
 
 
 ////////////////////////////////////////////////
 // NOTES:
 // 
-// Packet contents (15 bytes):
-//      packet type (1 byte), [time stamp (2 bytes)], data (12-14 bytes)
+// Packet contents (17 bytes):
+//      packet type (1 byte), [time stamp (4 bytes)], data (12-14 bytes)
 //
 ////////////////////////////////////////////////
 
-// Wireless packet length (refer to notes)
-int rf_packet_len;
 
 ////////////////////////////////////////////////
 // INIT_CONNECTION
@@ -73,7 +72,7 @@ bool test_connection();
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(unsigned char packet_type, unsigned long time_stamp, char*data);
+bool send_packet(char packet_type, unsigned long time_stamp, char*data, unsigned int data_len);
 
 
 ////////////////////////////////////////////////
