@@ -9,7 +9,6 @@
  */
 
 #import "timers.h"
-#import "m_general.h"
 
 #define base_clock_speed 16000000
 

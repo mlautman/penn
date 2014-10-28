@@ -9,9 +9,6 @@
  */
 
 #import "usb_debug.h"
-#import "m_usb.h"
-#import "m_general.h"
-#include "wireless.h"
 
 ////////////////////////////////////////////////
 // USB_DEBUG
