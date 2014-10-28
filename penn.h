@@ -51,10 +51,10 @@ bool usb_debug;
 // 		1 : success
 // 		0 : communication error
 
-#define _a_0 0
-#define _a_2 1
-#define _a_2 2
-#define _a_3 3
+#define __a_0 0
+#define __a_1 1
+#define __a_2 2
+#define __a_3 3
 
 // accelerometer_scale
 // _a_0 = +/-2G
@@ -115,7 +115,8 @@ bool tx_rf_packet(unsigned long time_stamp, char* imu_data);
 //  DEBUG
 //	 - if usb_debug is enabled, sets up usb com and blocks
 //
-bool setup(bool usb_debug, int loop_frequency, char imu_scale, char gyro_scale);
+// bool setup(bool usb_debug, int loop_frequency, char imu_scale, char gyro_scale);
+bool setup(void);
 
 ////////////////////////////////////////////////
 // RUN
@@ -129,8 +130,6 @@ bool setup(bool usb_debug, int loop_frequency, char imu_scale, char gyro_scale);
 // 	 - When tip released,
 //		> send end of packet msg.
 
-void run();
-
-
+void run(void);
 
 #endif

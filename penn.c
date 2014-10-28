@@ -16,7 +16,7 @@
 #define	 	RX_add 		0x25
 #define 	TX_add 		0x17
 
-int receive_buffer;
+char* receive_buffer[p_length];
 
 
 volatile bool new_packet = false;
@@ -26,12 +26,7 @@ bool setup(void){
 	return false;
 }
 
-void run(bool usb_debug){
-	if (new_packet){
-        cli();
-		new_packet = false;
-        sei();
-	}
+void run(){
 }
 
 int main(void) {
@@ -42,8 +37,9 @@ int main(void) {
 	bool setup_success = setup();
 
 	// Run
-	run(usb_debug);
-
+	while(1){
+		run();
+	}
 }
 
 

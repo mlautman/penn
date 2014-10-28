@@ -51,6 +51,6 @@ bool imu_init(void);
 //
 // Returns
 //   - success or failure
-bool imu_rawData_get(char* data);
+bool imu_rawData_get(int* data);
 
 #endif

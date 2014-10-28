@@ -11,8 +11,8 @@
 #ifndef __USB_DEBUG__PENN__
 #define __USB_DEBUG__PENN__
 
-#import "m_general.h"
-#import "m_usb.h"
+#include "m_general.h"
+#include "m_usb.h"
 #include "wireless.h"
 
 ////////////////////////////////////////////////

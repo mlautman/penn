@@ -8,7 +8,7 @@
  *********************************************
  */
 
-#import "timers.h"
+#include "timers.h"
 
 #define base_clock_speed 16000000
 
@@ -92,10 +92,10 @@ bool set_loop(void){
     set(TCCR3B, CS30);
 
     // put timer 3 into Mode 4 (Up to OCR3A)
-    clear(TCCR3B, WCM33);
-    set(TCCR3B, WCM32);
-    clear(TCCR3A, WCM31);
-    clear(TCCR3A, WCM30);
+    clear(TCCR3B, WGM33);
+    set(TCCR3B, WGM32);
+    clear(TCCR3A, WGM31);
+    clear(TCCR3A, WGM30);
 
     // set OCR3A to be equal to 250 since we will always want a frequency of 1000KHz
     OCR3A = (int8_t)((base_clock_speed >> clock_prescaler)/(uint_32)timer_prescaler/1000);
@@ -179,10 +179,10 @@ bool config_stopWatch(void){
     clear(TCCR1B, CS10);
 
     // put timer 3 into Mode 0 (Up to 0xFFFF)
-    clear(TCCR1B, WCM13);
-    clear(TCCR1B, WCM12);
-    clear(TCCR1A, WCM11);
-    clear(TCCR1A, WCM10);
+    clear(TCCR1B, WGM13);
+    clear(TCCR1B, WGM12);
+    clear(TCCR1A, WGM11);
+    clear(TCCR1A, WGM10);
 
 
     stopWatch_set = true;

@@ -44,7 +44,7 @@ bool imu_isInit(void){
 bool imu_init(void){
     unsigned char accel_scale=0;
     unsigned char gyro_scale=0;
-    imu_isInitialized = m_imu_init(accel_scale,gyro_scale)
+    imu_isInitialized = m_imu_init(accel_scale, gyro_scale);
     return imu_isInitialized;
 }
 
@@ -60,6 +60,8 @@ bool imu_init(void){
 //
 // Returns
 //   - success or failure
-bool imu_rawData_get(char* data){
-    return m_imu_raw(char* data);
+
+bool imu_rawData_get(int* data){
+    bool success = m_imu_raw(data);
+    return success;
 }
