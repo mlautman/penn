@@ -15,8 +15,6 @@
 // Public functions:
 // -----------------------------------------------------------------------------
 
-unsigned char m_imu_test(unsigned char* raw_data);
-
 unsigned char m_imu_init(unsigned char accel_scale, unsigned char gyro_scale);
 // FUNCTIONALITY
 // initialize the 9-DOF mIMU board
