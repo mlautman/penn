@@ -93,12 +93,11 @@ bool usb_debug_imu_tx(int* imu_data, char dataLen){
     int i;
     for(i = 0; i < dataLen; i++){
         txSuccess &= m_usb_tx_char('\t');
-        txSuccess &= m_usb_tx_char(imu_data[i]);
+        m_usb_tx_int(imu_data[i]);
     }
     m_usb_tx_string("\n\r");
     return txSuccess;
 }
-
 
 
 ////////////////////////////////////////////////
@@ -113,19 +112,33 @@ bool usb_debug_imu_tx(int* imu_data, char dataLen){
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_rf_data(char* data, char dataLen){
+int rf_packet_len_debug = 17;
+bool usb_debug_rf_data(char packet_type, unsigned long time_stamp, char* data, unsigned int data_len){
     m_usb_tx_string("rf_data:");
+
+    char toSend [rf_packet_len_debug];
+    toSend[0] = packet_type;
+    int ii;
+    for (ii=0; ii<4; ii++) {
+        toSend[ii+1] = ((char*)&time_stamp)[ii]; //assumes long is 4 bytes
+    }
+    if (data_len > (rf_packet_len_debug - 5)) {
+        data_len = rf_packet_len_debug - 5; //TODO: FIX THIS SILENT FAILURE
+    }
+    for (ii=0;ii<data_len;ii++) {
+        toSend[ii+5] = data[ii];
+    }
+
 
     bool txSuccess = true;
     int i;
-    for(i = 0; i < dataLen; i++){
+    for(i = 0; i < rf_packet_len_debug; i++){
         txSuccess &= m_usb_tx_char('\t');
-        txSuccess &= m_usb_tx_char(data[i]);
+        m_usb_tx_int((int)toSend[i]);
     }
     m_usb_tx_string("\n\r");
     return txSuccess;
 }
-
 
 
 ////////////////////////////////////////////////

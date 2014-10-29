@@ -96,7 +96,7 @@ bool set_loop_speed(int16_t freq){
     clear(TCCR3A, WGM30);
 
     // set OCR3A to be equal to 250 since we will always want a frequency of 1000KHz
-    OCR3A = 1000;//(int8_t)((250000/(uint32_t)freq);
+    OCR3A = 500;//(int8_t)((250000/(uint32_t)freq);
     return true;
 }
 

@@ -82,7 +82,8 @@ bool usb_debug_imu_tx(int* imu_data, char dataLen);
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_rf_data(char* data, char dataLen);
+// bool usb_debug_rf_data(char* data, char dataLen);
+bool usb_debug_rf_data(char packet_type, unsigned long time_stamp, char* data, unsigned int data_len);
 
 
 ////////////////////////////////////////////////
