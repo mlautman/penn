@@ -53,11 +53,11 @@ void run(){
 		char imuData_char[12];
 		int imuIndex;
 		char* imuData_cAsi = (char*)imuData_int;
-		for (imuIndex = 0; imuIndex < 6; imuIndex+=2){
-			imuData_char[imuIndex] = imuData_cAsi[imuIndex];
-			imuData_char[imuIndex+1] = imuData_cAsi[imuIndex + 1];
+		for (imuIndex = 0; imuIndex < 12; imuIndex+=2){
+			imuData_char[imuIndex] = (char)imuData_cAsi[imuIndex];
+			imuData_char[imuIndex] = (char)imuData_cAsi[imuIndex];
 		}
-		usb_debug_rf_data(1, stopWatch_now(), imuData_char, 17);
+		usb_debug_rf_data(1, stopWatch_now(), (int*)imuData_int, 17);
 
 
 	}

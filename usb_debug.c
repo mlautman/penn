@@ -132,9 +132,12 @@ bool usb_debug_rf_data(char packet_type, unsigned long time_stamp, char* data, u
 
     bool txSuccess = true;
     int i;
-    for(i = 0; i < rf_packet_len_debug; i++){
+    m_usb_tx_int((int)toSend[0]);
+    m_usb_tx_string("\t");
+    m_usb_tx_long((unsigned long)((unsigned long*)&toSend[1])[0]);
+    for(i = 5; i < rf_packet_len_debug; i+=2){
         txSuccess &= m_usb_tx_char('\t');
-        m_usb_tx_int((int)toSend[i]);
+        m_usb_tx_int((int)((int*)&toSend[i])[0]);
     }
     m_usb_tx_string("\n\r");
     return txSuccess;
