@@ -131,8 +131,8 @@ bool loop_ready(void){
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
-static volatile uint32_t stopWatch_ovl_cnt = 0;
-static volatile bool stopWatch_set = false;
+volatile uint32_t stopWatch_ovl_cnt = 0;
+volatile bool stopWatch_set = false;
 
 
 ////////////////////////////////////////////////
@@ -171,16 +171,21 @@ bool config_stopWatch(void){
 
     // set clock prescaler to clock_speed/8
     // int16_t stopWatch_prescaler = 8;
-    clear(TCCR1B, CS12);
-    set(TCCR1B, CS11);
-    clear(TCCR1B, CS10);
+    set(TCCR1B, CS12);
+    clear(TCCR1B, CS11);
+    set(TCCR1B, CS10);
 
-    // put timer 3 into Mode 0 (Up to 0xFFFF)
+    // put timer 1 into Mode 0 (Up to Oxffff)
     clear(TCCR1B, WGM13);
     clear(TCCR1B, WGM12);
     clear(TCCR1A, WGM11);
     clear(TCCR1A, WGM10);
 
+    // enable timer1 overflow interrupt
+    set(TIMSK1,TOIE1);
+
+    // clear ovfl cnt
+    stopWatch_ovl_cnt = 0;
 
     stopWatch_set = true;
     clear_stopWatch();
@@ -211,8 +216,8 @@ bool clear_stopWatch(){
     TCNT1L = 0;
 
     // check Timer1 cnt ==0
-    int16_t clk = (int16_t)TCNT1L;
-    clk |= (int16_t)TCNT1H<<8;
+    uint16_t clk = (uint16_t)TCNT1L;
+    clk |= (uint16_t)TCNT1H<<8;
 
     // re-enable interrupts
     sei();
@@ -223,7 +228,7 @@ bool clear_stopWatch(){
 
 
 ////////////////////////////////////////////////
-// STOPWATCH_NOW ()
+// STOPWATCH_NOW
 //
 // Functionality:
 //   - get the time since last stopWatch clear
@@ -236,11 +241,11 @@ uint32_t stopWatch_now(void){
     // get current clock time
     uint8_t low = TCNT1L;
     uint8_t high = TCNT1H;
-    int16_t clk = (int16_t)low;
-    clk |= (int16_t)high<<8;
+    uint32_t now = (uint32_t)low | (uint32_t)high<<8;
+    // clk |= (uint16_t)high<<8;
 
     // add all of the overflows
-    uint32_t now = (stopWatch_ovl_cnt << 16) | (uint32_t)clk;
+    now += stopWatch_ovl_cnt << 16;
     return now;
 }
 
@@ -268,9 +273,25 @@ uint32_t stopWatch_getDelta(uint32_t deltaStart){
 //   ~30times/second
 ////////////////////////
 ISR(TIMER1_OVF_vect){
-    if (stopWatch_ovl_cnt + 1 == 0){
-        // ERR STATE!!!
-    }
+
+    // if (stopWatch_ovl_cnt + 1 > 1000){
+    //     // ERR STATE!!!
+    //     stopWatch_ovl_cnt =0;
+    // }
     stopWatch_ovl_cnt +=1;
 }
+
+// ////////////////////////
+// // Stopwatch timer ovfl
+// //   ~30times/second
+// ////////////////////////
+// ISR(TIMER1_COMPA_vect){
+
+//     // if (stopWatch_ovl_cnt + 1 > 1000){
+//     //     // ERR STATE!!!
+//     //     stopWatch_ovl_cnt =0;
+//     // }
+//     stopWatch_ovl_cnt +=1;
+// }
+
 

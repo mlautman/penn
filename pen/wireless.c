@@ -12,7 +12,7 @@
 
 ////////////////////////////////////////////////
 // NOTES:
-// 
+//
 // Packet contents (17 bytes):
 //      packet type (1 byte), [time stamp (4 bytes)], data (12-14 bytes)
 //
@@ -20,12 +20,12 @@
 
 
 // Wireless packet length (refer to notes)
-int rf_packet_len = 17;
-char rf_base_addr = 0x11;
+int16_t rf_packet_len = 17;
+int8_t rf_base_addr = 0x11;
 
 // Wireless packet types
-char rf_packet_test = 0;
-char rf_packet_IMU = 1;
+int8_t rf_packet_test = 0;
+int8_t rf_packet_IMU = 1;
 
 ////////////////////////////////////////////////
 // INIT_CONNECTION
@@ -34,13 +34,13 @@ char rf_packet_IMU = 1;
 //      Initialize m_rf wireless board channel and address for communication
 //
 // PARAMETERS:
-//      receiver_addr:  unsigned int 0x00 to 0xFF
-//      receiver_chan:  unsigned int 1 to 32
+//      receiver_addr:  uint16_t 0x00 to 0xFF
+//      receiver_chan:  uint16_t 1 to 32
 //
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan) {
+bool init_wireless(uint8_t receiver_addr, uint8_t receiver_chan) {
     return (bool)m_rf_open(receiver_chan, receiver_addr, rf_packet_len);
 }
 
@@ -58,12 +58,12 @@ bool init_wireless(unsigned char receiver_addr, unsigned char receiver_chan) {
 //      true:   connection is good
 //      false:  connection is bad
 bool test_connection() {
-    char data [1] = {0};
+    int8_t data [1] = {0};
     send_packet(0, 0, data, 1);
 
     m_wait(100);
 
-    char data_back [rf_packet_len];
+    int8_t data_back [rf_packet_len];
     bool heard = read_packet(data_back);
     return heard && data_back[0] == 13; //this is a magic number right now
 }
@@ -83,19 +83,31 @@ bool test_connection() {
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(char packet_type, unsigned long time_stamp, char*data, unsigned int data_len) {
-    char toSend [rf_packet_len];
-    toSend[0] = packet_type;
-    int ii;
-    for (ii=0; ii<4; ii++) {
-        toSend[ii+1] = ((char*)&time_stamp)[ii]; //assumes long is 4 bytes
-    }
-    if (data_len > (rf_packet_len - 5)) {
-        data_len = rf_packet_len - 5; //TODO: FIX THIS SILENT FAILURE
-    }
-    for (ii=0;ii<data_len;ii++) {
-        toSend[ii+5] = data[ii];
-    }
+bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len) {
+
+    toSend[0] = (uint8_t)packet_type;
+
+    // time_stamp
+    toSend[1] = (uint8_t)((time_stamp & 0xff000000) >> 24);
+    toSend[2] = (uint8_t)((time_stamp & 0x00ff0000) >> 16);
+    toSend[3] = (uint8_t)((time_stamp & 0x0000ff00) >> 8);
+    toSend[4] = (uint8_t)((time_stamp & 0x000000ff));
+
+    // Accel
+    toSend[5] =  (uint8_t)data[0];
+    toSend[6] =  (uint8_t)data[1];
+    toSend[7] =  (uint8_t)data[2];
+    toSend[8] =  (uint8_t)data[3];
+    toSend[9] =  (uint8_t)data[4];
+    toSend[10] = (uint8_t)data[5];
+
+    // Gyro
+    toSend[11] =  (uint8_t)data[6];
+    toSend[12] =  (uint8_t)data[7];
+    toSend[13] =  (uint8_t)data[8];
+    toSend[14] =  (uint8_t)data[9];
+    toSend[15] =  (uint8_t)data[10];
+    toSend[16] =  (uint8_t)data[11];
 
     m_rf_send(rf_base_addr, toSend, rf_packet_len);
     return false;
@@ -109,12 +121,12 @@ bool send_packet(char packet_type, unsigned long time_stamp, char*data, unsigned
 //      Read data from the base station
 //
 // PARAMETERS:
-//      data:   pointer to char[6] array for storing data
+//      data:   pointer to int8_t[6] array for storing data
 //
 // RESPONSE:
 //      true:   success
 //      false:  failures
-bool read_packet(char* data) {
+bool read_packet(int8_t* data) {
     return (bool)m_rf_read(data, rf_packet_len);
 }
 

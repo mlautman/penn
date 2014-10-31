@@ -17,14 +17,14 @@
 
 char m_rf_open(char channel, char RXaddress, char packet_length);
 // FUNCTIONALITY:
-// configure the RF communications channel and place in RX mode, 
+// configure the RF communications channel and place in RX mode,
 // which will take INT2 low when data is available
 //
 // TAKES:
 // channel : 1 to 32 (must match between sender/receiver)
 // RXaddress : (the module's unique RX address)
 // packet_length : 1 to 32 (must match between sender/receiver)
-// 
+//
 // RETURNS:
 // 1 : module acknowledged setup
 // 0 : something went wrong

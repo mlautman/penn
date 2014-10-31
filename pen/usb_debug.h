@@ -48,7 +48,7 @@ bool usb_debug(bool activate);
 //  ]
 //
 // Parameters
-//   - char setup_mask  : mask for setup success/fail bits
+//   - int8_t setup_mask  : mask for setup success/fail bits
 //
 // Returns
 //   - success/failure of transmission
@@ -62,12 +62,12 @@ bool usb_debug_send_setupMask();
 //   - Sends Imu values over usb instead of wireless
 //
 // Parameters
-//   - int* imu_data
-//   - char dataLen : lenght of rf_data
+//   - int16_t* imu_data
+//   - int8_t dataLen : lenght of rf_data
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_imu_tx(int* imu_data, char dataLen);
+bool usb_debug_imu_tx(int16_t* imu_data, int8_t dataLen);
 
 
 ////////////////////////////////////////////////
@@ -77,13 +77,13 @@ bool usb_debug_imu_tx(int* imu_data, char dataLen);
 //   - Sends rf packets values over usb instead of wireless
 //
 // Parameters
-//   - char* rf_data : data that would normally be sent over rf
-//   - char dataLen : lenght of rf_data
+//   - int8_t* rf_data : data that would normally be sent over rf
+//   - int8_t dataLen : lenght of rf_data
 //
 // Returns
 //   - success/failure of transmission
-// bool usb_debug_rf_data(char* data, char dataLen);
-bool usb_debug_rf_data(char packet_type, unsigned long time_stamp, char* data, unsigned int data_len);
+// bool usb_debug_rf_data(int8_t* data, int8_t dataLen);
+bool usb_debug_rf_data(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint32_t data_len);
 
 
 ////////////////////////////////////////////////
@@ -93,10 +93,26 @@ bool usb_debug_rf_data(char packet_type, unsigned long time_stamp, char* data, u
 //   - Sends number of dropped packets
 //
 // Parameters
-//   - unsigned int drop_cnt : number of dropped packets as cnted by wireless
+//   - uint16_t drop_cnt : number of dropped packets as cnted by wireless
 //
 // Returns
 //   - success/failure of transmission
-bool usb_debug_rf_drop_count(unsigned int drop_cnt);
+bool usb_debug_rf_drop_count(uint16_t drop_cnt);
+
+
+///////////////////////////////////////////////
+// USB_DEBUG_STOPWATCH
+//
+// Functionality :
+//   - Sends stopWatch value
+//
+// Parameters
+//   - uint16_t now : stopWatch cnt value
+//
+// Returns
+//   - success/failure of transmission
+bool usb_debug_stopWatch(uint32_t now);
+
+
 
 #endif
