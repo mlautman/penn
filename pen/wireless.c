@@ -84,38 +84,37 @@ bool test_connection() {
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, uint8_t button) {
+bool send_packet(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, char button) {
 
     char* toSend = {0};
-    toSend[0] = (uint8_t)packet_type;
+    toSend[0] = (char)1; //packet_type;
 
     // time_stamp
-    toSend[1] = (uint8_t)((time_stamp & 0xff000000) >> 24);
-    toSend[2] = (uint8_t)((time_stamp & 0x00ff0000) >> 16);
-    toSend[3] = (uint8_t)((time_stamp & 0x0000ff00) >> 8);
-    toSend[4] = (uint8_t)((time_stamp & 0x000000ff));
+    toSend[1] = (char)((time_stamp & 0xff000000) >> 24);
+    toSend[2] = (char)((time_stamp & 0x00ff0000) >> 16);
+    toSend[3] = (char)((time_stamp & 0x0000ff00) >> 8);
+    toSend[4] = (char)((time_stamp & 0x000000ff));
 
     // Accel
-    toSend[5] =  (uint8_t)data[0];
-    toSend[6] =  (uint8_t)data[1];
-    toSend[7] =  (uint8_t)data[2];
-    toSend[8] =  (uint8_t)data[3];
-    toSend[9] =  (uint8_t)data[4];
-    toSend[10] = (uint8_t)data[5];
+    toSend[5] =  (char)data[0];
+    toSend[6] =  (char)data[1];
+    toSend[7] =  (char)data[2];
+    toSend[8] =  (char)data[3];
+    toSend[9] =  (char)data[4];
+    toSend[10] = (char)data[5];
 
     // Gyro
-    toSend[11] =  (uint8_t)data[6];
-    toSend[12] =  (uint8_t)data[7];
-    toSend[13] =  (uint8_t)data[8];
-    toSend[14] =  (uint8_t)data[9];
-    toSend[15] =  (uint8_t)data[10];
-    toSend[16] =  (uint8_t)data[11];
-    toSend[17] =  (uint8_t)button;
+    toSend[11] =  (char)data[6];
+    toSend[12] =  (char)data[7];
+    toSend[13] =  (char)data[8];
+    toSend[14] =  (char)data[9];
+    toSend[15] =  (char)data[10];
+    toSend[16] =  (char)data[11];
+    toSend[17] =  (char)button;
 
-    // usb_debug_rf_data(toSend, _rf_packet_len);
-
-    m_rf_send(_rf_base_addr, toSend, _rf_packet_len);
-    return false;
+    usb_debug_rf_data(toSend, _rf_packet_len);
+    return true;
+//    return m_rf_send(_rf_base_addr, toSend, _rf_packet_len);
 }
 
 

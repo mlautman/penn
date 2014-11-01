@@ -72,7 +72,7 @@ bool test_connection();
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, uint8_t button);
+bool send_packet(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, char button);
 
 
 ////////////////////////////////////////////////

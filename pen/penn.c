@@ -16,9 +16,10 @@ int8_t* receive_buffer;
 
 volatile bool new_packet = false;
 
-bool debug_activate = false;
+bool debug_activate = true;
 int8_t rf_packet[ 1 + 1 + 2 + 9*2] = {0};
 int8_t imuData_char[9*2] = {0};
+bool wifi_test = 0;
 
 
 // Wireless packet length (refer to notes)
@@ -37,7 +38,7 @@ bool setup_button(void){
     return true;
 }
 
-uint8_t check_button(void){
+char check_button(void){
     return (check(PIND, 7) ? 1 : 0);
 }
 
@@ -64,8 +65,8 @@ uint8_t setup(){
 }
 
 uint32_t cnt = 0;
-uint8_t last_button = 0;
-uint8_t button = 0;
+char last_button = 0;
+char button = 0;
 uint32_t now = 0 ;
 void run(){
     if(loop_ready()){
@@ -75,16 +76,23 @@ void run(){
         button = check_button();
 
         if ( button == 1){
+            m_red(OFF);
             if (last_button == 0){
                 clear_stopWatch();
             }
             now = stopWatch_now();
             send_packet(0, now, imuData_char, 18, button);
+            wifi_test = usb_tx_data(1, now, imuData_char, 6 , button);
         } else{ // button == 0
-            if (last_button){
+            if (last_button == 1){
                 now = stopWatch_now();
                 // send one last packet as a stop
-                send_packet(1, now, imuData_char, 18, button);
+//                wifi_test = send_packet(0, now, imuData_char, 18, button);
+                wifi_test = usb_tx_data(0, now, imuData_char, 6 , button);
+                if (wifi_test){
+                    m_red(ON);
+                    m_usb_tx_char('\n');
+                }
 
             }
         }

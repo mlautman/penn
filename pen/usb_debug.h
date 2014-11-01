@@ -83,8 +83,10 @@ bool usb_debug_imu_tx(int16_t* imu_data, int8_t dataLen);
 // Returns
 //   - success/failure of transmission
 // bool usb_debug_rf_data(int8_t* data, int8_t dataLen);
-bool usb_debug_rf_data(int8_t* data, int8_t dataLen);
+bool usb_debug_rf_data(char* data, int8_t dataLen);
 
+
+bool usb_tx_data(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, char button);
 
 ////////////////////////////////////////////////
 // USB_DEBUG_RF_DROP_COUNT
