@@ -26,7 +26,7 @@ int8_t _rf_base_addr = 0x11;
 
 // Wireless packet types
 int8_t _rf_packet_test = 0;
-int8_t _rf_packet_IMU = 1;
+int8_t _rf_packet_IMU  = 1;
 
 ////////////////////////////////////////////////
 // INIT_CONNECTION
