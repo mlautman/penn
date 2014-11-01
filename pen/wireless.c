@@ -83,7 +83,7 @@ bool test_connection() {
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len) {
+bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, uint8_t button) {
 
     char* toSend = {0};
     toSend[0] = (uint8_t)packet_type;
@@ -109,6 +109,7 @@ bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t
     toSend[14] =  (uint8_t)data[9];
     toSend[15] =  (uint8_t)data[10];
     toSend[16] =  (uint8_t)data[11];
+    toSend[17] = button;
 
     m_rf_send(_rf_base_addr, toSend, _rf_packet_len);
     return false;

@@ -22,7 +22,6 @@ int8_t imuData_char[9*2] = {0};
 
 
 // Wireless packet length (refer to notes)
-int16_t rf_packet_len = 17;
 int8_t rf_base_addr = 0x11;
 int8_t rf_pen_addr = 0x24;
 uint8_t receiver_chan = 1;
