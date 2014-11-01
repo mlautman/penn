@@ -84,7 +84,7 @@ bool set_loop_speed(void){
     set_clock_speed();
 
     // set clock prescaler to clock_speed/64
-    int16_t timer_prescaler = 64;
+    // int16_t timer_prescaler = 64;
     clear(TCCR3B, CS32);
     set(TCCR3B, CS31);
     clear(TCCR3B, CS30);

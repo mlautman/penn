@@ -8,8 +8,8 @@
 *********************************************
 */
 
-#ifndef __penn__
-#define __penn__
+#ifndef __RECEIVE__PENN__
+#define __RECEIVE__PENN__
 
 #include <avr/io.h>
 #include "m_imu.h"
@@ -18,7 +18,6 @@
 #include "m_general.h"
 #include "m_rf.h"
 #include "wireless.h"
-#include "imu.h"
 #include "timers.h"
 #include "usb_debug.h"
 #include <stdlib.h>
