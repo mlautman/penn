@@ -31,6 +31,16 @@ uint8_t receiver_chan = 1;
 int8_t rf_packet_test = 0;
 int8_t rf_packet_IMU = 1;
 
+// Button for the pen
+bool setup_button(void){
+    clear(DDRD, 7);
+    return true;
+}
+
+uint8_t check_button(void){
+    return (check(PIND, 7) ? 1 : 0);
+}
+
 uint8_t setup(){
     // setup main loop timer
     bool loop_set = set_loop_speed();
@@ -38,6 +48,7 @@ uint8_t setup(){
     bool imu_set = imu_init();
     bool rf_set = init_wireless(rf_pen_addr, receiver_chan);
     bool usb_set = usb_debug(debug_activate);
+    bool button_set = setup_button();
 
     uint8_t setup_mask = 0;
     setup_mask += (loop_set ? 1:0)      <<0;
@@ -45,32 +56,45 @@ uint8_t setup(){
     setup_mask += (imu_set ? 1:0)       <<2;
     setup_mask += (rf_set ? 1:0)        <<3;
     setup_mask += (usb_set ? 1:0)       <<4;
+    setup_mask += (button_set ? 1:0)    <<5;
+
 
     sei();
     return setup_mask;
 }
 
-uint32_t cnt =0;
-int16_t i;
+uint32_t cnt = 0;
+uint8_t last_button = 0;
+uint8_t button = 0;
+uint32_t now = 0 ;
 void run(){
     if(loop_ready()){
         // cli();
         m_green(2);
         imu_rawData_get((int16_t*)imuData_char);
-        uint32_t now = stopWatch_now();
-        if (now  >= 100000 ){
-            clear_stopWatch();
+        button = check_button();
+
+        if ( button == 1){
+            if (last_button == 0){
+                clear_stopWatch();
+            }
+            now = stopWatch_now();
+            send_packet(0, now, imuData_char, 18, button);
+        } else{ // button == 0
+            if (last_button){
+                now = stopWatch_now();
+                // send one last packet as a stop
+                send_packet(1, now, imuData_char, 18, button);
+
+            }
         }
-        // usb_debug_rf_data( 1 , now, imuData_char, 17);
-        send_packet(0, now, imuData_char, 17);
-        // usb_debug_imu_tx((int16_t*)imuData_char, 9);
-        // usb_debug_stopWatch(now);
+        last_button = button;
     }
 }
 
 int16_t main(void) {
     // Setup
-    uint8_t setup_success = setup();
+    setup();
     // Run
     while(1){
         run();

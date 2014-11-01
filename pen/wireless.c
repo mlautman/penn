@@ -9,6 +9,7 @@
  */
 
 #include "wireless.h"
+#include "usb_debug.h"
 
 ////////////////////////////////////////////////
 // NOTES:
@@ -20,7 +21,7 @@
 
 
 // Wireless packet length (refer to notes)
-int16_t _rf_packet_len = 17;
+int16_t _rf_packet_len = 18;
 int8_t _rf_base_addr = 0x11;
 
 // Wireless packet types
@@ -59,7 +60,7 @@ bool init_wireless(uint8_t receiver_addr, uint8_t receiver_chan) {
 //      false:  connection is bad
 bool test_connection() {
     int8_t data [1] = {0};
-    send_packet(0, 0, data, 1);
+    send_packet(0, 0, data, 1, 0);
 
     m_wait(100);
 
@@ -109,7 +110,9 @@ bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t
     toSend[14] =  (uint8_t)data[9];
     toSend[15] =  (uint8_t)data[10];
     toSend[16] =  (uint8_t)data[11];
-    toSend[17] = button;
+    toSend[17] =  (uint8_t)button;
+
+    // usb_debug_rf_data(toSend, _rf_packet_len);
 
     m_rf_send(_rf_base_addr, toSend, _rf_packet_len);
     return false;
