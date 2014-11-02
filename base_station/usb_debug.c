@@ -112,39 +112,31 @@ bool usb_debug_imu_tx(int16_t* imu_data, int8_t dataLen){
 //
 // Returns
 //   - success/failure of transmission
-int16_t rf_packet_len_debug = 17;
-bool usb_debug_rf_data(int8_t* data, int8_t dataLen){
-
+int16_t rf_packet_len_debug = 18;
+bool usb_debug_rf_data(uint8_t* data, int8_t dataLen){
     if(data[0]==0){
         // m_usb_tx_string("rf_data");
         // debug rf_packet
 
-        int16_t i;
-        // m_usb_tx_int((int16_t)data[0]);
-        uint32_t now = 0;
-        now += (uint32_t)data[1] << 24;
-        now += (uint32_t)data[2] << 16;
-        now += (uint32_t)data[3] << 8;
-        now += (uint32_t)data[4];
-
-        m_usb_tx_string("Time:\t");
-        m_usb_tx_long((long)now);
-        m_usb_tx_char('\t');
+        m_usb_tx_int((int16_t)data[0]);
         m_usb_tx_char('\t');
 
+        uint32_t now_32 = 0;
+        now_32 += (uint32_t)data[1] << 24;
+        now_32 += (uint32_t)data[2] << 16;
+        now_32 += (uint32_t)data[3] << 8;
+        now_32 += (uint32_t)data[4];
 
-        char* XYZRPY = "XYZRPY";
-        for(i = 5; i < rf_packet_len_debug; i+=2){
-            if (i==11){
-                m_usb_tx_char('\t');
+        m_usb_tx_ulong((unsigned long)now_32);
+        m_usb_tx_char('\t');
 
-            }
-            m_usb_tx_char(XYZRPY[(i-5)/2]);
-            m_usb_tx_string(":\t");
+
+        int8_t i;
+        for(i = 5; i < rf_packet_len_debug - 1; i+=2){
             m_usb_tx_int(*(int16_t*)&data[i]);
             m_usb_tx_char('\t');
         }
-
+        m_usb_tx_int((int16_t)data[17]);
         bool txSuccess = m_usb_tx_char('\t');
         m_usb_tx_string("\n\r");
 

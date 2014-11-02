@@ -1,8 +1,8 @@
 /*********************************************
  *********************************************
  *
- *	Project: Penn
- * 	Script: wireless.c
+ *  Project: Penn
+ *  Script: wireless.c
  *  Author: Justin Yim
  *********************************************
  *********************************************
@@ -20,8 +20,8 @@
 
 
 // Wireless packet length (refer to notes)
-int16_t _rf_packet_len = 17;
-int8_t  _rf_base_addr = 0x11;
+int16_t _rf_packet_len = 18 ;
+int8_t _rf_base_addr = 0x11;
 
 // Wireless packet types
 int8_t _rf_packet_test = 0;
@@ -59,7 +59,7 @@ bool init_wireless(uint8_t receiver_addr, uint8_t receiver_chan) {
 //      false:  connection is bad
 bool test_connection() {
     int8_t data [1] = {0};
-    send_packet(0, 0, data, 1);
+    send_packet(0, 0, data, 1, 0);
 
     m_wait(100);
 
@@ -83,7 +83,35 @@ bool test_connection() {
 // RESPONSE:
 //      true:   success
 //      false:  failure
-bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len) {
+bool send_packet(int8_t packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, uint8_t button) {
+
+    char* toSend = {0};
+    toSend[0] = (uint8_t)packet_type;
+
+    // time_stamp
+    toSend[1] = (uint8_t)((time_stamp & 0xff000000) >> 24);
+    toSend[2] = (uint8_t)((time_stamp & 0x00ff0000) >> 16);
+    toSend[3] = (uint8_t)((time_stamp & 0x0000ff00) >> 8);
+    toSend[4] = (uint8_t)((time_stamp & 0x000000ff));
+
+    // Accel
+    toSend[5] =  (uint8_t)data[0];
+    toSend[6] =  (uint8_t)data[1];
+    toSend[7] =  (uint8_t)data[2];
+    toSend[8] =  (uint8_t)data[3];
+    toSend[9] =  (uint8_t)data[4];
+    toSend[10] = (uint8_t)data[5];
+
+    // Gyro
+    toSend[11] =  (uint8_t)data[6];
+    toSend[12] =  (uint8_t)data[7];
+    toSend[13] =  (uint8_t)data[8];
+    toSend[14] =  (uint8_t)data[9];
+    toSend[15] =  (uint8_t)data[10];
+    toSend[16] =  (uint8_t)data[11];
+    toSend[17] =  (uint8_t)button;
+
+    m_rf_send(_rf_base_addr, toSend, _rf_packet_len);
     return false;
 }
 

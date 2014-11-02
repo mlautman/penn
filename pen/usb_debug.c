@@ -59,7 +59,7 @@ bool usb_debug(bool activate){
 
 bool usb_debug_send_setupMask(void){
     uint8_t wireless_isConnected = (test_connection()?1:0);
-    uint8_t imu_init = (imu_isInit()?1:0);
+    uint8_t imu_init = 1;
     uint8_t loop_timer_running = loop_isSet()?1:0;
     uint8_t stopWatch_running = stopwatch_isSet()?1:0;
 
@@ -112,16 +112,15 @@ bool usb_debug_imu_tx(int16_t* imu_data, int8_t dataLen){
 //
 // Returns
 //   - success/failure of transmission
-int16_t _rf_packet_len_debug = 17;
-bool usb_debug_rf_data(int8_t* data, int8_t dataLen){
-
+int16_t rf_packet_len_debug2 = 18;
+bool usb_debug_rf_data(char* data, int8_t dataLen){
     if(data[0]==0){
-        m_usb_tx_string("rf_data:\t");
+        // m_usb_tx_string("rf_data");
         // debug rf_packet
 
         int16_t i;
-        m_usb_tx_int((int16_t)data[0]);
-        m_usb_tx_string("\t");
+        m_usb_tx_int((int)data[0]);
+        m_usb_tx_char('\t');
         uint32_t now = 0;
         now += (uint32_t)data[1] << 24;
         now += (uint32_t)data[2] << 16;
@@ -129,20 +128,62 @@ bool usb_debug_rf_data(int8_t* data, int8_t dataLen){
         now += (uint32_t)data[4];
 
         m_usb_tx_long((long)now);
+        m_usb_tx_char('\t');
 
-        for(i = 5; i < _rf_packet_len_debug; i+=2){
-            m_usb_tx_char('\t');
+
+        for(i = 5; i < rf_packet_len_debug2 - 1; i+=2){
             m_usb_tx_int(*(int16_t*)&data[i]);
+            m_usb_tx_char('\t');
         }
-        m_usb_tx_string("\n\r");
-
+        m_usb_tx_int((int)data[17]);
         bool txSuccess = m_usb_tx_char('\t');
+        m_usb_tx_string("\n\r");
 
         return txSuccess != -1;
     }
 
     return true ;
 }
+
+
+////////////////////////////////////////////////
+// USB_TX_DATA
+//
+// Functionality :
+//   - Sends rf packets values over usb instead of wireless
+//
+// Parameters
+//   - int8_t* rf_data : data that would normally be sent over rf
+//   - int8_t dataLen : lenght of rf_data
+//
+// Returns
+//   - success/failure of transmission
+int16_t rf_packet_len_debug = 18;
+bool usb_tx_data(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t data_len, char button){
+    int i;
+    // m_usb_tx_string("rf_data");
+    // debug rf_packet
+    
+    m_usb_tx_int((int)packet_type);
+    m_usb_tx_char('\t');
+    
+    m_usb_tx_ulong((unsigned long)time_stamp);
+    m_usb_tx_char('\t');
+    
+    
+    for(i = 0; i < data_len; i++){
+        m_usb_tx_int(*(int16_t*)&data[i*2]);
+        m_usb_tx_char('\t');
+    }
+    m_usb_tx_int((int)button);
+    bool txSuccess = m_usb_tx_char('\t');
+    m_usb_tx_string("\n\r");
+    
+    return txSuccess != -1;
+    
+    return true ;
+}
+
 
 ////////////////////////////////////////////////
 // USB_DEBUG_RF_DROP_COUNT

@@ -3,3 +3,15 @@
 ./*.xcodeproj
 ./*.hex
 ./*.elf
+./*.pbxproj
+./*.xcworkspacedata
+./*.xccheckout
+./*.xcuserstate
+./*.xcscheme
+./*.plist
+./*.name
+./*.xml
+./*.iml
+./*.xcuserstate
+./*.xcworkspace
+./*.xcuserdatad
