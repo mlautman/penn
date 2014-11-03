@@ -10,17 +10,21 @@
 
 #ifndef __RECEIVE__PENN__
 #define __RECEIVE__PENN__
-
+// STD libraries
+#include <stdlib.h>
 #include <avr/io.h>
+
+// Fiene libraries
 #include "m_imu.h"
 #include "m_bus.h"
 #include "m_usb.h"
 #include "m_general.h"
 #include "m_rf.h"
+
+// custom libraries
 #include "wireless.h"
 #include "timers.h"
 #include "usb_debug.h"
-#include <stdlib.h>
 
 
 
@@ -45,49 +49,49 @@
 //
 // RETURNS:
 // 		1 : success
-// 		0 : communication error
+// // 		0 : communication error
 
-#define __a_0 0
-#define __a_1 1
-#define __a_2 2
-#define __a_3 3
+// #define __a_0 0
+// #define __a_1 1
+// #define __a_2 2
+// #define __a_3 3
 
-// accelerometer_scale
-// _a_0 = +/-2G
-// _a_1 = +/-4G
-// _a_2 = +/-8G
-// _a_3 = +/-16G
+// // accelerometer_scale
+// // _a_0 = +/-2G
+// // _a_1 = +/-4G
+// // _a_2 = +/-8G
+// // _a_3 = +/-16G
 
-// gyro_scale:
-// _g_0 = +/-250d/s,
-// _g_1 = +/-500d/s,
-// _g_2 = +/-1000d/s,
-// _g_3 = +/-2000d/s
+// // gyro_scale:
+// // _g_0 = +/-250d/s,
+// // _g_1 = +/-500d/s,
+// // _g_2 = +/-1000d/s,
+// // _g_3 = +/-2000d/s
 
-bool init_imu(int accel_scale, int gyro_scale);
+// bool init_imu(int accel_scale, int gyro_scale);
 
 
-////////////////////////////////////////////////
-//
-//		RF helpers
-//
-////////////////////////////////////////////////
+// ////////////////////////////////////////////////
+// //
+// //		RF helpers
+// //
+// ////////////////////////////////////////////////
 
-////////////////////////////////////////////////
-// TX_RF_PACKET
-//
-// FUNCTIONALITY:
-//		transmits the newest data to the receiver
-//		basically a wrapper function for m_rf_send()
-//
-// PARAMETERS:
-//		time_stamp	: time delta since penn hit paper
-//		imu_data 	: raw sensor data from imu
-//
-// RESPONSE
-//		true	: success
-// 		false	: communication error
-bool tx_rf_packet(unsigned long time_stamp, char* imu_data);
+// ////////////////////////////////////////////////
+// // TX_RF_PACKET
+// //
+// // FUNCTIONALITY:
+// //		transmits the newest data to the receiver
+// //		basically a wrapper function for m_rf_send()
+// //
+// // PARAMETERS:
+// //		time_stamp	: time delta since penn hit paper
+// //		imu_data 	: raw sensor data from imu
+// //
+// // RESPONSE
+// //		true	: success
+// // 		false	: communication error
+// bool tx_rf_packet(unsigned long time_stamp, char* imu_data);
 
 
 ////////////////////////////////////////////////

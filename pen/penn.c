@@ -78,21 +78,22 @@ void run(){
         if ( button == 1){
             m_red(OFF);
             if (last_button == 0){
-                clear_stopWatch();
+                // clear_smak topWatch();
             }
             now = stopWatch_now();
             send_packet(0, now, imuData_char, 18, button);
             wifi_test = usb_tx_data(1, now, imuData_char, 6 , button);
         } else{ // button == 0
+            now = stopWatch_now();
+            wifi_test = usb_tx_data(0, now, imuData_char, 6 , button);
             if (last_button == 1){
-                now = stopWatch_now();
-                // send one last packet as a stop
-//                wifi_test = send_packet(0, now, imuData_char, 18, button);
-                wifi_test = usb_tx_data(0, now, imuData_char, 6 , button);
-                if (wifi_test){
+//                 now = stopWatch_now();
+//                 // send one last packet as a stop
+// //                wifi_test = send_packet(0, now, imuData_char, 18, button);
+//                 wifi_test = usb_tx_data(0, now, imuData_char, 6 , button);
+                // if (wifi_test){
                     m_red(ON);
-                    m_usb_tx_char('\n');
-                }
+                // }
 
             }
         }
