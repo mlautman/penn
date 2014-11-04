@@ -12,6 +12,8 @@ class Data(object):
     def __init__(self, X=None, fname=None, dirname=None):
         """
         Data should be given either an X value, a filename or a dirname
+        The data for the penn project should be in vector format with each horozontal line
+        representing a single image.
         """
         if X:
             """
@@ -36,6 +38,3 @@ class Data(object):
             self.X = np.matrix(np.zeros((n,len(files))))
             for i, f in enumerate(os.listdir(dirname)):
                 self.X[:,i] = np.matrix(np.loadtxt(dirname + f, delimiter=',')).T
-
-            else:
-                print "ERR! dirname is empty "
