@@ -137,7 +137,7 @@ bool usb_debug_rf_data(char* data, int8_t dataLen){
         }
         m_usb_tx_int((int)data[17]);
         bool txSuccess = m_usb_tx_char('\t');
-        m_usb_tx_string("\n\r");
+        m_usb_tx_string("\n");
 
         return txSuccess != -1;
     }
@@ -163,24 +163,24 @@ bool usb_tx_data(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t d
     int i;
     // m_usb_tx_string("rf_data");
     // debug rf_packet
-    
+
     m_usb_tx_int((int)packet_type);
     m_usb_tx_char('\t');
-    
+
     m_usb_tx_ulong((unsigned long)time_stamp);
     m_usb_tx_char('\t');
-    
-    
+
+
     for(i = 0; i < data_len; i++){
         m_usb_tx_int(*(int16_t*)&data[i*2]);
         m_usb_tx_char('\t');
     }
     m_usb_tx_int((int)button);
     bool txSuccess = m_usb_tx_char('\t');
-    m_usb_tx_string("\n\r");
-    
+    m_usb_tx_string("\n");
+
     return txSuccess != -1;
-    
+
     return true ;
 }
 
@@ -216,7 +216,7 @@ bool usb_debug_rf_drop_count(uint16_t drop_cnt){
 bool usb_debug_stopWatch(uint32_t now){
     m_usb_tx_string("stopwatch_now:\t");
     m_usb_tx_ulong(now);
-    m_usb_tx_string("\n\r");
+    m_usb_tx_string("\n");
     return true;
 }
 
