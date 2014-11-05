@@ -1,15 +1,48 @@
 %quadSerial
+%{a without the a does block comment in Matlab. If you delete a, block comment.
 
+%% Initialize program and USB port
+if(exist('M2USB'))
+  fclose(M2USB);
+ else
+%  fclose(instrfindall);
+ delete(instrfindall);
+end
+
+%% If the above initialization does not work, please run the following commands manually and disconnect and reconnect USB.
+%  fclose(serial('COM5','Baudrate', 9600));
+%  fclose(instrfindall);
+clear all;
+close all;
+
+%% SERIAL - Open serial interface to M2
+
+%----> for ***UBUNTU***
 %{a
-% Open serial interface to M2
 if ~exist('s','var')
-s = serial('/dev/ttyACM0');
-s.baudrate = 57600;
-s.terminator = 'LF';
-fopen(s);
+    s = serial('/dev/ttyACM0');
+%     s = serial('/dev/tty.usbmodem411');
+    s.baudrate = 57600;
+    s.terminator = 'LF';
+    fopen(s);
 end
 %}
 
+%----> for ***WINDOZE***
+%{
+M2USB = serial('COM5','Baudrate', 9600);
+*** Use the device manager to check where the microcontroller is plugged
+into.
+%}
+
+%----> for ***MAC***
+%{
+M2USB = serial('/dev/tty.usbmodem411','Baudrate',9600);
+fopen(M2USB);       % Open up the port to the M2 microcontroller.
+flushinput(M2USB);  % Remove anything extranneous that may be in the buffer.
+%}
+
+%%
 % Prepare data log
 numHistory = 1000;
 numVals = 9;
