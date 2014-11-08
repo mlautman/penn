@@ -37,55 +37,91 @@ def recenter(image):
     # skew right (add to x-index's to recenter)
     skew_right = d/2 - x_c
 
-    return ndimage.interpolation.shift(image, [skew_down, skew_right], cval=0.0)
+    return ndimage.interpolation.shift(
+        image,
+        [skew_down, skew_right],
+        cval=0.0
+    )
 
 
 def normalize(image):
     return image/np.sqrt(np.power(image, 2).sum())
 
+# ASSUME SQUARE!!
 def scale(image, threshold=10):
     X = np.round(image, decimals=threshold)
-    n,d = X.shape
+    n, d = X.shape
     Yz, Xz = np.nonzero(X)
+
     left = Xz.min()
     right = Xz.max()
     top = Yz.min()
     bottom = Yz.max()
 
-    proportionX = float(right - left)/d
-    proportionY = float(bottom - top)/n
+    h_span = right - left
+    v_span = bottom - top
+
+    proportionX = float(h_span)/float(d)
+    proportionY = float(v_span)/float(n)
 
     goal = .80
 
-    zoomX = goal/proportionX
-    zoomY = goal/proportionY
+    if proportionX > proportionY:
+        span = h_span
+        extents = d
+        proportion = proportionX
 
-    zoom = min(zoomY, zoomX)
+    else:
+        span = v_span
+        extents = n
+        proportion = proportionY
 
-    step = 1./zoom
+    zoom = goal/proportion
 
-    x = np.arange(0, d, step)
-    y = np.arange(0, n, step)
+    full = np.round(span/goal)
 
-    mg = np.meshgrid(x,y)
-    for i in range(2):
-        mg[i] = np.int64(np.floor(mg[i]))
+    h_begin = (d - full)/2.
+    h_end   = (d + full)/2.
 
-    b = X[mg].T
 
-    n2,d2 = b.shape
+    v_begin = (n - full)/2.
+    v_end   = (n + full)/2.
 
-    extra_n = n2-n
-    n_before= np.floor(float(extra_n)/2.)
-    n_after= np.ceil(float(extra_n)/2.)
 
-    extra_d = d2-d
-    d_before= int(np.floor(float(extra_d)/2.))
-    d_after= int(np.ceil(float(extra_d)/2.))
+    i_locations = (
+        np.int64(
+            np.floor(
+                np.linspace(
+                    h_begin,
+                    h_end,
+                    d
+                )
+            )
+        )
+    )
 
-    X2 = b[n_before:n2-n_after, d_before:d2-d_after]
-    return X2
-    # return ndimage.interpolation.zoom(X, zoom)
+    j_locations = (
+        np.int64(
+            np.floor(
+                np.linspace(
+                    v_begin,
+                    v_end,
+                    n
+                )
+            )
+        )
+    )
+
+    # create scaled img grid mapping
+    mg = np.meshgrid(
+        i_locations,
+        j_locations,
+        indexing='ij',
+    )
+
+    # zoomed in img
+    return X[mg]
+
 
 
 
