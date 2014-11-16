@@ -1,5 +1,18 @@
-%quadSerial
+% Documentation ===========================================================
+%                       z   y
+%     z  y     tip       | /    P Penn frame
+%     | /        . _ _ _ .__ x
+%     .__ x              IMU
+%    O      G Ground frame
+% 
+% A: Penn tip
+% P: IMU frame
+% C: IMU center
+% G: Ground frame
 
+tipP = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+
+% Initialization ==========================================================
 %{a
 % Open serial interface to M2
 if ~exist('s','var')
@@ -16,13 +29,14 @@ numVals = 9;
 log = zeros(numHistory,numVals+1);
 
 % Display and additional code setup
-cntr = 0;
 figure(62)
 clf
 haxis62 = axes;
+title('Raw Serial Data')
 
 toPlot = 3:8; % indices of raw logs to plot
 plot_reduce = 10; % plot every plot_reduce loops
+plt_red_cntr = 0;
 
 h_raws = zeros(length(toPlot),1);
 color_list = 'rgbcmk';
@@ -38,6 +52,7 @@ grid on
 
 % Additional calculations and plotting
 % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+% Attitude estimation
 addpath('quaternion_library')
 gyr_max_scale = 250; %degrees per second max
 acc_max_scale = 2; %gs max
@@ -45,47 +60,77 @@ acc_max_scale = 2; %gs max
 gyr_scale = 250/32768 * pi/180;
 acc_scale = 2/32768 * 9.81;
 
-eulers = zeros(numHistory, 3);
+%AHRS = MahonyAHRS('SamplePeriod', 1/300, 'Kp', 0.5); % Kalman filter
+AHRS = MadgwickAHRS('SamplePeriod', 1/300, 'Beta', 0.1); % Kalman filter
 
-% Kalman filter
-%AHRS = MahonyAHRS('SamplePeriod', 1/300, 'Kp', 0.5);
-AHRS = MadgwickAHRS('SamplePeriod', 1/300, 'Beta', 0.1);
+% Integration
+v_old = [0;0;0];
+p_old = [0;0;0];
+alpha1 = 0.9;
+alpha2 = 0.9;
 
-%Plot euler angles
+tp_old = [0;0;0];
+alpha3 = 0.99;
+NanVect = NaN(numHistory,1);
+
+yaw_old = 0;
+raw_old = 0;
+alpha4 = 0.95;
+
+% Plot selected processed signals (euler angles, ground frame accelerations, etc.)
 figure(1)
 clf
 haxis1 = axes;
+title('Processed Signals')
 
-h_filts = zeros(3,1);
+h_sigs = zeros(3,1);
+sigs = zeros(numHistory,3);
+
 hold on
 for ii=1:3
-    h_filts(ii) = plot(log(:,1), eulers(:,ii),...
+    h_sigs(ii) = plot(log(:,1), sigs(:,ii),...
         [color_list(mod(ii-1,length(color_list))+1),...
         line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
 end
 hold off
 grid on
 
-% 3D pen plot
+
+% Plot 3D pen visualization
 figure(2)
 clf
 haxis2 = axes;
+title('Pen Visualization')
 
-pen3D = [0, 0, -5;
-         -1, 0, 0;
-         0, 0, 0];
+pen3D = [0, 0, 0.05; % long arm along pen, short arm away from author
+         0, 0, 0;
+         tipP';
+        -0.15, 0, 0]';
          
 h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
 axis equal
-set(gca,'xlim',[-6,6],'ylim',[-6,6],'zlim',[-6,6]);
+set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
 grid on
+
+
+% Plot character integration
+figure(3)
+clf
+haxis3 = axes;
+title('Drawn Character')
+h_char = plot(sigs(:,1),sigs(:,2),'b');
+axis equal
+grid on
+
+char_writing = input('Character: ','s');
+title(char_writing);
+save_ind = 0;
+dir = 'example_letters';
+set(gcf,'windowkeypressfcn','char_writing = get(gcf,''currentcharacter''); title(char_writing); save_ind = 0;')
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-%HACK
-quaternion = [1, 0, 0, 0];
-
-% Run loop
+% Run Loop ================================================================
 tic
 while(1)
     % Read data from M2
@@ -100,17 +145,45 @@ while(1)
     
     % Additional calculations
     % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-    %R = quatern2rotMat(quaternion);
-    %mag = R*[0;1;0];
-    %AHRS.Update(log(end,6:8) * gyr_scale, log(end,3:5) * acc_scale/9.81, [1, 0, 0]);%mag');	% gyroscope units must be radians
-    AHRS.UpdateIMU(log(end,7:9) * gyr_scale, log(end,4:6) * acc_scale/9.81);
+    % Acceleration and Rotation scaling
+    a_meas_P = log(end, 4:6)' * acc_scale;
+    w_PG = log(end, 7:9)' * gyr_scale;
+    
+    % Attitude estimation
+    AHRS.UpdateIMU(w_PG, a_meas_P);
     quaternion = AHRS.Quaternion;
-    eulers = [eulers(2:end,:);quatern2euler(quaternConj(quaternion)) * (180/pi)];
+    
+    % Rotation, projection, and integration
+    rotGP = quatern2rotMat(quaternion);
+    %{
+        euler = rotMat2euler(rotGP');
+        yaw = alpha4*(yaw_old + (euler(3) - raw_old));
+        yaw_old = yaw;
+        raw_old = euler(3);
+        euler(3) = yaw;
+        rotGP = euler2rotMat(euler(1),euler(2),euler(3));
+    %}
+    a_P = rotGP*[0;0;-9.81] + a_meas_P;
+    a_PG = rotGP'*a_P;
+    
+    % IMU position integration
+    v_PG = alpha1*(v_old + a_PG*1/300);
+    v_old = v_PG;
+    p_PG = alpha2*(p_old + v_PG*1/300);
+    p_old = p_PG;
+    
+    % Tip position integration
+    tv_P = cross(w_PG, rotGP'*tipP);
+    tp_P = alpha3*(tp_old + tv_P*1/300);
+    tp_old = tp_P;
+    
+    sigs = [sigs(2:end,:); tp_P' + p_PG'];%p_PG'];%a_PG'];%quatern2euler(quaternConj(quaternion)) * (180/pi)];
+    
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
     % Display
-    cntr = mod(cntr+1,plot_reduce);
-    if ~cntr
+    plt_red_cntr = mod(plt_red_cntr+1,plot_reduce);
+    if ~plt_red_cntr
         for ii=1:length(toPlot)
             set(h_raws(ii), 'xdata', log(:,1), 'ydata', log(:,toPlot(ii)+1))
         end
@@ -118,16 +191,30 @@ while(1)
         
         % Additional Plotting
         % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        % Other signals
         for ii=1:3
-            set(h_filts(ii), 'xdata', log(:,1), 'ydata', eulers(:,ii))
+            set(h_sigs(ii), 'xdata', log(:,1), 'ydata', sigs(:,ii))
         end
         set(haxis1, 'xlim', [log(1,1),log(end,1)])
         
-        rot = quatern2rotMat(quaternion);
-        newPen = rot'*pen3D;
+        % Penn visualization
+        newPen = rotGP'*pen3D;
         set(h_3D, 'xdata', newPen(1,:), 'ydata', newPen(2,:), 'zdata', newPen(3,:))
         
+        % Character visualization
+        toDraw = sigs;
+        toDraw(log(:,2)==0,:) = NaN;
+        set(h_char, 'xdata', toDraw(:,1), 'ydata', toDraw(:,2))
         % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         drawnow
     end
+    
+    % Saving 
+    if log(end-1,2) && ~log(end,2)
+        fig_im = getframe(3);
+        im = fig_im.cdata;
+        imwrite(im,[dir,'/',char_writing,num2str(save_ind),'.png'])
+        save_ind = save_ind + 1;
+    end
+        
 end
