@@ -75,7 +75,7 @@ void run(){
         imu_rawData_get((int16_t*)imuData_char);
         button = check_button();
 
-        if ( button == 1){
+        if (button == 1){
             m_red(OFF);
             if (last_button == 0){
                 // clear_smak topWatch();
