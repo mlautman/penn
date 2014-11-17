@@ -73,25 +73,27 @@
 ]
 
 \begin{abstract} 
-Implementation and design of machine learning algorithms to learn characters in real time through IMU and gyro acquisitions on a regular pen.
+In this project, we designed an inertial measurement unit (IMU) equipped pen and implemented machine learning algorithms to identify written characters in real time using acceleration and rotation measurements.
+%Implementation and design of machine learning algorithms to learn characters in real time through IMU and gyro acquisitions on a regular pen.
 \end{abstract} 
 
 
 
 \section{Prototype Design and Programming}
-
-This stage consisted mainly of the design of a working prototype to start the data gathering process. The challenge consisted in having a non bulky pen that could stream gyro and IMU data through WiFi to the computer so that the data could then be processed by a more powerful computer.
+We designed and built a custom electronic pen to gather data for character identification. Three dimensional acceleration and angular velocity measurements from the pen are streamed wirelessly to a computer for processing.  Our design of the pen hardware focused on fitting inertial measurement, processing, communication, and power management into a streamlined and easy to use form.
+%This stage consisted mainly of the design of a working prototype to start the data gathering process. The challenge consisted in having a non bulky pen that could stream gyro and IMU data through WiFi to the computer so that the data could then be processed by a more powerful computer.
 
 \subsection{Design}
-
-We first took all the ideas and components we needed to make this project work, and carried them on to sketches. Once we were pretty sure of the feasibility of the design and that it could contain everything we needed, we stepped into 3D designing a pen that could be easily 3D printed and could be manufactured rather quickly we the resources we have in AddLab. The result of the first version of the pen looks like this:
+We designed the pen layout and body in CAD (pictured below) to ensure appropriate packing of components. The clear body was 3D printed.
+%We first took all the ideas and components we needed to make this project work, and carried them on to sketches. Once we were pretty sure of the feasibility of the design and that it could contain everything we needed, we stepped into 3D designing a pen that could be easily 3D printed and could be manufactured rather quickly we the resources we have in AddLab. The result of the first version of the pen looks like this:
 \begin{figure}[H]
 \centering
     \includegraphics[width=0.5\textwidth, height= 5cm]{pen_render.png}
     \caption{Rendering of the 3D printed model of the penn}
 \end{figure}
 
-As you can see, we have an on-board microprocessor, 3 axis accelerometer, 3 axis gyroscope, magnetometer, and WiFi module. It also has a very sensitive switch that can tel us when the pen is actually writing. On top of that, the pen has 3 LED lights to make a visual recognition of the states the pen was at. We also included in the real version, a switch to turn it on and off, and batteries.
+An ATMega32u4 microcontroller provides onboard processing and interfaces to the wireless module, IMU, switch, and indicator LEDs. Two Nordic nRF24LE1 transceivers handle wireless communication between the pen and base station computer. Inertial measurements are provided by an MPU6050 digital IMU with configurable gain triaxial accelerometers and gyroscopes. A Honeywell HMC5883L triaxial magnetometer provides a reference to earth's magnetic field for orientation. A switch behind the pen tip detects contact with the page for character segmentation. Three LEDs on the case display pen state. The pen also includes onboard batteries, power management, and an on-off switch.
+%As you can see, we have an on-board microprocessor, 3 axis accelerometer, 3 axis gyroscope, magnetometer, and WiFi module. It also has a very sensitive switch that can tel us when the pen is actually writing. On top of that, the pen has 3 LED lights to make a visual recognition of the states the pen was at. We also included in the real version, a switch to turn it on and off, and batteries.
 
 \section{Data Processing} 
 
