@@ -19,7 +19,7 @@ def smear(image, sigma):
         returns
             blurryIm : n x d numpy matrix
     """
-    return ndimage.filters.gaussian_filter(X, sigma, mode='nearest')
+    return ndimage.filters.gaussian_filter(image, sigma, mode='nearest')
 
 def recenter(image):
     # center_of_mass

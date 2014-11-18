@@ -78,10 +78,10 @@ void run(){
         if (button == 1){
             m_red(OFF);
             if (last_button == 0){
-                // clear_smak topWatch();
+                // clear_stopWatch();
             }
             now = stopWatch_now();
-            send_packet(0, now, imuData_char, 18, button);
+            // send_packet(0, now, imuData_char, 18, button);
             wifi_test = usb_tx_data(1, now, imuData_char, 6 , button);
         } else{ // button == 0
             now = stopWatch_now();
