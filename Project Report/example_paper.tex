@@ -141,7 +141,7 @@ differentiating $^G \underset{\mbox{\textasciitilde}}{w}^M$.
 
 The trajectory of the pen tip in the page frame is obtained by twice-integrating $^G \underset{\mbox{\textasciitilde}}{a}^Q$.
 Since the velocity and position are integrations of noisy signals they are prone to very significant drift over time. To counteract this drift, the position and velocity estimates are re-zeroed at the start of every character and both the velocity and position are high pass filtered. The resulting trajectory can be plotted in the plane to approximate the appearance of the character on the page. This trajectory image is sampled to produce a black and white image which is then scaled and blurred to produce the final learning features.
-
+ 
 \subsection{Preliminary Results}
 We are currently able to produce relatively accurate trajectory estimates. The integrated character image is prone to distortion due to velocity and position drift over the course of writing the character. Our current filtering schemes are somewhat successful at reducing integration drift and rejecting noise from vibration. Figure 2 shows a trajectory recovered 'g' that we were able to produce using our methodology.
 
@@ -159,8 +159,8 @@ The next step in the project is to create a labeled test set. With a training se
  
 Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\\\
 For trajectory reconstruction, consulted Jeen-Shing Wang, Yu-Liang Hsu, and Jiun-Nan Liu's paper entitled \textbf{An Inertial-Measurement-Unit-Based Pen With a Trajectory Reconstruction Algorithm and Its Applications}.
-\bibliography{example_paper}
-\bibliographystyle{icml2014}
+%\bibliography{example_paper}
+%\bibliographystyle{icml2014}
 
 \end{document} 
 
