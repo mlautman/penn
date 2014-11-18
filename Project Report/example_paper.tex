@@ -29,7 +29,7 @@
 % resulting PDF.  If this breaks your system, please commend out the
 % following usepackage line and replace \usepackage{icml2014} with
 % \usepackage[nohyperref]{icml2014} above.
-\usepackage{hyperref}
+%\usepackage{hyperref}
 
 % Packages hyperref and algorithmic misbehave sometimes.  We can fix
 % this with the following command.
@@ -73,7 +73,7 @@
 ]
 
 \begin{abstract} 
-This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. Our device tracks position and angle and uses machine learning methods to identify written characters in real time. By solving for the dynamics of the system, and using them in our Kalman Filter, we are able to estimate the pen tip position as a function of time that will be used as inputs to a classification algorithm.
+This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. Our device tracks it's motion and uses machine learning methods to identify written characters in real time. By solving for the dynamics of the system, and using them in our Kalman Filter, we are able to estimate the pen tip accelerations and rotations ad a function of time. We will use this data to compare several machine learning algorithms based on their ability to recgnize handwritten characters. 
 %Implementation and design of machine learning algorithms to learn characters in real time through IMU and gyro acquisitions on a regular pen.
 \end{abstract} 
 
