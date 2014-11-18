@@ -73,42 +73,39 @@
 ]
 
 \begin{abstract} 
-In this project, we designed an inertial measurement unit (IMU) equipped pen and implemented machine learning algorithms to identify written characters in real time using acceleration and rotation measurements.
+This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. Our device tracks position and angle and uses machine learning methods to identify written characters in real time. By solving for the dynamics of the system, and using them in our Kalman Filter, we are able to estimate the pen tip position as a function of time that will be used as inputs to a classification algorithm.
 %Implementation and design of machine learning algorithms to learn characters in real time through IMU and gyro acquisitions on a regular pen.
 \end{abstract} 
 
 
 
-\section{Prototype Design and Programming}
-We designed and built a custom electronic pen to gather data for character identification. Three dimensional acceleration and angular velocity measurements from the pen are streamed wirelessly to a computer for processing.  Our design of the pen hardware focused on fitting inertial measurement, processing, communication, and power management into a streamlined and easy to use form.
-%This stage consisted mainly of the design of a working prototype to start the data gathering process. The challenge consisted in having a non bulky pen that could stream gyro and IMU data through WiFi to the computer so that the data could then be processed by a more powerful computer.
+\section{Prototype}
+In this section we give a brief summary of the hardware incorporated into the proposed device. We first describe the mechanical device before then discussing the electronics. 
 
-\subsection{Design}
-We designed the pen layout and body in CAD (pictured below) to ensure appropriate packing of components. The clear body was 3D printed.
-%We first took all the ideas and components we needed to make this project work, and carried them on to sketches. Once we were pretty sure of the feasibility of the design and that it could contain everything we needed, we stepped into 3D designing a pen that could be easily 3D printed and could be manufactured rather quickly we the resources we have in AddLab. The result of the first version of the pen looks like this:
+\subsection{Hardware}
+The pen layout and body was designed in CAD (pictured below) to ensure appropriate packing of components. The clear body was 3D printed in ABS in the University's prototyping labs. The ink for the pen rests on a small limit switch which is engaged when the user makes contact with the page. 
+
 \begin{figure}[H]
-\centering
-    \includegraphics[width=0.5\textwidth, height= 5cm]{pen_render.png}
-    \caption{Rendering of the 3D printed model of the penn}
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{pen_render.png}
+	\caption{Rendering of the 3D printed model of the penn}
 \end{figure}
 
-An ATMega32u4 microcontroller provides onboard processing and interfaces to the wireless module, IMU, switch, and indicator LEDs. Two Nordic nRF24LE1 transceivers handle wireless communication between the pen and base station computer. Inertial measurements are provided by an MPU6050 digital IMU with configurable gain triaxial accelerometers and gyroscopes. A Honeywell HMC5883L triaxial magnetometer provides a reference to earth's magnetic field for orientation. A switch behind the pen tip detects contact with the page for character segmentation. Three LEDs on the case display pen state. The pen also includes onboard batteries, power management, and an on-off switch.
+\subsection{Electronics}
+An ATMega32u4 microcontroller provides on-board processing and interfaces to the wireless module, IMU, switch, and indicator LEDs. Two Nordic nRF24LE1 transceivers handle wireless communication between the pen and base station computer. Inertial measurements are provided by an MPU6050 digital IMU with configurable gain triaxial accelerometers and gyroscopes. A Honeywell HMC5883L triaxial magnetometer provides a reference to earth's magnetic field for orientation. A switch behind the pen tip detects contact with the page for character segmentation. Three LEDs on the case display pen state. The pen also includes on-board batteries, power management, and an on-off switch.
+%We designed and built a custom electronic pen to gather data for character identification. Three dimensional acceleration and angular velocity measurements from the pen are streamed to a computer for processing.  Our design of the pen hardware focused on fitting inertial measurement, processing, communication, and power management into a streamlined and easy to use form.
+%This stage consisted mainly of the design of a working prototype to start the data gathering process. The challenge consisted in having a non bulky pen that could stream gyro and IMU data through WiFi to the computer so that the data could then be processed by a more powerful computer.
+
+
+%We first took all the ideas and components we needed to make this project work, and carried them on to sketches. Once we were pretty sure of the feasibility of the design and that it could contain everything we needed, we stepped into 3D designing a pen that could be easily 3D printed and could be manufactured rather quickly we the resources we have in AddLab. The result of the first version of the pen looks like this:
+
+
 %As you can see, we have an on-board microprocessor, 3 axis accelerometer, 3 axis gyroscope, magnetometer, and WiFi module. It also has a very sensitive switch that can tel us when the pen is actually writing. On top of that, the pen has 3 LED lights to make a visual recognition of the states the pen was at. We also included in the real version, a switch to turn it on and off, and batteries.
 
-\section{Data Processing} 
-
-\subsection{Data Streaming}
- 
-The first thing we had to do was to get raw data readings from the pen. After a couple of trials and for the sake of time saving, we decided that we would have a better first approach streaming the data out through USB instead of WiFi, to get a higher density of readings (WiFi is slower, saturates faster). Though the pen still has the functionality and all the programming to send the data via WiFi, we are more interested in getting the data out as soon as possible. Once that was done, we could pass to the next big task, data pre-processing.
 
 \subsection{Filtering the data}
 
-The raw data you get out of this readings is really noisy. It cannot be used in any way like it is. The data needs to be filtered to get the attitude estimation. We use a Kalman Filter to get the attitude estimation, which will give us the orientation of the pen relative to gravity and the page (Which has to be on a flat surface, and cannot be moving).
-We use this to subtract the gravity components in the vectors that they are appearing, so in this way we prevent drifting on those readings. We also get out of this the rotation of the pen relative to the page, which we will then use for further filtering.
-
-\subsection{More filtering... and trajectory tracking}
-
-Once we have the pre-filtered data, we can get a cleaner reading of the acceleration of the tip of the pen (relative to the page), which we will use to get a trajectory estimation. We integrate the acceleration twice, while at the same time, high-pass filtering any long time drifting of the readings in both yaw angle and velocities.
+The raw data from the IMU pose issues for learning algorithms. Sources of variance can include posture, handed-ness, roll angle of the pen, and sensor drift. To minimize sources of error, we compute the trajectory of the pen tip on the page. Using various filtering and sensor fusion techniques we are able to compensate for gravity and perform attitude and position estimation. We use a Kalman Filter to estimate the orientation of the pen relative to gravity so that we can subtract the gravity components from the acceleration measurements. 
 
 
 \subsection{Implicated Dynamics}
@@ -157,19 +154,13 @@ differentiating $^G \underset{\mbox{\textasciitilde}}{w}^M$.
 The trajectory of the pen tip in the page frame is obtained by
 twice-integrating $^G \underset{\mbox{\textasciitilde}}{a}^Q$.
 
-This does not work because of measurement noise and drift. Differentiation
-of $^G \underset{\mbox{\textasciitilde}}{w}^M$ greatly increases
-high-frequency noise in the acceleration estimate which must be low-pass
-filtered. More problematic, double-integration of the acceleration estimate
-compounds small steady errors which build up to large velocity errors and even
-larger position errors. This necessitates high-pass filtering of both the
-velocity and position signals. These high-pass filters are ineffective both
-at removing low-frequency drift and maintaining good signal quality resulting
-in unusably noisy and drift-filled position estimates
+Differentiation of $^G \underset{\mbox{\textasciitilde}}{w}^M$ greatly increases
+high-frequency noise in the acceleration which is smoothed out using a low-pass
+filter. Double-integration of the acceleration estimate results in drift error as small errors sum to large velocity and position errors. We use high-pass filters to remove some of the drift but there are still significant distortions apparent in the recovered trajectories. 
 
 \subsection{Preliminary Results}
-After some trials and errors, we finally de-bugged the code to get some character images that we could then use with the neural nets that we have already implemented on class, to get some character recognition via class classification.
-The results from all the estimations give us characters like the one below.
+We are currently able to produce relatively accurate trajectory estimates. Figure 2 shows a trajectory recovered 'g' that we were able to produce using our methodology.
+
 \begin{figure}[H]
 \centering
     \includegraphics[width=0.5\textwidth, height= 5cm]{g.png}
@@ -178,11 +169,11 @@ The results from all the estimations give us characters like the one below.
 
 
 \subsection{Next Steps}
-After some thinking on the results we are getting and the complexity of the math behind all this, we are presented with two different options. Keep on pushing for this approach to get all the character representations in an image base, or shifting our Machine Learning algorithm to Hidden Markov Models which would potentially require a lot less data pre-processing and a more complicated machine learning implementation.
+The next step in the project is to create a labeled test set. With a training set in hand, we will begin testing different learning algorithms so that we can find the most successful model. To this end, we will approach the learning component of this project in two ways. One method involves projecting the trajectory into an image and using learning algorithms such as neural networks. The other method involves using feature selection methods on the filtered signals before integration and differentiation. This method will require that we transform the time series data into a constant width feature vector. By interpolating, we are able to produce this result. Reducing dimensionality might prove to be an important step if we experience performance issues. In that case we intend to use either PCA or LDA to generate features. We intend to test the performance of various learning algorithms including Hidden Markov Models, Neural Networks, and Naive Bayes.
  
 \section*{Acknowledgments} 
  
-Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\
+Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\\\
 For trajectory reconstruction, consulted Jeen-Shing Wang, Yu-Liang Hsu, and Jiun-Nan Liu's paper entitled \textbf{An Inertial-Measurement-Unit-Based Pen With a Trajectory Reconstruction Algorithm and Its Applications}.
 \bibliography{example_paper}
 \bibliographystyle{icml2014}
