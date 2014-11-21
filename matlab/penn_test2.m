@@ -110,7 +110,8 @@ haxis1 = axes;
 title('Processed Signals')
 
 h_sigs = zeros(3,1);
-sigs = zeros(numHistory,3);
+siglen = 9;
+sigs = zeros(numHistory,siglen);
 
 hold on
 for ii=1:3
@@ -150,10 +151,12 @@ h_char = plot(sigs(:,1),sigs(:,2),'.-b');
 axis equal
 grid on
 
+
+% File output
+dir = 'letter_logs';
 char_writing = input('Character: ','s');
 title(char_writing);
 save_ind = 0;
-dir = 'example_letters';
 set(gcf,'windowkeypressfcn','char_writing = get(gcf,''currentcharacter''); title(char_writing); save_ind = 0;')
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -247,7 +250,7 @@ while(1)
     G_Q = alpha2*(G_Q_old + G_vQ*1/300);
     G_Q_old = G_Q;
         
-    sigs = [sigs(2:end,:); -G_Q'];%G_aQ'];%M_aP'];
+    sigs = [sigs(2:end,:); [G_Q', G_vQ', G_aQ'] ];%G_aQ'];%M_aP'];
     %}
     
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -279,12 +282,26 @@ while(1)
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
-    % Saving 
+    % File output 
     if log(end-1,2) && ~log(end,2) && ~isempty(char_writing)
+        % datetime to append to filenames
+        datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
+        
+        % Raw data
+        % TODO: Add column headers
+        dlmwrite([dir,'/','raw_',char_writing,datetime,'.txt'],log)
+        
+        % Integrated data
+        % TODO: Add column headers
+        dlmwrite([dir,'/','proc_',char_writing,datetime,'.txt'],sigs)
+        
+        % Integrated image
         fig_im = getframe(3);
         im = fig_im.cdata;
-        imwrite(im,[dir,'/',char_writing,num2str(save_ind),'.png'])
+        imwrite(im,[dir,'/','im_',char_writing,datetime,'.png'])
         save_ind = save_ind + 1;
     end
+    
+    % TODO: Data set gathering modifications
         
 end
