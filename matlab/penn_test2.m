@@ -21,13 +21,24 @@
 % G_RM is the rotation of frame M in frame G
 % G_Q is the position of point Q in frame G
 
-% Parameters
-M_Q = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+% GUI
+nogui = false;
+
+% File directory
+directory = 'letter_logs';
+
+% Simulated run
+rerun = false;
+if rerun
+    rerun_file = 'raw_a14-11-21_16:40:12.txt';
+    f_rerun = fopen([directory,'/',rerun_file],'r');
+    rerun_cntr = 0;
+end
 
 % Initialization ==========================================================
 %{a
 % Open serial interface to M2
-if ~exist('s','var')
+if ~exist('s','var') && ~rerun
 s = serial('/dev/ttyACM0');
 s.baudrate = 57600;
 s.terminator = 'LF';
@@ -46,9 +57,10 @@ toPlot = 3:8; % indices of raw logs to plot
 plot_reduce = 30; % plot every plot_reduce loops
 plt_red_cntr = 0;
 
-figure(62)
+if ~nogui
+figure(99)
 clf
-haxis62 = axes;
+haxis99 = axes;
 title('Raw Serial Data')
 
 h_raws = zeros(length(toPlot),1);
@@ -62,9 +74,16 @@ for ii=1:length(toPlot)
 end
 hold off
 grid on
+end
 
 % Calculations and plotting
 % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+processedVals = 12;
+processed = zeros(numHistory,processedVals);
+
+% Parameters
+M_Q = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+
 % Attitude estimation
 addpath('quaternion_library')
 gyr_max_scale = 250; %degrees per second max
@@ -102,20 +121,19 @@ yaw = 0;
 alpha_a = 0.99;
 G_aP_LP = zeros(3,1);
 
+
 % Plotting
 % Plot selected processed signals (euler angles, ground frame accelerations, etc.)
+if ~nogui
 figure(1)
 clf
 haxis1 = axes;
 title('Processed Signals')
 
-h_sigs = zeros(3,1);
-siglen = 9;
-sigs = zeros(numHistory,siglen);
-
+h_processed = zeros(3,1);
 hold on
 for ii=1:3
-    h_sigs(ii) = plot(log(:,1), sigs(:,ii),...
+    h_processed(ii) = plot(log(:,1), processed(:,ii),...
         [color_list(mod(ii-1,length(color_list))+1),...
         line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
 end
@@ -147,31 +165,60 @@ zlabel('z')
 figure(3)
 clf
 haxis3 = axes;
-h_char = plot(sigs(:,1),sigs(:,2),'.-b');
+h_char = plot(processed(:,1),processed(:,2),'.-b');
 axis equal
 grid on
-
+end
 
 % File output
-dir = 'letter_logs';
-char_writing = input('Character: ','s');
-title(char_writing);
-save_ind = 0;
-set(gcf,'windowkeypressfcn','char_writing = get(gcf,''currentcharacter''); title(char_writing); save_ind = 0;')
+if ~rerun && ~nogui
+    char_writing = input('Character: ','s');
+    title(char_writing);
+    save_ind = 0;
+    set(gcf,'windowkeypressfcn',['char_writing = get(gcf,''currentcharacter'');', ...
+    'title(char_writing); save_ind = 0;'])
+else
+    char_writing = '#';
+end
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 
 % Run Loop ================================================================
 tic
 while(1)
-    % Read data from M2
-    data = fgets(s);
-    %fprintf(data); %display read data
-    numdata = str2num(data);
-    if all(size(numdata) == [1,numVals]) % reject malformed packets
-        log = [log(2:end,:);[toc,numdata]];
+    % Read data
+    if ~rerun
+        % Read data from M2
+        data = fgets(s);
+        numdata = str2num(data);
+        
+        if all(size(numdata) == [1,numVals]) % reject malformed packets
+            log = [log(2:end,:);[toc,numdata]];
+        end
+    else
+        % Read data from log file
+        data = fgets(f_rerun);
+        
+        if ~ischar(data)
+            % Write file and exit
+            toappend = rerun_file((end-21):end);
+            f_post = fopen([directory,'/','post_',toappend],'w');
+            fprintf(f_post,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+            fclose(f_post);
+            dlmwrite([directory,'/','post_',toappend],processed,'-append')
+            
+            return
+        end
+        
+        numdata = str2num(data);
+        if isempty(numdata)
+            continue
+        end
+        
+        log = [log(2:end,:);numdata];
+        rerun_cntr = rerun_cntr+1;
     end
-    disp(log(end,7:9)*gyr_scale)
+    
+    
     
     % Calculations
     % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -205,13 +252,6 @@ while(1)
     G_aP = M_RG'*M_aP;                      % acc. w/o g in ground frame
     G_w = M_RG'*M_w;                        % ang. vel. in ground frame
     
-    %{
-    % Tip Velocities in the Ground Frame
-    % A_vQ = A_vP + P_vQ + A_wB x PQ
-    G_vQ = G_vP + cross(G_w, M_Q);
-    %}
-    
-    %{a
     % Tip Acceleration in the Ground Frame
     % Angular acceleration
     % low pass, differentiate, low pass, rotate into ground frame
@@ -232,11 +272,6 @@ while(1)
     G_aP_LP = G_aP;%alpha_a*G_aP + (1-alpha_a)*G_aP_LP; %LP linear acceleration to prevent drift
     G_aQ = G_aP_LP + cross(G_alpha, M_RG'*M_Q) + cross(G_w,cross(G_w, M_RG'*M_Q));
     
-    % VERIFICATION:
-    % G_aP verified at different orientations and directions (along axes and diagonals)
-    % cross(G_alpha, M_RG'M_Q) verified at different orientations and directions (along axes and diagonals)
-    % cross(G_w,cross(G_w, M_RG'*M_Q)) mostly verified at different orientations and directions
-    
     % Zeroing
     if log(end,2) && ~log(end-1,2)
         G_aQ = zeros(3,1);
@@ -250,23 +285,47 @@ while(1)
     G_Q = alpha2*(G_Q_old + G_vQ*1/300);
     G_Q_old = G_Q;
         
-    sigs = [sigs(2:end,:); [G_Q', G_vQ', G_aQ'] ];%G_aQ'];%M_aP'];
-    %}
+    processed = [processed(2:end,:); [G_Q', G_vQ', G_aQ', euler] ];
     
+    
+    % File output 
+    if log(end-1,2) && ~log(end,2) && ~isempty(char_writing) && ~rerun
+        % datetime to append to filenames
+        datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
+        
+        % Raw data
+        f_raw = fopen([directory,'/','raw_',char_writing,datetime,'.txt'],'w');
+        fprintf(f_raw,'switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
+        fclose(f_raw);
+        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append')
+        
+        % Integrated data
+        f_post = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
+        fprintf(f_post,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+        fclose(f_post);
+        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],processed,'-append')
+        
+        % Integrated image
+        fig_im = getframe(3);
+        im = fig_im.cdata;
+        imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
+        save_ind = save_ind + 1;
+    end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
     % Display vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    if ~nogui
     plt_red_cntr = mod(plt_red_cntr+1,plot_reduce);
     if ~plt_red_cntr
         % Raw Signals
         for ii=1:length(toPlot)
             set(h_raws(ii), 'xdata', log(:,1), 'ydata', log(:,toPlot(ii)+1))
         end
-        set(haxis62, 'xlim', [log(1,1), log(end,1)])
+        set(haxis99, 'xlim', [log(1,1), log(end,1)])
         
         % Processed Signals
         for ii=1:3
-            set(h_sigs(ii), 'xdata', log(:,1), 'ydata', sigs(:,ii))
+            set(h_processed(ii), 'xdata', log(:,1), 'ydata', processed(:,ii))
         end
         set(haxis1, 'xlim', [log(1,1),log(end,1)])
         
@@ -275,33 +334,12 @@ while(1)
         set(h_3D, 'xdata', newPen(1,:), 'ydata', newPen(2,:), 'zdata', newPen(3,:))
         
         % Character Visualization
-        toDraw = sigs;
+        toDraw = processed;
         toDraw(log(:,2)==0,:) = NaN;
         set(h_char, 'xdata', toDraw(:,1), 'ydata', toDraw(:,2))
         drawnow
     end
-    % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
-    % File output 
-    if log(end-1,2) && ~log(end,2) && ~isempty(char_writing)
-        % datetime to append to filenames
-        datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
-        
-        % Raw data
-        % TODO: Add column headers
-        dlmwrite([dir,'/','raw_',char_writing,datetime,'.txt'],log)
-        
-        % Integrated data
-        % TODO: Add column headers
-        dlmwrite([dir,'/','proc_',char_writing,datetime,'.txt'],sigs)
-        
-        % Integrated image
-        fig_im = getframe(3);
-        im = fig_im.cdata;
-        imwrite(im,[dir,'/','im_',char_writing,datetime,'.png'])
-        save_ind = save_ind + 1;
     end
-    
-    % TODO: Data set gathering modifications
+    % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
 end
