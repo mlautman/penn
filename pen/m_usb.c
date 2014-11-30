@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // M2 USB communication subsystem
-// version: 2.1
-// date: June 16, 2012
+// version: 2.3
+// date: March 21, 2013
 // authors: J. Fiene & J. Romano
 // -----------------------------------------------------------------------------
 
@@ -1006,7 +1006,7 @@ void m_usb_tx_int(int i)
 
 void m_usb_tx_uint(unsigned int i)
 {
-	char string[5] = {0,0,0,0,0};
+	char string[6] = {0,0,0,0,0,0};
 	utoa(i,string,10);
 	for(i=0;i<5;i++){
         if(string[i]){
@@ -1028,7 +1028,7 @@ void m_usb_tx_long(long i)
 
 void m_usb_tx_ulong(unsigned long i)
 {
-	char string[10] = {0,0,0,0,0,0,0,0,0,0};
+	char string[11] = {0,0,0,0,0,0,0,0,0,0,0};
 	ultoa(i,string,10);
 	for(i=0;i<10;i++){
         if(string[i]){
