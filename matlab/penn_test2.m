@@ -22,7 +22,7 @@
 % G_Q is the position of point Q in frame G
 
 % GUI
-nogui = false;
+nogui = true;
 
 % File directory
 directory = 'letter_logs';
@@ -30,8 +30,8 @@ directory = 'letter_logs';
 % Simulated run
 rerun = false;
 if rerun
-    rerun_file = 'raw_a14-11-21_16:40:12.txt';
-    f_rerun = fopen([directory,'/',rerun_file],'r');
+    rerun_file = 'a14-11-30_20:29:36';
+    f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
 
@@ -50,6 +50,7 @@ end
 numHistory = 1000;
 numVals = 9;
 log = zeros(numHistory,numVals+1);
+log(end,1) = toc;
 
 % Display Raw Signals
 % Display parameters
@@ -170,15 +171,32 @@ axis equal
 grid on
 end
 
-% File output
-if ~rerun && ~nogui
+% Character Label
+if ~rerun
     char_writing = input('Character: ','s');
-    title(char_writing);
-    save_ind = 0;
-    set(gcf,'windowkeypressfcn',['char_writing = get(gcf,''currentcharacter'');', ...
-    'title(char_writing); save_ind = 0;'])
+    if ~rerun && ~nogui
+        title(char_writing);
+        set(gcf,'windowkeypressfcn',['char_writing = get(gcf,''currentcharacter'');', ...
+        'title(char_writing);'])
+    end
 else
-    char_writing = '#';
+    char_writing = rerun_file(1);
+    title(char_writing);
+end
+
+% Rerun Initialization
+if rerun
+    fgets(f_rerun);
+    
+    % Initialize 
+    f_proced = fopen([directory,'/proc_',rerun_file,'.txt'],'r');
+    fgets(f_proced)
+    data = fgets(f_proced)
+    fclose(f_proced)
+    numdata = str2num(data)
+    euler = numdata(10:12);
+    M_RG = euler2rotMat(euler(1),euler(2),euler(3))';
+    AHRS.Quaternion = rotMat2quatern(M_RG);
 end
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -193,27 +211,28 @@ while(1)
         
         if all(size(numdata) == [1,numVals]) % reject malformed packets
             log = [log(2:end,:);[toc,numdata]];
+        else
+            continue
         end
     else
         % Read data from log file
         data = fgets(f_rerun);
         
         if ~ischar(data)
-            % Write file and exit
-            toappend = rerun_file((end-21):end);
-            f_post = fopen([directory,'/','post_',toappend],'w');
-            fprintf(f_post,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
-            fclose(f_post);
+            fclose(f_rerun)
+            
+            % Write file and exit at end of raw file
+            toappend = rerun_file((end-17):end);
+            f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
+            fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+            fclose(f_proc);
             dlmwrite([directory,'/','post_',toappend],processed,'-append')
             
             return
         end
         
         numdata = str2num(data);
-        if isempty(numdata)
-            continue
-        end
-        
+
         log = [log(2:end,:);numdata];
         rerun_cntr = rerun_cntr+1;
     end
@@ -295,21 +314,20 @@ while(1)
         
         % Raw data
         f_raw = fopen([directory,'/','raw_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_raw,'switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
+        fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
         fclose(f_raw);
         dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append')
         
         % Integrated data
-        f_post = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_post,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
-        fclose(f_post);
+        f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
+        fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+        fclose(f_proc);
         dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],processed,'-append')
         
         % Integrated image
         fig_im = getframe(3);
         im = fig_im.cdata;
         imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
-        save_ind = save_ind + 1;
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
@@ -339,6 +357,8 @@ while(1)
         set(h_char, 'xdata', toDraw(:,1), 'ydata', toDraw(:,2))
         drawnow
     end
+    else
+        disp(norm(G_vQ))
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
