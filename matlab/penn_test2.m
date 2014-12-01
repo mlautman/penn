@@ -22,7 +22,7 @@
 % G_Q is the position of point Q in frame G
 
 % GUI
-nogui = true;
+nogui = false;
 
 % File directory
 directory = 'letter_logs';
@@ -226,7 +226,7 @@ while(1)
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
             fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
             fclose(f_proc);
-            dlmwrite([directory,'/','post_',toappend],processed,'-append')
+            dlmwrite([directory,'/','post_',toappend,'.txt'],processed,'-append')
             
             return
         end
