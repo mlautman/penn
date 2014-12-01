@@ -79,7 +79,7 @@ end
 
 % Calculations and plotting
 % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-processedVals = 12;
+processedVals = 15;
 processed = zeros(numHistory,processedVals);
 
 % Parameters
@@ -259,6 +259,7 @@ while(1)
     AHRS.UpdateIMU(M_w', M_aP_g');          % Kalman filter
     quaternion = AHRS.Quaternion;           % quaternion rotation
     M_RG = quatern2rotMat(quaternion);      % rotation matrix
+    
     % Correct for gyro drift
     euler = rotMat2euler(M_RG');
     yaw = alpha_yaw*(yaw + (euler(3) - yaw_old));
@@ -271,7 +272,6 @@ while(1)
     G_aP = M_RG'*M_aP;                      % acc. w/o g in ground frame
     G_w = M_RG'*M_w;                        % ang. vel. in ground frame
     
-    % Tip Acceleration in the Ground Frame
     % Angular acceleration
     % low pass, differentiate, low pass, rotate into ground frame
     tau_w = 0.02;                           % w low pass time constant (s)
@@ -303,8 +303,8 @@ while(1)
     G_vQ_old = G_vQ;
     G_Q = alpha2*(G_Q_old + G_vQ*1/300);
     G_Q_old = G_Q;
-        
-    processed = [processed(2:end,:); [G_Q', G_vQ', G_aQ', euler] ];
+    
+    processed = [processed(2:end,:); [G_Q', G_vQ', G_aQ', euler, G_w'] ];
     
     
     % File output 
@@ -320,7 +320,7 @@ while(1)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+        fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
         dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],processed,'-append')
         
