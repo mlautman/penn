@@ -28,9 +28,9 @@ nogui = false;
 directory = 'letter_logs';
 
 % Simulated run
-rerun = false;
+rerun = true;
 if rerun
-    rerun_file = 'a14-11-30_20:29:36';
+    rerun_file = 'a14-12-02_10:25:15';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
@@ -50,7 +50,6 @@ end
 numHistory = 1000;
 numVals = 9;
 log = zeros(numHistory,numVals+1);
-log(end,1) = toc;
 
 % Display Raw Signals
 % Display parameters
@@ -84,6 +83,7 @@ processed = zeros(numHistory,processedVals);
 
 % Parameters
 M_Q = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+t_scale = 1024/16000000; %seconds per timer count
 
 % Attitude estimation
 addpath('quaternion_library')
@@ -110,8 +110,8 @@ M_w = [0;0;0];
 M_w_old = 0;
 M_alpha_LP = 0;
 
-alpha1 = 0.995;
-alpha2 = 0.995;
+alpha_vel = 0.990; %velocity high pass filter % previously 0.995
+alpha_pos = 0.990; %position high pass filter % preivously 0.995
 G_vQ_old = 0;
 G_Q_old = 0;
 
@@ -134,7 +134,7 @@ title('Processed Signals')
 h_processed = zeros(3,1);
 hold on
 for ii=1:3
-    h_processed(ii) = plot(log(:,1), processed(:,ii),...
+    h_processed(ii) = plot(log(:,3)*t_scale, processed(:,ii),...
         [color_list(mod(ii-1,length(color_list))+1),...
         line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
 end
@@ -190,11 +190,17 @@ if rerun
     
     % Initialize 
     f_proced = fopen([directory,'/proc_',rerun_file,'.txt'],'r');
-    fgets(f_proced)
+    header = fgets(f_proced)
     data = fgets(f_proced)
-    fclose(f_proced)
-    numdata = str2num(data)
-    euler = numdata(10:12);
+    fclose(f_proced);
+    numdata = str2num(data);
+    if header(1) == 'a'
+        euler = numdata(10:12);
+        G_vQ_old = zeros(3,1);
+    else
+        euler = numdata(11:13);
+        G_vQ_old = numdata(5:7)';
+    end
     M_RG = euler2rotMat(euler(1),euler(2),euler(3))';
     AHRS.Quaternion = rotMat2quatern(M_RG);
 end
@@ -224,9 +230,9 @@ while(1)
             % Write file and exit at end of raw file
             toappend = rerun_file((end-17):end);
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
-            fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw\n');
+            fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
             fclose(f_proc);
-            dlmwrite([directory,'/','post_',toappend,'.txt'],processed,'-append')
+            dlmwrite([directory,'/','post_',toappend,'.txt'],[log(:,3),processed],'-append')
             
             return
         end
@@ -243,7 +249,8 @@ while(1)
     % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     
     % Time, Acceleration and Rotation scaling
-    dt = log(end,1)-log(end-1,1);           % time since last loop
+    dt = (log(end,3)-log(end-1,3))*t_scale; % time since last loop
+    dt = max(dt,1E-6);
     M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs;
     M_w_raw = log(end,7:9)' .* gyr_scale;
     
@@ -293,15 +300,15 @@ while(1)
     
     % Zeroing
     if log(end,2) && ~log(end-1,2)
-        G_aQ = zeros(3,1);
-        G_vQ_old = zeros(3,1);
+        %G_aQ = zeros(3,1);
+        %G_vQ_old = zeros(3,1);
         G_Q_old = zeros(3,1);
     end
     
-    % IMU position integration
-    G_vQ = alpha1*(G_vQ_old + G_aQ*1/300);
+    % IMU position integration and high pass filtering
+    G_vQ = alpha_vel*(G_vQ_old + G_aQ*1/300);
     G_vQ_old = G_vQ;
-    G_Q = alpha2*(G_Q_old + G_vQ*1/300);
+    G_Q = alpha_pos*(G_Q_old + G_vQ*1/300);
     G_Q_old = G_Q;
     
     processed = [processed(2:end,:); [G_Q', G_vQ', G_aQ', euler, G_w'] ];
@@ -320,9 +327,9 @@ while(1)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_proc,'a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
+        fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
-        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],processed,'-append')
+        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],[log(:,3),processed],'-append')
         
         % Integrated image
         fig_im = getframe(3);
@@ -337,15 +344,15 @@ while(1)
     if ~plt_red_cntr
         % Raw Signals
         for ii=1:length(toPlot)
-            set(h_raws(ii), 'xdata', log(:,1), 'ydata', log(:,toPlot(ii)+1))
+            set(h_raws(ii), 'xdata', log(:,3)*t_scale, 'ydata', log(:,toPlot(ii)+1))
         end
-        set(haxis99, 'xlim', [log(1,1), log(end,1)])
+        set(haxis99, 'xlim', t_scale*[log(1,3), log(end,3)])
         
         % Processed Signals
         for ii=1:3
-            set(h_processed(ii), 'xdata', log(:,1), 'ydata', processed(:,ii))
+            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii))
         end
-        set(haxis1, 'xlim', [log(1,1),log(end,1)])
+        set(haxis1, 'xlim', t_scale*[log(1,3),log(end,3)])
         
         % 3D Pen Visualization
         newPen = M_RG'*pen3D;
