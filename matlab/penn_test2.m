@@ -28,9 +28,9 @@ nogui = false;
 directory = 'letter_logs';
 
 % Simulated run
-rerun = true;
+rerun = false;
 if rerun
-    rerun_file = 'a14-12-02_10:25:15';%'a14-11-30_20:29:36';%
+    rerun_file = 'a14-12-02_10:59:47';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
@@ -195,11 +195,11 @@ if rerun
     fclose(f_proced);
     numdata = str2num(data);
     if header(1) == 'a'
-        euler = numdata(10:12);
+        euler = numdata(10:12)
         G_vQ_old = zeros(3,1);
     else
-        euler = numdata(11:13);
-        G_vQ_old = numdata(5:7)';
+        euler = numdata(11:13)
+        G_vQ_old = numdata(5:7)'
     end
     M_RG = euler2rotMat(euler(1),euler(2),euler(3))';
     AHRS.Quaternion = rotMat2quatern(M_RG);
@@ -232,7 +232,8 @@ while(1)
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
             fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
             fclose(f_proc);
-            dlmwrite([directory,'/','post_',toappend,'.txt'],[log(:,3),processed],'-append')
+            dlmwrite([directory,'/','post_',toappend,'.txt'],[log(:,3),processed],'-append',...
+                'precision',12)
             
             return
         end
@@ -323,13 +324,14 @@ while(1)
         f_raw = fopen([directory,'/','raw_',char_writing,datetime,'.txt'],'w');
         fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
         fclose(f_raw);
-        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append')
+        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append', 'precision', 12)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
         fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
-        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],[log(:,3),processed],'-append')
+        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],[log(:,3),processed],'-append',...
+            'precision', 12)
         
         % Integrated image
         fig_im = getframe(3);
