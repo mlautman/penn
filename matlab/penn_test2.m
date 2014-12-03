@@ -48,7 +48,7 @@ end
 
 % Prepare data log
 numHistory = 1000;
-numVals = 9;
+numVals = 12;
 log = zeros(numHistory,numVals+1);
 
 % Display Raw Signals
@@ -82,7 +82,7 @@ processedVals = 15;
 processed = zeros(numHistory,processedVals);
 
 % Parameters
-M_Q = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+M_Q = [0; 0; -83.6*10^-3]; %penn tip position in IMU frame
 t_scale = 1024/16000000; %seconds per timer count
 
 % Attitude estimation
@@ -105,22 +105,23 @@ AHRS = MadgwickAHRS('SamplePeriod', 1/300, 'Beta', 0.05); % Kalman filter
 % to prevent accelerations coupling to rotations
 
 % Filters and Integration
+tau_acc = 0.04;                         % accelerometer LP t. const. (s)
+tau_gyr = 0.02;                         % gyroscope LP t. const. (s)
 M_aP_g = [0;0;9.81];
 M_w = [0;0;0];
 M_w_old = 0;
 M_alpha_LP = 0;
 
-alpha_vel = 0.990; %velocity high pass filter % previously 0.995
-alpha_pos = 0.990; %position high pass filter % preivously 0.995
+alpha_a = 0.999; %acceleration high pass gain
+alpha_vel = 0.995; %velocity high pass gain
+alpha_pos = 1;%0.990; %position high pass gain
+G_aP_LP = zeros(3,1);
 G_vQ_old = 0;
 G_Q_old = 0;
 
-alpha_yaw = 0.998;
+alpha_yaw = 0.998; %yaw high pass gain
 yaw_old = 0;
 yaw = 0;
-
-alpha_a = 0.99;
-G_aP_LP = zeros(3,1);
 
 
 % Plotting
@@ -147,10 +148,10 @@ figure(2)
 clf
 haxis2 = axes;
 
-pen3D = [0, 0, 0.05; % long arm along pen, short arm away from author
+pen3D = [0, 0.05, 0; % long arm along pen, short arm away from author
          0, 0, 0;
          M_Q';
-        -0.15, 0, 0]';
+         0, 0, 0.15]';
          
 h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
 axis equal
@@ -228,12 +229,14 @@ while(1)
             fclose(f_rerun)
             
             % Write file and exit at end of raw file
+            start_ind = find(log(:,2),2,'last');
+            start_ind = start_ind(2)+1;
             toappend = rerun_file((end-17):end);
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
-            fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
+            fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
             fclose(f_proc);
-            dlmwrite([directory,'/','post_',toappend,'.txt'],[log(:,3),processed],'-append',...
-                'precision',12)
+            dlmwrite([directory,'/','post_',toappend,'.txt'],...
+                [log(start_ind:end,3),processed],'-append','precision',12)
             
             return
         end
@@ -252,12 +255,14 @@ while(1)
     % Time, Acceleration and Rotation scaling
     dt = (log(end,3)-log(end-1,3))*t_scale; % time since last loop
     dt = max(dt,1E-6);
+    AHRS.SamplePeriod = dt;
+    
     M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs;
     M_w_raw = log(end,7:9)' .* gyr_scale;
+    M_aP_g_raw = M_aP_g_raw([2,3,1]).*[-1;1;-1]; % Axis realignment
+    M_w_raw = M_w_raw([2,3,1]).*[-1;1;-1];       % Axis realignment
     
     % Initial low pass filters
-    tau_acc = 0.04;                         % accelerometer LP t. const. (s)
-    tau_gyr = 0.02;                         % gyroscope LP t. const. (s)
     al_acc = dt/(tau_acc + dt);
     al_gyr = dt/(tau_gyr + dt);
     M_aP_g = al_acc*M_aP_g_raw + (1-al_acc)*M_aP_g;
@@ -296,13 +301,13 @@ while(1)
     %                         tangential       coriolis          centripetal
     % A_aQ = A_aP + B_aQ + A_alphaB x PQ + 2*A_wB x B_vQ + A_wB x (A_wB x PQ)
     % A_aQ = A_aP + 0 + A_alphaB x PQ + 0 + A_wB x (A_wB x PQ)
-    G_aP_LP = G_aP;%alpha_a*G_aP + (1-alpha_a)*G_aP_LP; %LP linear acceleration to prevent drift
+    G_aP_LP = alpha_a*G_aP + (1-alpha_a)*G_aP_LP; %LP linear acceleration to prevent drift
     G_aQ = G_aP_LP + cross(G_alpha, M_RG'*M_Q) + cross(G_w,cross(G_w, M_RG'*M_Q));
     
     % Zeroing
     if log(end,2) && ~log(end-1,2)
         %G_aQ = zeros(3,1);
-        %G_vQ_old = zeros(3,1);
+        G_vQ_old = zeros(3,1);
         G_Q_old = zeros(3,1);
     end
     
@@ -317,21 +322,25 @@ while(1)
     
     % File output 
     if log(end-1,2) && ~log(end,2) && ~isempty(char_writing) && ~rerun
+        start_ind = find(log(:,2),2,'last');
+        start_ind = start_ind(2)+1;
+        
         % datetime to append to filenames
         datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
         
         % Raw data
         f_raw = fopen([directory,'/','raw_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
+        fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,m_x,m_y,m_z,switch\n');
         fclose(f_raw);
-        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append', 'precision', 12)
+        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],...
+            log(start_ind:end),'-append', 'precision', 10)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
+        fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
-        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],[log(:,3),processed],'-append',...
-            'precision', 12)
+        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],...
+            [log(start_ind:end,3),processed(start_ind:end)],'-append','precision', 12)
         
         % Integrated image
         fig_im = getframe(3);
@@ -352,7 +361,7 @@ while(1)
         
         % Processed Signals
         for ii=1:3
-            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii))
+            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii+6))
         end
         set(haxis1, 'xlim', t_scale*[log(1,3),log(end,3)])
         
