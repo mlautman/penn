@@ -40,7 +40,7 @@ end
 % Open serial interface to M2
 if ~exist('s','var') && ~rerun
 s = serial('/dev/ttyACM0');
-s.baudrate = 57600;
+s.baudrate = 115200;%57600;
 s.terminator = 'LF';
 fopen(s);
 end
@@ -57,7 +57,7 @@ toPlot = 3:11;%3:8; % indices of raw logs to plot
 plot_reduce = 30; % plot every plot_reduce loops
 plt_red_cntr = 0;
 
-if ~nogui
+%{
 figure(99)
 clf
 haxis99 = axes;
@@ -74,7 +74,7 @@ for ii=1:length(toPlot)
 end
 hold off
 grid on
-end
+%}
 
 % Calculations and plotting
 % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -105,15 +105,15 @@ AHRS = MadgwickAHRS('SamplePeriod', 1/300, 'Beta', 0.05); % Kalman filter
 % to prevent accelerations coupling to rotations
 
 % Filters and Integration
-tau_acc = 0.04;                         % accelerometer LP t. const. (s)
+tau_acc = 0.05;                         % accelerometer LP t. const. (s)
 tau_gyr = 0.02;                         % gyroscope LP t. const. (s)
 M_aP_g = [0;0;9.81];
 M_w = [0;0;0];
 M_w_old = 0;
 M_alpha_LP = 0;
 
-alpha_a = 0.999; %acceleration high pass gain
-alpha_vel = 0.995; %velocity high pass gain
+alpha_a = 1;%0.995; %acceleration high pass gain
+alpha_vel = 0.97; %velocity high pass gain
 alpha_pos = 1;%0.990; %position high pass gain
 G_aP_LP = zeros(3,1);
 G_vQ_old = 0;
@@ -125,51 +125,83 @@ yaw = 0;
 
 
 % Plotting
-% Plot selected processed signals (euler angles, ground frame accelerations, etc.)
 if ~nogui
-figure(1)
-clf
-haxis1 = axes;
-title('Processed Signals')
+    figure(1)
+    clf
+    
+    % Plot raw signals
+    subplot(2,3,1,'position',[0.05,0.55,0.28,0.4])
+    haxis_raw = gca;
+    title('Raw Serial Data')
 
-h_processed = zeros(3,1);
-hold on
-for ii=1:3
-    h_processed(ii) = plot(log(:,3)*t_scale, processed(:,ii),...
-        [color_list(mod(ii-1,length(color_list))+1),...
-        line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
-end
-hold off
-grid on
+    h_va_t = zeros(length(toPlot),1);
+    color_list = 'rgbcmk';
+    line_list = {'-','--'};
+    hold on
+    for ii=1:length(toPlot)
+        h_va_t(ii) = plot(log(:,1),log(:,toPlot(ii)+1),...
+            [color_list(mod(ii-1,length(color_list))+1),...
+            line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
+    end
+    hold off
+    grid on
+    
+    % Plot processed signals
+    subplot(2,3,4,'position',[0.05,0.05,0.28,0.4])
+    haxis_proc = gca;
+    title('Processed Signals')
 
+    h_processed = zeros(6,1);
+    hold on
+    for ii=1:6
+        h_processed(ii) = plot(log(:,3)*t_scale, processed(:,ii+3),...
+            [color_list(mod(ii-1,length(color_list))+1),...
+            line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
+    end
+    hold off
+    grid on
 
-% Plot 3D pen visualization
-figure(2)
-clf
-haxis2 = axes;
+    % Plot 3D pen visualization
+    subplot(2,3,2,'position',[0.38,0.55,0.28,0.4])
+    haxis_pen = gca;
+    
+    pen3D = [0, 0.05, 0; % long arm along pen, short arm away from author
+             0, 0, 0;
+             M_Q';
+             0, 0, 0.15]';
 
-pen3D = [0, 0.05, 0; % long arm along pen, short arm away from author
-         0, 0, 0;
-         M_Q';
-         0, 0, 0.15]';
-         
-h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
-axis equal
-set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
-grid on
-title('Pen Visualization')
-xlabel('x')
-ylabel('y')
-zlabel('z')
+    h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
+    title('Pen Visualization')
+    axis equal
+    set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
+    grid on
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
 
-
-% Plot character integration
-figure(3)
-clf
-haxis3 = axes;
-h_char = plot(processed(:,1),processed(:,2),'.-b');
-axis equal
-grid on
+    % Plot character integration
+    subplot(2,3,5,'position',[0.38,0.05,0.28,0.4])
+    haxis_char = gca;
+    
+    h_char = plot(processed(:,1),processed(:,2),'.-b');
+    axis equal
+    grid on
+    
+    % Plot vel and acceleration vectors
+    subplot(2,3,3,'position',[0.71,0.55,0.28,0.4])
+    haxis_vect = gca;
+    
+    hold on
+    h_acc = plot(0,0,'r');
+    h_vel = plot(0,0,'b');
+    hold off
+    title('Acceleration (R) and Velocity (B) Vectors')
+    set(gca,'ylim',[-5,5])
+    axis equal
+    xlabel('x')
+    ylabel('y')
+    grid on
+    
 end
 
 % Character Label
@@ -182,7 +214,9 @@ if ~rerun
     end
 else
     char_writing = rerun_file(1);
-    title(char_writing);
+    if ~nogui
+        title(char_writing);
+    end
 end
 
 % Rerun Initialization
@@ -357,15 +391,15 @@ while(1)
     if ~plt_red_cntr
         % Raw Signals
         for ii=1:length(toPlot)
-            set(h_raws(ii), 'xdata', log(:,3)*t_scale, 'ydata', log(:,toPlot(ii)+1))
+            set(h_va_t(ii), 'xdata', log(:,3)*t_scale, 'ydata', log(:,toPlot(ii)+1))
         end
-        set(haxis99, 'xlim', t_scale*[log(1,3), log(end,3)])
+        set(haxis_raw, 'xlim', t_scale*[log(1,3), log(end,3)],'ylim', [-35000,35000])
         
         % Processed Signals
-        for ii=1:3
-            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii+6))
+        for ii=1:6
+            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii+3))
         end
-        set(haxis1, 'xlim', t_scale*[log(1,3),log(end,3)])
+        set(haxis_proc, 'xlim', t_scale*[log(1,3),log(end,3)])
         
         % 3D Pen Visualization
         newPen = M_RG'*pen3D;
@@ -375,6 +409,11 @@ while(1)
         toDraw = processed;
         toDraw(log(:,2)==0,:) = NaN;
         set(h_char, 'xdata', toDraw(:,1), 'ydata', toDraw(:,2))
+        
+        % Acceleration and Position Vectors
+        set(h_vel, 'xdata', [0,processed(end,4)], 'ydata', [0,processed(end,5)])
+        set(h_acc, 'xdata', [0,processed(end,7)], 'ydata', [0,processed(end,8)])
+        
         drawnow
     end
     else
