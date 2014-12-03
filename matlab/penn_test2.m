@@ -30,7 +30,7 @@ directory = 'letter_logs';
 % Simulated run
 rerun = false;
 if rerun
-    rerun_file = 'a14-12-02_10:59:47';%'a14-11-30_20:29:36';%
+    rerun_file = 'b14-12-03_16:07:18';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
@@ -53,7 +53,7 @@ log = zeros(numHistory,numVals+1);
 
 % Display Raw Signals
 % Display parameters
-toPlot = 3:8; % indices of raw logs to plot
+toPlot = 3:11;%3:8; % indices of raw logs to plot
 plot_reduce = 30; % plot every plot_reduce loops
 plt_red_cntr = 0;
 
@@ -229,14 +229,14 @@ while(1)
             fclose(f_rerun)
             
             % Write file and exit at end of raw file
-            start_ind = find(log(:,2),2,'last');
-            start_ind = start_ind(2)+1;
+            start_ind = find(~log(:,2),2,'last');
+            start_ind = start_ind(1)+1;
             toappend = rerun_file((end-17):end);
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
             fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
             fclose(f_proc);
             dlmwrite([directory,'/','post_',toappend,'.txt'],...
-                [log(start_ind:end,3),processed],'-append','precision',12)
+                [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision',12)
             
             return
         end
@@ -254,13 +254,15 @@ while(1)
     
     % Time, Acceleration and Rotation scaling
     dt = (log(end,3)-log(end-1,3))*t_scale; % time since last loop
-    dt = max(dt,1E-6);
+    dt = min(max(dt,1E-6),0.1);
     AHRS.SamplePeriod = dt;
     
-    M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs;
-    M_w_raw = log(end,7:9)' .* gyr_scale;
-    M_aP_g_raw = M_aP_g_raw([2,3,1]).*[-1;1;-1]; % Axis realignment
-    M_w_raw = M_w_raw([2,3,1]).*[-1;1;-1];       % Axis realignment
+    M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs; % accelerometer
+    M_w_raw = log(end,7:9)' .* gyr_scale;               % gyroscope
+    M_m_raw = log(end,10:12)';                          % unscaled magentometer 
+    M_aP_g_raw = M_aP_g_raw([2,3,1]).*[-1;1;-1];        % Axis realignment
+    M_w_raw = M_w_raw([2,3,1]).*[-1;1;-1];              % Axis realignment
+    M_m_raw = M_m_raw([3,2,1]).*[1;-1;-1];              % Axis realignment
     
     % Initial low pass filters
     al_acc = dt/(tau_acc + dt);
@@ -322,8 +324,8 @@ while(1)
     
     % File output 
     if log(end-1,2) && ~log(end,2) && ~isempty(char_writing) && ~rerun
-        start_ind = find(log(:,2),2,'last');
-        start_ind = start_ind(2)+1;
+        start_ind = find(~log(:,2),2,'last');
+        start_ind = start_ind(1)+1;
         
         % datetime to append to filenames
         datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
@@ -333,14 +335,14 @@ while(1)
         fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,m_x,m_y,m_z,switch\n');
         fclose(f_raw);
         dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],...
-            log(start_ind:end),'-append', 'precision', 10)
+            log(start_ind:(end-1),:),'-append', 'precision', 10)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
         fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
         dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],...
-            [log(start_ind:end,3),processed(start_ind:end)],'-append','precision', 12)
+            [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision', 12)
         
         % Integrated image
         fig_im = getframe(3);
