@@ -17,7 +17,7 @@ int8_t* receive_buffer;
 volatile bool new_packet = false;
 
 bool debug_activate = true;
-int8_t rf_packet[ 1 + 1 + 2 + 9*2] = {0};
+// int8_t rf_packet[ 1 + 1 + 4 + 9*2] = {0};
 int8_t imuData_char[9*2] = {0};
 bool wifi_test = 0;
 
@@ -82,10 +82,10 @@ void run(){
             }
             now = stopWatch_now();
             // send_packet(0, now, imuData_char, 18, button);
-            wifi_test = usb_tx_data(1, now, imuData_char, 6 , button);
+            wifi_test = usb_tx_data(1, now, imuData_char, 9 , button);
         } else{ // button == 0
             now = stopWatch_now();
-            wifi_test = usb_tx_data(0, now, imuData_char, 6 , button);
+            wifi_test = usb_tx_data(0, now, imuData_char, 9 , button);
             if (last_button == 1){
 //                 now = stopWatch_now();
 //                 // send one last packet as a stop

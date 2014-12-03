@@ -21,7 +21,7 @@
 
 
 // Wireless packet length (refer to notes)
-int16_t _rf_packet_len = 18;
+int16_t _rf_packet_len = 24;
 int8_t _rf_base_addr = 0x11;
 
 // Wireless packet types
@@ -110,7 +110,16 @@ bool send_packet(char packet_type, uint32_t time_stamp, int8_t* data, uint16_t d
     toSend[14] =  (char)data[9];
     toSend[15] =  (char)data[10];
     toSend[16] =  (char)data[11];
-    toSend[17] =  (char)button;
+
+    // Magnetometer
+    toSend[17] =  (char)data[15];
+    toSend[18] =  (char)data[17];
+    toSend[19] =  (char)data[19];
+    toSend[20] =  (char)data[21];
+    toSend[21] =  (char)data[16];
+    toSend[22] =  (char)data[17];
+
+    toSend[23] =  (char)button;
 
     usb_debug_rf_data(toSend, _rf_packet_len);
     return true;
