@@ -28,9 +28,9 @@ nogui = false;
 directory = 'letter_logs';
 
 % Simulated run
-rerun = false;
+rerun = true;
 if rerun
-    rerun_file = 'b14-12-03_16:07:18';%'a14-11-30_20:29:36';%
+    rerun_file = 'a14-12-03_20:30:23';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
@@ -208,9 +208,10 @@ end
 if ~rerun
     char_writing = input('Character: ','s');
     if ~rerun && ~nogui
+        axes(haxis_char);
         title(char_writing);
         set(gcf,'windowkeypressfcn',['char_writing = get(gcf,''currentcharacter'');', ...
-        'title(char_writing);'])
+        'axes(haxis_char);title(char_writing);'])
     end
 else
     char_writing = rerun_file(1);
@@ -225,19 +226,17 @@ if rerun
     
     % Initialize 
     f_proced = fopen([directory,'/proc_',rerun_file,'.txt'],'r');
-    header = fgets(f_proced)
-    data = fgets(f_proced)
+    header = fgets(f_proced);
+    data = fgets(f_proced);
     fclose(f_proced);
     numdata = str2num(data);
-    if header(1) == 'a'
-        euler = numdata(10:12)
-        G_vQ_old = zeros(3,1);
-    else
-        euler = numdata(11:13)
-        G_vQ_old = numdata(5:7)'
-    end
+    
+    euler = numdata(11:13);
+    G_vQ_old = numdata(5:7)';
     M_RG = euler2rotMat(euler(1),euler(2),euler(3))';
+    M_w_old = M_RG*numdata(14:16)';
     AHRS.Quaternion = rotMat2quatern(M_RG);
+    %log(end,1) = numdata(1)-1/300;
 end
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -379,8 +378,8 @@ while(1)
             [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision', 12)
         
         % Integrated image
-        fig_im = getframe(1);
-        im = fig_im.cdata;
+        fig_im = getframe(haxis_char);
+        im = imresize(fig_im.cdata,0.2);
         imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
