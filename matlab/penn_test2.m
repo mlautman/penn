@@ -379,7 +379,7 @@ while(1)
             [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision', 12)
         
         % Integrated image
-        fig_im = getframe(3);
+        fig_im = getframe(1);
         im = fig_im.cdata;
         imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
     end
