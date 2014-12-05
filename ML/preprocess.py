@@ -26,6 +26,8 @@ def feature_vect_size(motion_data, interpolation_len):
     num_dimensions = motion_data.shape[1]
     return num_dimensions * (interpolation_len + NUM_AGG_STAT_VALS ) + 1
 
+
+
 def create_feature_vect(motion_data, interpolation_len, just_data=True):
     """
     Create a single vector of features
@@ -64,11 +66,17 @@ def create_feature_vect(motion_data, interpolation_len, just_data=True):
 
     input:
         motion_data : Transformed Acc, vel, pos, rot rate and angle values
-            k x 15 array.
+            k x 18 array.
+
+            # x,y,z,
+            # v_x,v_y,v_z,
+            # a_x,a_y,a_z,
+            # roll,pitch,yaw,
+            # theta,phi,psi
 
         interpolation_len : An integer value representing target resolution in sensor readings.
     output:
-        feature : (interpolation_len + 3)* 15 + 1
+        feature : (interpolation_len + 3)* 18 + 1
 
     """
 

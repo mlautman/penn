@@ -27,6 +27,8 @@ def get_labels(fnames, label_index):
     y = np.array([ label_dict[l] for l in class_labels])
     return y, label_lookup
 
+
+# timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi
 def load_all(path, label_index, prefix='', suffix=''):
     fnames = [
         f for f in os.listdir(path) if (
@@ -34,17 +36,18 @@ def load_all(path, label_index, prefix='', suffix=''):
         )
     ]
 
-    signal_len = 1000
+    signal_len = 200
     samples = len(fnames)
 
-    ex_vect = np.loadtxt(path + '/' + fnames[0], delimiter=',', skiprows=1)
+    ex_vect = np.loadtxt(path + '/' + fnames[0], delimiter=',', skiprows=1)[:,1:]
+
 
     features = feature_vect_size(ex_vect, signal_len)
 
     X = np.zeros((samples, features))
 
     for i,f in enumerate(fnames):
-        raw_data = np.loadtxt(path + '/' + f, delimiter=',', skiprows=1)
+        raw_data = np.loadtxt(path + '/' + f, delimiter=',', skiprows=1)[:,1:]
         X[i,:] = create_feature_vect(raw_data, signal_len, just_data=True)
 
     y, label_lookup = get_labels(fnames, label_index)
