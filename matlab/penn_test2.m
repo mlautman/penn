@@ -30,7 +30,7 @@ directory = 'letter_logs';
 % Simulated run
 rerun = false;
 if rerun
-    rerun_file = 'a14-12-02_10:59:47';%'a14-11-30_20:29:36';%
+    rerun_file = 'a14-12-03_20:30:23';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
     rerun_cntr = 0;
 end
@@ -40,7 +40,7 @@ end
 % Open serial interface to M2
 if ~exist('s','var') && ~rerun
 s = serial('/dev/ttyACM0');
-s.baudrate = 57600;
+s.baudrate = 115200;%57600;
 s.terminator = 'LF';
 fopen(s);
 end
@@ -48,16 +48,16 @@ end
 
 % Prepare data log
 numHistory = 1000;
-numVals = 9;
+numVals = 12;
 log = zeros(numHistory,numVals+1);
 
 % Display Raw Signals
 % Display parameters
-toPlot = 3:8; % indices of raw logs to plot
+toPlot = 3:11;%3:8; % indices of raw logs to plot
 plot_reduce = 30; % plot every plot_reduce loops
 plt_red_cntr = 0;
 
-if ~nogui
+%{
 figure(99)
 clf
 haxis99 = axes;
@@ -74,7 +74,7 @@ for ii=1:length(toPlot)
 end
 hold off
 grid on
-end
+%}
 
 % Calculations and plotting
 % vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -82,7 +82,7 @@ processedVals = 15;
 processed = zeros(numHistory,processedVals);
 
 % Parameters
-M_Q = [83.6*10^-3; 0; 0]; %penn tip position in IMU frame
+M_Q = [0; 0; -83.6*10^-3]; %penn tip position in IMU frame
 t_scale = 1024/16000000; %seconds per timer count
 
 % Attitude estimation
@@ -105,83 +105,137 @@ AHRS = MadgwickAHRS('SamplePeriod', 1/300, 'Beta', 0.05); % Kalman filter
 % to prevent accelerations coupling to rotations
 
 % Filters and Integration
+tau_acc = 0.05;                         % accelerometer LP t. const. (s)
+tau_gyr = 0.02;                         % gyroscope LP t. const. (s)
 M_aP_g = [0;0;9.81];
 M_w = [0;0;0];
 M_w_old = 0;
 M_alpha_LP = 0;
 
-alpha_vel = 0.990; %velocity high pass filter % previously 0.995
-alpha_pos = 0.990; %position high pass filter % preivously 0.995
+alpha_a = 1;%0.995; %acceleration high pass gain
+alpha_vel = 0.97; %velocity high pass gain
+alpha_pos = 1;%0.990; %position high pass gain
+G_aP_LP = zeros(3,1);
 G_vQ_old = 0;
 G_Q_old = 0;
 
-alpha_yaw = 0.998;
+alpha_yaw = 0.998; %yaw high pass gain
 yaw_old = 0;
 yaw = 0;
 
-alpha_a = 0.99;
-G_aP_LP = zeros(3,1);
-
 
 % Plotting
-% Plot selected processed signals (euler angles, ground frame accelerations, etc.)
 if ~nogui
-figure(1)
-clf
-haxis1 = axes;
-title('Processed Signals')
+    figure(1)
+    clf
+    
+    % Plot raw signals
+    subplot(2,3,1,'position',[0.05,0.55,0.28,0.4])
+    haxis_raw = gca;
+    title('Raw Serial Data')
 
-h_processed = zeros(3,1);
-hold on
-for ii=1:3
-    h_processed(ii) = plot(log(:,3)*t_scale, processed(:,ii),...
-        [color_list(mod(ii-1,length(color_list))+1),...
-        line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
-end
-hold off
-grid on
+    h_va_t = zeros(length(toPlot),1);
+    color_list = 'rgbcmk';
+    line_list = {'-','--'};
+    hold on
+    for ii=1:length(toPlot)
+        h_va_t(ii) = plot(log(:,1),log(:,toPlot(ii)+1),...
+            [color_list(mod(ii-1,length(color_list))+1),...
+            line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
+    end
+    xlabel('Time (s)')
+    ylabel('Signals (unscaled raw)')
+    hold off
+    grid on
+    
+    % Plot processed signals
+    subplot(2,3,4,'position',[0.05,0.05,0.28,0.4])
+    haxis_proc = gca;
+    title('Processed Signals')
 
+    h_processed = zeros(6,1);
+    hold on
+    for ii=1:6
+        h_processed(ii) = plot(log(:,3)*t_scale, processed(:,ii+3),...
+            [color_list(mod(ii-1,length(color_list))+1),...
+            line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
+    end
+    xlabel('Time (s)')
+    ylabel('Signals (engineering units)')
+    hold off
+    grid on
 
-% Plot 3D pen visualization
-figure(2)
-clf
-haxis2 = axes;
+    % Plot 3D pen visualization
+    subplot(2,3,2,'position',[0.38,0.55,0.28,0.4])
+    haxis_pen = gca;
+    
+    pen3D = [0, 0.05, 0; % long arm along pen, short arm away from author
+             0, 0, 0;
+             M_Q';
+             0, 0, 0.15]';
 
-pen3D = [0, 0, 0.05; % long arm along pen, short arm away from author
-         0, 0, 0;
-         M_Q';
-        -0.15, 0, 0]';
-         
-h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
-axis equal
-set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
-grid on
-title('Pen Visualization')
-xlabel('x')
-ylabel('y')
-zlabel('z')
+    h_3D = plot3(pen3D(1,:),pen3D(2,:),pen3D(3,:),'k');
+    title('Pen Visualization')
+    axis equal
+    set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
+    grid on
+    xlabel('x (m)')
+    ylabel('y (m)')
+    zlabel('z (m)')
 
-
-% Plot character integration
-figure(3)
-clf
-haxis3 = axes;
-h_char = plot(processed(:,1),processed(:,2),'.-b');
-axis equal
-grid on
+    % Plot character integration
+    subplot(2,3,5,'position',[0.38,0.05,0.28,0.4])
+    haxis_char = gca;
+    
+    h_char = plot(processed(:,1),processed(:,2),'.-b');
+    xlabel('x (m)')
+    ylabel('y (m)')
+    axis equal
+    grid on
+    
+    % Plot vel and acceleration vectors
+    subplot(2,3,3,'position',[0.71,0.55,0.28,0.4])
+    haxis_vect = gca;
+    
+    hold on
+    h_acc = plot(0,0,'r');
+    h_vel = plot(0,0,'b');
+    hold off
+    title('Acceleration (R) and Velocity (B) Vectors')
+    set(gca,'ylim',[-5,5])
+    axis equal
+    xlabel('x (m/s or m/s^2)')
+    ylabel('y (m/s or m/s^2)')
+    grid on
+    
+    % Other debug plots:
+    subplot(2,3,6,'position',[0.71,0.05,0.28,0.4])
+    haxis_debug = gca;
+    
+    hold on
+    h_debug1 = plot(0,0,'b');
+    title('Yaw angle');
+    xlabel('Time (s)')
+    ylabel('Angle (rad)')
+    grid on
+    
+    
 end
 
 % Character Label
 if ~rerun
     char_writing = input('Character: ','s');
     if ~rerun && ~nogui
+        axes(haxis_char);
         title(char_writing);
         set(gcf,'windowkeypressfcn',['char_writing = get(gcf,''currentcharacter'');', ...
-        'title(char_writing);'])
+        'axes(haxis_char);title(char_writing);'])
     end
 else
     char_writing = rerun_file(1);
-    title(char_writing);
+    if ~nogui
+        title(char_writing);
+    end
 end
 
 % Rerun Initialization
@@ -190,19 +244,17 @@ if rerun
     
     % Initialize 
     f_proced = fopen([directory,'/proc_',rerun_file,'.txt'],'r');
-    header = fgets(f_proced)
-    data = fgets(f_proced)
+    header = fgets(f_proced);
+    data = fgets(f_proced);
     fclose(f_proced);
     numdata = str2num(data);
-    if header(1) == 'a'
-        euler = numdata(10:12)
-        G_vQ_old = zeros(3,1);
-    else
-        euler = numdata(11:13)
-        G_vQ_old = numdata(5:7)'
-    end
+    
+    euler = numdata(11:13);
+    G_vQ_old = numdata(5:7)';
     M_RG = euler2rotMat(euler(1),euler(2),euler(3))';
+    M_w_old = M_RG*numdata(14:16)';
     AHRS.Quaternion = rotMat2quatern(M_RG);
+    %log(end,1) = numdata(1)-1/300;
 end
 % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -228,12 +280,14 @@ while(1)
             fclose(f_rerun)
             
             % Write file and exit at end of raw file
+            start_ind = find(~log(:,2),2,'last');
+            start_ind = start_ind(1)+1;
             toappend = rerun_file((end-17):end);
             f_proc = fopen([directory,'/','post_',toappend,'.txt'],'w');
-            fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
+            fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
             fclose(f_proc);
-            dlmwrite([directory,'/','post_',toappend,'.txt'],[log(:,3),processed],'-append',...
-                'precision',12)
+            dlmwrite([directory,'/','post_',toappend,'.txt'],...
+                [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision',12)
             
             return
         end
@@ -251,13 +305,17 @@ while(1)
     
     % Time, Acceleration and Rotation scaling
     dt = (log(end,3)-log(end-1,3))*t_scale; % time since last loop
-    dt = max(dt,1E-6);
-    M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs;
-    M_w_raw = log(end,7:9)' .* gyr_scale;
+    dt = min(max(dt,1E-6),0.1);
+    AHRS.SamplePeriod = dt;
+    
+    M_aP_g_raw = log(end,4:6)' .* acc_scale + acc_offs; % accelerometer
+    M_w_raw = log(end,7:9)' .* gyr_scale;               % gyroscope
+    M_m_raw = log(end,10:12)';                          % unscaled magentometer 
+    M_aP_g_raw = M_aP_g_raw([2,3,1]).*[-1;1;-1];        % Axis realignment
+    M_w_raw = M_w_raw([2,3,1]).*[-1;1;-1];              % Axis realignment
+    M_m_raw = M_m_raw([3,2,1]).*[1;-1;-1];              % Axis realignment
     
     % Initial low pass filters
-    tau_acc = 0.04;                         % accelerometer LP t. const. (s)
-    tau_gyr = 0.02;                         % gyroscope LP t. const. (s)
     al_acc = dt/(tau_acc + dt);
     al_gyr = dt/(tau_gyr + dt);
     M_aP_g = al_acc*M_aP_g_raw + (1-al_acc)*M_aP_g;
@@ -268,8 +326,13 @@ while(1)
     quaternion = AHRS.Quaternion;           % quaternion rotation
     M_RG = quatern2rotMat(quaternion);      % rotation matrix
     
-    % Correct for gyro drift
+    % Correct yaw angle for gyro drift
     euler = rotMat2euler(M_RG');
+    if yaw - yaw_old > pi
+        yaw_old = yaw_old + pi;
+    elseif yaw - yaw_old < -pi
+        yaw_old = yaw_old - pi;
+    end
     yaw = alpha_yaw*(yaw + (euler(3) - yaw_old));
     yaw_old = euler(3);
     euler(3) = yaw;
@@ -296,13 +359,13 @@ while(1)
     %                         tangential       coriolis          centripetal
     % A_aQ = A_aP + B_aQ + A_alphaB x PQ + 2*A_wB x B_vQ + A_wB x (A_wB x PQ)
     % A_aQ = A_aP + 0 + A_alphaB x PQ + 0 + A_wB x (A_wB x PQ)
-    G_aP_LP = G_aP;%alpha_a*G_aP + (1-alpha_a)*G_aP_LP; %LP linear acceleration to prevent drift
+    G_aP_LP = alpha_a*G_aP + (1-alpha_a)*G_aP_LP; %LP linear acceleration to prevent drift
     G_aQ = G_aP_LP + cross(G_alpha, M_RG'*M_Q) + cross(G_w,cross(G_w, M_RG'*M_Q));
     
     % Zeroing
     if log(end,2) && ~log(end-1,2)
         %G_aQ = zeros(3,1);
-        %G_vQ_old = zeros(3,1);
+        G_vQ_old = zeros(3,1);
         G_Q_old = zeros(3,1);
     end
     
@@ -317,25 +380,29 @@ while(1)
     
     % File output 
     if log(end-1,2) && ~log(end,2) && ~isempty(char_writing) && ~rerun
+        start_ind = find(~log(:,2),2,'last');
+        start_ind = start_ind(1)+1;
+        
         % datetime to append to filenames
         datetime = datestr(now,'yy-mm-dd_HH:MM:SS');
         
         % Raw data
         f_raw = fopen([directory,'/','raw_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,switch\n');
+        fprintf(f_raw,'comptime,switch,timestamp,a_x,a_y,a_z,w_x,w_y,w_z,m_x,m_y,m_z,switch\n');
         fclose(f_raw);
-        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],log,'-append', 'precision', 12)
+        dlmwrite([directory,'/','raw_',char_writing,datetime,'.txt'],...
+            log(start_ind:(end-1),:),'-append', 'precision', 10)
         
         % Integrated data
         f_proc = fopen([directory,'/','proc_',char_writing,datetime,'.txt'],'w');
-        fprintf(f_proc,'timestamp,a_x,a_y,a_z,v_x,v_y,v_z,x,y,z,roll,pitch,yaw,theta,phi,psi\n');
+        fprintf(f_proc,'timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi\n');
         fclose(f_proc);
-        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],[log(:,3),processed],'-append',...
-            'precision', 12)
+        dlmwrite([directory,'/','proc_',char_writing,datetime,'.txt'],...
+            [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision', 12)
         
         % Integrated image
-        fig_im = getframe(3);
-        im = fig_im.cdata;
+        fig_im = getframe(haxis_char);
+        im = imresize(fig_im.cdata,0.2);
         imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -346,15 +413,15 @@ while(1)
     if ~plt_red_cntr
         % Raw Signals
         for ii=1:length(toPlot)
-            set(h_raws(ii), 'xdata', log(:,3)*t_scale, 'ydata', log(:,toPlot(ii)+1))
+            set(h_va_t(ii), 'xdata', log(:,3)*t_scale, 'ydata', log(:,toPlot(ii)+1))
         end
-        set(haxis99, 'xlim', t_scale*[log(1,3), log(end,3)])
+        set(haxis_raw, 'xlim', t_scale*[log(1,3), log(end,3)],'ylim', [-35000,35000])
         
         % Processed Signals
-        for ii=1:3
-            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii))
+        for ii=1:6
+            set(h_processed(ii), 'xdata', log(:,3)*t_scale, 'ydata', processed(:,ii+3))
         end
-        set(haxis1, 'xlim', t_scale*[log(1,3),log(end,3)])
+        set(haxis_proc, 'xlim', t_scale*[log(1,3),log(end,3)])
         
         % 3D Pen Visualization
         newPen = M_RG'*pen3D;
@@ -364,6 +431,15 @@ while(1)
         toDraw = processed;
         toDraw(log(:,2)==0,:) = NaN;
         set(h_char, 'xdata', toDraw(:,1), 'ydata', toDraw(:,2))
+        
+        % Acceleration and Position Vectors
+        set(h_vel, 'xdata', [0,processed(end,4)], 'ydata', [0,processed(end,5)])
+        set(h_acc, 'xdata', [0,processed(end,7)], 'ydata', [0,processed(end,8)])
+        
+        % Debug plot
+        set(h_debug1, 'xdata', log(:,3)*t_scale, 'ydata', processed(:,12))
+        set(haxis_debug, 'xlim', t_scale*[log(1,3), log(end,3)], 'ylim', [-4, 4])
+        
         drawnow
     end
     else
