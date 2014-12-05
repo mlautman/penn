@@ -28,7 +28,7 @@ nogui = false;
 directory = 'letter_logs';
 
 % Simulated run
-rerun = true;
+rerun = false;
 if rerun
     rerun_file = 'a14-12-03_20:30:23';%'a14-11-30_20:29:36';%
     f_rerun = fopen([directory,'/raw_',rerun_file,'.txt'],'r');
@@ -143,6 +143,8 @@ if ~nogui
             [color_list(mod(ii-1,length(color_list))+1),...
             line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
     end
+    xlabel('Time (s)')
+    ylabel('Signals (unscaled raw)')
     hold off
     grid on
     
@@ -158,6 +160,8 @@ if ~nogui
             [color_list(mod(ii-1,length(color_list))+1),...
             line_list{mod(floor((ii-1)/length(color_list)),length(line_list))+1}]);
     end
+    xlabel('Time (s)')
+    ylabel('Signals (engineering units)')
     hold off
     grid on
 
@@ -175,15 +179,17 @@ if ~nogui
     axis equal
     set(gca,'xlim',[-0.2,0.2],'ylim',[-0.2,0.2],'zlim',[-0.2,0.2]);
     grid on
-    xlabel('x')
-    ylabel('y')
-    zlabel('z')
+    xlabel('x (m)')
+    ylabel('y (m)')
+    zlabel('z (m)')
 
     % Plot character integration
     subplot(2,3,5,'position',[0.38,0.05,0.28,0.4])
     haxis_char = gca;
     
     h_char = plot(processed(:,1),processed(:,2),'.-b');
+    xlabel('x (m)')
+    ylabel('y (m)')
     axis equal
     grid on
     
@@ -198,9 +204,21 @@ if ~nogui
     title('Acceleration (R) and Velocity (B) Vectors')
     set(gca,'ylim',[-5,5])
     axis equal
-    xlabel('x')
-    ylabel('y')
+    xlabel('x (m/s or m/s^2)')
+    ylabel('y (m/s or m/s^2)')
     grid on
+    
+    % Other debug plots:
+    subplot(2,3,6,'position',[0.71,0.05,0.28,0.4])
+    haxis_debug = gca;
+    
+    hold on
+    h_debug1 = plot(0,0,'b');
+    title('Yaw angle');
+    xlabel('Time (s)')
+    ylabel('Angle (rad)')
+    grid on
+    
     
 end
 
@@ -308,8 +326,13 @@ while(1)
     quaternion = AHRS.Quaternion;           % quaternion rotation
     M_RG = quatern2rotMat(quaternion);      % rotation matrix
     
-    % Correct for gyro drift
+    % Correct yaw angle for gyro drift
     euler = rotMat2euler(M_RG');
+    if yaw - yaw_old > pi
+        yaw_old = yaw_old + pi;
+    elseif yaw - yaw_old < -pi
+        yaw_old = yaw_old - pi;
+    end
     yaw = alpha_yaw*(yaw + (euler(3) - yaw_old));
     yaw_old = euler(3);
     euler(3) = yaw;
@@ -412,6 +435,10 @@ while(1)
         % Acceleration and Position Vectors
         set(h_vel, 'xdata', [0,processed(end,4)], 'ydata', [0,processed(end,5)])
         set(h_acc, 'xdata', [0,processed(end,7)], 'ydata', [0,processed(end,8)])
+        
+        % Debug plot
+        set(h_debug1, 'xdata', log(:,3)*t_scale, 'ydata', processed(:,12))
+        set(haxis_debug, 'xlim', t_scale*[log(1,3), log(end,3)], 'ylim', [-4, 4])
         
         drawnow
     end
