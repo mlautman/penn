@@ -16,3 +16,5 @@
 ./*.xcworkspace
 ./*.xcuserdatad
 ./*.pyc
+matlab/letter_logs/
+matlab/*.zip
