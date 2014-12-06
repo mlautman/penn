@@ -10,7 +10,6 @@ from sklearn import svm
 
 # def main(split=.8):
 
-from sax import paa_transform
 
 def main(split=.7):
 
