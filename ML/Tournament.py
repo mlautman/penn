@@ -16,6 +16,7 @@ from sklearn import svm
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import LabelBinarizer
 
 from KNN_DTW import knnDTW
 
@@ -41,18 +42,11 @@ def main(options, args):
         10-fold testing
         ROC curves for each letter.
     """
-    X, Y, label_lookup = load_all(
-        options.input_folder,
-        5,
-        options.prefix
-    )
-    n, d = X.shape
-
     if options.learning_algorithm == "svm":
         model = svm.SVC(
             C=options.C,
             kernel=options.kernel,
-            degree=options.poly,
+            degree=options.degree,
             gamma=options.gamma,
             tol=options.tol,
             max_iter=options.max_iter,
@@ -105,12 +99,28 @@ def main(options, args):
         print "ERROR, must select learning algoritm"
         return
 
-    kf = cross_validation.Kfold(
+
+    X, y, label_lookup = load_all(
+        options.input_folder,
+        5,
+        options.prefix
+    )
+    n, d = X.shape
+
+    kf = cross_validation.KFold(
         n,
         folds=options.folds,
         shuffle=True,
         random_state=5,
     )
+    lb = LabelBinarizer()
+    lb.fit(y)
+
+    for i in lb.classes:
+        print i, label_lookup[i]
+
+    Y = lb.transform(y)
+
 
 
 
@@ -230,10 +240,17 @@ def extract_options(args):
         "-k","--k_folds",
         dest="folds",
         help="number of folds for K-folds",
+        type="int",
         default=4,
     )
 
-
+    algo_opt. add_option(
+        "-f", "--interpolation",
+        dest="interpolation_size",
+        help="Standardized lenght of recorded signal",
+        type="int",
+        default=30,
+    )
 
     parser.add_option_group(algo_opt)
 
