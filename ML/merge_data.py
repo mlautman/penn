@@ -41,7 +41,6 @@ def load_all(path, label_index, prefix='', suffix=''):
 
     ex_vect = np.loadtxt(path + '/' + fnames[0], delimiter=',', skiprows=1)[:,1:]
 
-
     features = feature_vect_size(ex_vect, signal_len)
 
     X = np.zeros((samples, features))

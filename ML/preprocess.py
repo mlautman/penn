@@ -40,17 +40,10 @@ def create_feature_vect(motion_data, interpolation_len, just_data=True):
         interpYvel, mean_Yvel, std_Yvel, rms_Yvel, (interp_len+3 long)
         interpZvel, mean_Zvel, std_Zvel, rms_Zvel, (interp_len+3 long)
 
-                interpXvel_int (interp_len)
-                interpYvel_int (interp_len)
-                interpZvel_int (interp_len)
-
         interpXpos, mean_Xpos, std_Xpos, rms_Xpos, (interp_len+3 long)
         interpYpos, mean_Ypos, std_Ypos, rms_Ypos, (interp_len+3 long)
         interpZpos, mean_Zpos, std_Zpos, rms_Zpos, (interp_len+3 long)
 
-                interpXpos_int (interp_len)
-                interpYpos_int (interp_len)
-                interpZpos_int (interp_len)
 
         interpXgyro, mean_Xgyro, std_Xgyro, rms_Xgyro, (interp_len+3 long)
         interpYgyro, mean_Ygyro, std_Ygyro, rms_Ygyro, (interp_len+3 long)
