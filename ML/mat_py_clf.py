@@ -20,7 +20,7 @@ if __name__ == '__main__':
     model = pickled[0]
     label_lookup = pickled[1]
 
-    signal_len = 40 #this is unclean: should be matched to training data signal_len
+    signal_len = 200 #this is unclean: should be matched to training data signal_len
     file_loc = path + 'letter.txt'
     #file_loc = '../data/letter_logs1Justin/proc_z14-12-05_13:21:55.txt'
     raw_data = np.loadtxt(file_loc, delimiter=',', skiprows=1)[:,1:]
