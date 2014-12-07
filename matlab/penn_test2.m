@@ -39,8 +39,8 @@ end
 %{a
 % Open serial interface to M2
 if ~exist('s','var') && ~rerun
-% s = serial('/dev/ttyACM0');
-s = serial('/dev/tty.usbmodem411');
+s = serial('/dev/ttyACM0');
+% s = serial('/dev/tty.usbmodem411');
 s.baudrate = 115200;%57600;
 s.terminator = 'LF';
 fopen(s);
@@ -402,9 +402,9 @@ while(1)
             [log(start_ind:(end-1),3),processed(start_ind:(end-1),:)],'-append','precision', 12)
         
         % Integrated image
-%         fig_im = getframe(haxis_char);
-%         im = imresize(fig_im.cdata,0.2);
-%         imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
+        fig_im = getframe(haxis_char);
+        im = imresize(fig_im.cdata,0.2);
+        imwrite(im,[directory,'/','im_',char_writing,datetime,'.png'])
     end
     % ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     

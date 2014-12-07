@@ -11,7 +11,7 @@ from merge_data import load_all
 if __name__ == '__main__':
     split = 0.9
     prefix = 'proc_'
-    path = '../data/letter_logs1Justin/'
+    path = '../data/letter_logs1Justin2/'
     X, y, label_lookup = load_all(path, 5, prefix=prefix)
 
     n, d = X.shape
