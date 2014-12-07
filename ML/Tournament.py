@@ -6,6 +6,7 @@ from __future__ import division
 # module imports
 import sys
 import numpy as np
+import pickle
 
 # class imports
 from optparse import OptionParser, OptionGroup
@@ -18,11 +19,14 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelBinarizer
 
+from sklearn.metrics import accuracy_score
+
 from KNN_DTW import knnDTW
 
+from cmcsv import cmplt, cmcsv
+from roc_curves import calc_roc_curves
 
 # own methods
-from merge_data import load_all
 
 def main(options, args):
     """
@@ -101,13 +105,15 @@ def main(options, args):
 
 
     # create X matrix
-    X, y, label_lookup = load_all(
-        options.input_folder,
-        5,
-        options.prefix
-    )
-    n, d = X.shape
 
+    if options.interpolation_size in [10, 100, 1000]:
+        i = options.interpolation_size
+        X,y,label_lookup = pickle.load(open('XyLL_'+str(i)+'.pkl','rb'))
+    else:
+        print "ERROR interpolation_size must be one of [10, 100, 1000]"
+        return
+
+    n, d = X.shape
 
     # binarize Y
     lb = LabelBinarizer()
@@ -142,8 +148,10 @@ def main(options, args):
             shuffle=True,
         )
 
-
+        inner_cnt = 0
         for train, test in kf:
+            inner_cnt +=1
+            print '\t',inner_cnt
 
             X_train_fold = X[train]
             y_train_fold = y[train]
@@ -164,10 +172,20 @@ def main(options, args):
 
             marker += len(test)
 
-    return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
+    print accuracy_score(y_pred, y_test)
+
+    # return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
+    if options.save_cm:
+        f_name = options.fname+"_cm_"+options.learning_algorithm+".csv"
+        cmcsv(f_name, y_pred, y_test, label_lookup)
+        cmplt(f_name, y_pred, y_true, label_lookup)
+
+    if options.save_roc:
+        f_name = options.fname+"_roc_"+options.learning_algorithm+".csv"
+        calc_roc_curves(f_name)
 
 
-
+def cmplt(f_name, y_pred, y_true, label_lookup):
 
 def extract_options(args):
     parser = OptionParser()
@@ -261,6 +279,27 @@ def extract_options(args):
         help="suffix for the training data files",
         default=".txt",
     )
+    file_options.add_option(
+        "--save_cm",
+        dest="save_cm",
+        help="Assign --save_cm if you want to save the confusion matrix to both a csv and an image",
+        action="store_true",
+        default=False,
+    )
+
+
+    file_options.add_option(
+        "--save_cm",
+        dest="save_cm",
+        help="Assign --save_cm if you want to save the confusion matrix to both a csv and an image",
+        action="store_true",
+        default=False,
+    )
+    file_options.add_option(
+        "--save_roc",
+        dest="save_roc",
+        help="Assign --save_roc if you want to save the ROC curve as an image",
+    )
 
     parser.add_option_group(file_options)
 
@@ -296,7 +335,7 @@ def extract_options(args):
         default=4,
     )
 
-    algo_opt. add_option(
+    algo_opt.add_option(
         "-f", "--interpolation",
         dest="interpolation_size",
         help="Standardized lenght of recorded signal",

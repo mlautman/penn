@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 
 # Calculation and graph of ROC curves
-def calc_roc_curves(y_probs, y_binarized):
+def calc_roc_curves(fname, y_probs, y_binarized):
   n, d = y_probs.shape
   roc_indexes = range(d)
 
@@ -29,5 +29,5 @@ def calc_roc_curves(y_probs, y_binarized):
   plt.ylabel('True Positive Rate')
   plt.title('ROC Curves for SVMs')
   plt.legend(loc="lower right")
-  plt.show()
+  plt.savefig(fname)
 

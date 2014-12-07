@@ -29,14 +29,13 @@ def get_labels(fnames, label_index):
 
 
 # timestamp,x,y,z,v_x,v_y,v_z,a_x,a_y,a_z,roll,pitch,yaw,theta,phi,psi
-def load_all(path, label_index, prefix='', suffix=''):
+def load_all(path, signal_len, label_index, prefix='proc_', suffix='.txt'):
     fnames = [
         f for f in os.listdir(path) if (
             f.startswith(prefix) and f.endswith(suffix)
         )
     ]
 
-    signal_len = 200
     samples = len(fnames)
 
     ex_vect = np.loadtxt(path + '/' + fnames[0], delimiter=',', skiprows=1)[:,1:]

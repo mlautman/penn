@@ -139,5 +139,3 @@ def create_feature_vect(motion_data, interpolation_len, just_data=True):
 
 
 
-
-
