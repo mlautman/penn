@@ -83,7 +83,7 @@ def main(options, args):
             )
         else:
             print "ERROR, must select learning algoritm"
-            return
+            # return
 
     elif options.learning_algorithm == "dt":
         model = DecisionTreeClassifier(
@@ -97,9 +97,10 @@ def main(options, args):
 
     else:
         print "ERROR, must select learning algoritm"
-        return
+        # return
 
 
+    # create X matrix
     X, y, label_lookup = load_all(
         options.input_folder,
         5,
@@ -107,26 +108,68 @@ def main(options, args):
     )
     n, d = X.shape
 
-    kf = cross_validation.KFold(
-        n,
-        folds=options.folds,
-        shuffle=True,
-        random_state=5,
-    )
+
+    # binarize Y
     lb = LabelBinarizer()
     lb.fit(y)
-
-    for i in lb.classes:
-        print i, label_lookup[i]
-
     Y = lb.transform(y)
+
+    # create folds and vector to hold predicted results
+    kf = cross_validation.StratifiedKFold(
+        y,
+        n_folds=options.folds,
+        shuffle=True,
+    )
+
+    Y_n, Y_d = Y.shape
+
+    Y_cv_n = Y_n * options.cv_splits
+
+    y_pred = np.zeros(Y_cv_n)
+    y_test = np.zeros(Y_cv_n)
+    Y_pred_prob = np.zeros((Y_cv_n, Y_d))
+    Y_test = np.zeros((Y_cv_n, Y_d))
+
+    # run for each fold
+    marker = 0
+    for cv in range(options.cv_splits):
+
+        kf = cross_validation.StratifiedKFold(
+            y,
+            n_folds=options.folds,
+            shuffle=True,
+        )
+
+
+        for train, test in kf:
+
+            X_train_fold = X[train]
+            y_train_fold = y[train]
+            X_test_fold = X[test]
+
+
+            model.fit(X_train_fold,y_train_fold)
+
+            probs = model.predict_proba(X_test_fold)
+
+            Y_test[marker:marker+len(test),:] = Y[test]
+            Y_pred_prob[marker:marker+len(test),:] = probs
+            y_test[marker:marker+len(test)] = y[test]
+            y_pred[marker:marker+len(test)] = np.argmax(
+                probs,
+                axis=1,
+            )
+
+            marker += len(test)
+
+    return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
 
 
 
 
 def extract_options(args):
     parser = OptionParser()
-    usage = "usage: %prog  [options]"
+    parser.usage = "usage: %prog  [options]"
     """
     options:
         algorithm
@@ -197,6 +240,13 @@ def extract_options(args):
     )
 
     file_options.add_option(
+        "-n","--name",
+        dest="fname",
+        default="testFile",
+        type="string",
+    )
+
+    file_options.add_option(
         "-p","--prefix",
         dest="prefix",
         help="prefix for the training data files",
@@ -250,6 +300,14 @@ def extract_options(args):
         help="Standardized lenght of recorded signal",
         type="int",
         default=30,
+    )
+
+    algo_opt. add_option(
+        "-c", "--cv_splits",
+        dest="cv_splits",
+        help="The number of cross validation splits",
+        type="int",
+        default=10,
     )
 
     parser.add_option_group(algo_opt)
@@ -463,6 +521,7 @@ def extract_options(args):
         dest="max_depth",
         help="The maximum depth of the tree. If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples. Ignored if max_samples_leaf is not None.",
         action="store",
+        type="int",
         default=None,
     )
     dt_opt.add_option(
@@ -487,6 +546,7 @@ def extract_options(args):
         dest="max_leaf_nodes",
         help="Grow a tree with max_leaf_nodes in best-first fashion. Best nodes are defined as relative reduction in impurity. If None then unlimited number of leaf nodes. If not None then max_depth will be ignored.",
         action="store",
+        type="int",
         default=None,
     )
 
