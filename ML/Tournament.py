@@ -132,8 +132,10 @@ def main(options, args):
 
     # run for each fold
     marker = 0
+    cnt = 0
     for cv in range(options.cv_splits):
-
+        cnt +=1
+        print cnt
         kf = cross_validation.StratifiedKFold(
             y,
             n_folds=options.folds,
