@@ -174,7 +174,7 @@ def main(options, args):
 
             marker += len(test)
 
-    print accuracy_score(y_pred, y_test)
+    print "Accuracy:",accuracy_score(y_pred, y_test)
 
     # return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
     if options.save_cm:

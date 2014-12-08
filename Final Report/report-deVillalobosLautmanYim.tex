@@ -1,0 +1,159 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2014 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2014,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+
+% use Times
+\usepackage{times}
+\usepackage{geometry,amsmath}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2014} with
+% \usepackage[nohyperref]{icml2014} above.
+%\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage{icml2014}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{de Villalobos, Lautman, Yim}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\nosymbol}{}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{Penn Project Report\\Machine Learning in Real Time Character Recognition}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2014
+% package.
+\icmlauthor{Francisco de Villalobos}{frade@seas.upenn.edu}
+\icmlauthor{Michael Lautman}{mlautman@seas.upenn.edu}
+\icmlauthor{Justin Yim}{yimj@seas.upenn.edu}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{machine learning, character recognition, kaman filter}
+
+
+\vskip 0.3in
+]
+
+\begin{abstract} 
+This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. By calculating the dynamics of the pen from IMU measurements, we are able to estimate the pen tip accelerations and rotations as a function of time. We evaluated SVCs, decision trees, Ada-Boost, and logistic regression learning algorithms based on their ability to recognize handwritten characters and achieved 93.2 \% accuracy using an SVC with a lineal kernel.
+\end{abstract} 
+
+\section{Prototype}
+In this section we give a brief summary of the hardware incorporated into the proposed device. We first describe the mechanical device before then discussing the electronics. 
+
+\subsection{Hardware}
+The pen layout and body was designed in CAD (pictured below) to ensure appropriate packing of components. The clear body was 3D printed in ABS in the University's prototyping labs. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{pen_render.png}
+	\caption{Rendering of the 3D printed model of the penn}
+\end{figure}
+
+\subsection{Electronics}
+An ATMega32u4 microcontroller provides on-board processing and interfaces to the wireless module, IMU, switch, and indicator LEDs. Two Nordic nRF24LE1 transceivers handle wireless communication between the pen and base station computer. Inertial measurements are provided by an MPU6050 digital IMU with configurable gain triaxial accelerometers and gyroscopes. A Honeywell HMC5883L triaxial magnetometer provides a reference to earth's magnetic field for orientation. A switch behind the pen tip detects contact with the page for character segmentation. Three LEDs on the case display pen state. The pen also includes on-board batteries, power management, and an on-off switch.
+
+\subsection{Filtering the data}
+
+The raw data from the IMU pose issues for learning algorithms. Sources of variance can include posture, handed-ness, roll angle of the pen, and sensor drift. To minimize sources of error, we compute the trajectory of the pen tip on the page to generate features in a four step process.  First, IMU measurements are scaled to engineering units and are low-pass filtered to remove high frequency noise from vibration.  Second, we use Madgwick?s open source Kalman filter attitude estimation to find the orientation of the pen relative to the page.  Third, we transform the IMU measurements into the ground frame relative to the page and double-integrate the acceleration to estimate the displacements of the pen tip.  Fourth and finally, the position and velocity estimates are high-pass filtered to remove drift.  From this IMU data processing we obtain the x,y,z position, velocity, and acceleration of the pen in the page frame as well as the euler angles and angular rates of the pen in the page frame at 300Hz sample rate.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.5\textwidth, height= 5cm]{g.png}
+    \caption{Recovered letter "g"}
+\end{figure}
+
+
+%\subsection{Next Steps}
+%The next step in the project is to create a labeled test set. With a training set in hand, we will begin testing different learning algorithms so that we can find the most successful model. To this end, we will approach the learning component of this project in two ways. One method involves projecting the trajectory into an image and using learning algorithms such as neural networks. The other method involves using feature selection methods on the filtered signals before integration and differentiation. This method will require that we transform the time series data into a constant width feature vector. By interpolating, we are able to produce this result. Reducing dimensionality might prove to be an important step if we experience performance issues. In that case we intend to use either PCA or LDA to generate features. We intend to test the performance of various learning algorithms including Hidden Markov Models, Neural Networks, and Naive Bayes.
+
+\section{Learning}
+
+\subsection{Features}
+To generate our feature vector, we find the mean, standard deviation, and RMS of each of the signals x, y, z position, velocity, and acceleration and euler angles and angular rates, then interpolate each of the signals to a uniform length.  Our feature vector consists of the character writing time, these interpolated signals, and their mean, standard deviation, and RMS.  This generates a feature vector of length 15*N + 46 where N is the interpolated signal length.  After feature vector generation we standardize our features.  
+ 
+\subsection{Learning Algorithms}
+We first tested Support Vector Machines with different Kernels to compare the results we were getting from them. This ones were all runned with 5 folds.
+
+\begin{center}
+    \begin{tabular}{ | c | c | c | c | c | r |}
+    \hline
+    %\hline
+    %& \multicolumn{2}{|c|}{$\textbf{Naive Bayes}$} & \multicolumn{2}{|c|}{$\textbf{SVM w/cos Kernel}$} \\ \hline
+    %Train Time & \multicolumn{2}{|c|}{0.17371 s} & \multicolumn{2}{|c|}{42.37024 s} \\ \hline
+    %& Train & Test & Train & Test \\ \hline
+    $\textbf{Algo.}$ & $\textbf{Kernel}$  & $\textbf{param}$ & $\textbf{Sig Len}$ & $\textbf{Time(s)}$ & $\textbf{Acc.}$ \\ \hline
+    SVC & linear & - & 10 & 2.114 & 94 $\%$ \\ \hline
+    SVC & poly & 2 & 10 & 2.07 & 91 $\%$ \\ \hline
+    SVC & poly & 3 & 100 & 6.681 & 91 $\%$ \\ \hline
+    SVC & gaussian & 5E-1 & 10 & 5.057 & 3 $\%$ \\ \hline
+    SVC & gaussian & 5E-4 & 10 & 2.124 & 77 $\%$ \\ \hline
+    SVC & gaussian & 5E-5 & 10 & 3.05 & 29 $\%$ \\ \hline
+    SVC & gaussian & 5E-4 & 100 & 11.357 & 93 $\%$ \\ \hline
+    SVC & gaussian & 5E-5 & 100 & 13.709 & 82 $\%$ \\ \hline
+    SVC & gaussian & 5E-3 & 1000 & 309.19 & 3 $\%$ \\ \hline
+    
+    \end{tabular}
+\end{center}
+
+As we can clearly see, while the linear and polynomial kernel do a pretty good job to classify the characters, the rbf is VERY prone to subtle variations in the parameters, which makes it a non robust method for character recognition. On the other side, we can see that the accuracy obtained
+
+ 
+\section*{Acknowledgments} 
+ 
+Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\\\
+For trajectory reconstruction, consulted Jeen-Shing Wang, Yu-Liang Hsu, and Jiun-Nan Liu's paper entitled \textbf{An Inertial-Measurement-Unit-Based Pen With a Trajectory Reconstruction Algorithm and Its Applications}.
+%\bibliography{example_paper}
+%\bibliographystyle{icml2014}
+
+\end{document} 
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified  
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
