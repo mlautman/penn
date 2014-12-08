@@ -107,12 +107,23 @@ def main(options, args):
 
     # create X matrix
 
-    if options.interpolation_size in [10, 100, 1000]:
+    if options.interpolation_size in [10, 100]:
         i = options.interpolation_size
-        X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'.pkl')
+        if options.justin1:
+            X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'_J1_'+'.pkl')
+            print X.shape
+        elif options.justin12:
+            X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'_J12_'+'.pkl')
+            print X.shape
+        elif options.francisco:
+            X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'_F1_'+'.pkl')
+            print X.shape
+        else:
+            X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'.pkl')
+            print X.shape
 
     else:
-        print "ERROR interpolation_size must be one of [10, 100, 1000]"
+        print "ERROR interpolation_size must be one of [10, 100]"
         return
 
     n, d = X.shape
@@ -273,6 +284,8 @@ def extract_options(args):
         type="string",
     )
 
+
+
     # file_options.add_option(
     #     "-p","--prefix",
     #     dest="prefix",
@@ -350,6 +363,30 @@ def extract_options(args):
         help="Standardized lenght of recorded signal",
         type="int",
         default=30,
+    )
+
+    algo_opt.add_option(
+        "--justin1",
+        dest="justin1",
+        help="Load the justin1 dataset",
+        action="store_true",
+        default=False,
+    )
+
+    algo_opt.add_option(
+        "--justin12",
+        dest="justin12",
+        help="Load the justin12 dataset",
+        action="store_true",
+        default=False,
+    )
+
+    algo_opt.add_option(
+        "--francisco",
+        dest="francisco",
+        help="Load the francisco dataset",
+        action="store_true",
+        default=False,
     )
 
     algo_opt. add_option(
