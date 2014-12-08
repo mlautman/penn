@@ -185,7 +185,9 @@ def main(options, args):
         calc_roc_curves(f_name)
 
 
-def cmplt(f_name, y_pred, y_true, label_lookup):
+
+
+# def cmplt(f_name, y_pred, y_true, label_lookup):
 
 def extract_options(args):
     parser = OptionParser()
@@ -287,14 +289,6 @@ def extract_options(args):
         default=False,
     )
 
-
-    file_options.add_option(
-        "--save_cm",
-        dest="save_cm",
-        help="Assign --save_cm if you want to save the confusion matrix to both a csv and an image",
-        action="store_true",
-        default=False,
-    )
     file_options.add_option(
         "--save_roc",
         dest="save_roc",
