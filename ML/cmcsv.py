@@ -36,6 +36,7 @@ def cmcsv(f_name, y_pred, y_true, label_lookup):
 def cmplt(f_name, y_pred, y_true, label_lookup):
     cm = confusion_matrix(y_pred, y_true)
     cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+    plt.clf()
     plt.matshow(cm_norm)
     plt.xlabel('Predicted label')
     plt.ylabel('True label')

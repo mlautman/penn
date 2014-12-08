@@ -178,13 +178,16 @@ def main(options, args):
 
     # return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
     if options.save_cm:
-        f_name = options.output_path+'/'+options.fname+"_cm_"+options.learning_algorithm
+        f_name = options.output_path+'/cm_'+options.fname+"_"+options.learning_algorithm
         cmcsv(f_name, y_pred, y_test, label_lookup)
         cmplt(f_name, y_pred, y_test, label_lookup)
 
     if options.save_roc:
-        f_name = options.output_path+'/'+options.fname+"_roc_"+options.learning_algorithm+".csv"
+        f_name = options.output_path+'/roc_'+options.fname+"_"+options.learning_algorithm+".png"
         calc_roc_curves(f_name, Y_pred_prob, Y_test)
+
+    if options.save_perf:
+        f_name = options.output_path+'/perf_'+options.fname+"_"+options.learning_algorithm
 
 
 
@@ -287,6 +290,14 @@ def extract_options(args):
         "--save_cm",
         dest="save_cm",
         help="Assign --save_cm if you want to save the confusion matrix to both a csv and an image",
+        action="store_true",
+        default=False,
+    )
+
+    file_options.add_option(
+        "--save_perf",
+        dest="save_perf",
+        help="Assign --save_perf if you want to save the performence values to a csv",
         action="store_true",
         default=False,
     )

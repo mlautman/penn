@@ -17,6 +17,7 @@ def calc_roc_curves(fname, y_probs, y_binarized):
     roc_auc[i] = auc(fpr[i], tpr[i])
 
   # Plot NB ROC curve
+  plt.clf()
   plt.figure(1)
   for i in range(len(roc_indexes)):
     plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.4f})'
