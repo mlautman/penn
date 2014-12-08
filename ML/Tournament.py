@@ -7,6 +7,7 @@ from __future__ import division
 import sys
 import numpy as np
 import pickle
+from sklearn.externals import joblib
 
 # class imports
 from optparse import OptionParser, OptionGroup
@@ -108,7 +109,8 @@ def main(options, args):
 
     if options.interpolation_size in [10, 100, 1000]:
         i = options.interpolation_size
-        X,y,label_lookup = pickle.load(open('XyLL_'+str(i)+'.pkl','rb'))
+        X,y,label_lookup = joblib.load('XyLL_2_'+str(i)+'.pkl')
+
     else:
         print "ERROR interpolation_size must be one of [10, 100, 1000]"
         return
@@ -176,12 +178,12 @@ def main(options, args):
 
     # return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
     if options.save_cm:
-        f_name = options.fname+"_cm_"+options.learning_algorithm+".csv"
+        f_name = options.path+'/'+options.fname+"_cm_"+options.learning_algorithm+".csv"
         cmcsv(f_name, y_pred, y_test, label_lookup)
-        cmplt(f_name, y_pred, y_true, label_lookup)
+        cmplt(f_name, y_pred, y_test, label_lookup)
 
     if options.save_roc:
-        f_name = options.fname+"_roc_"+options.learning_algorithm+".csv"
+        f_name = options.path+'/'+options.fname+"_roc_"+options.learning_algorithm+".csv"
         calc_roc_curves(f_name)
 
 
@@ -248,11 +250,11 @@ def extract_options(args):
         "file system options"
     )
 
-    file_options.add_option(
-        "-i","--input_folder",
-        dest="input_folder",
-        help="path to training data location"
-    )
+    # file_options.add_option(
+    #     "-i","--input_folder",
+    #     dest="input_folder",
+    #     help="path to training data location"
+    # )
 
     file_options.add_option(
         "-o","--output_path",
@@ -268,19 +270,19 @@ def extract_options(args):
         type="string",
     )
 
-    file_options.add_option(
-        "-p","--prefix",
-        dest="prefix",
-        help="prefix for the training data files",
-        default="proc_"
-    )
+    # file_options.add_option(
+    #     "-p","--prefix",
+    #     dest="prefix",
+    #     help="prefix for the training data files",
+    #     default="proc_"
+    # )
 
-    file_options.add_option(
-        "-s","--suffix",
-        dest="suffix",
-        help="suffix for the training data files",
-        default=".txt",
-    )
+    # file_options.add_option(
+    #     "-s","--suffix",
+    #     dest="suffix",
+    #     help="suffix for the training data files",
+    #     default=".txt",
+    # )
     file_options.add_option(
         "--save_cm",
         dest="save_cm",
@@ -293,6 +295,8 @@ def extract_options(args):
         "--save_roc",
         dest="save_roc",
         help="Assign --save_roc if you want to save the ROC curve as an image",
+        action="store_true",
+        default=False,
     )
 
     parser.add_option_group(file_options)
@@ -342,7 +346,7 @@ def extract_options(args):
         dest="cv_splits",
         help="The number of cross validation splits",
         type="int",
-        default=10,
+        default=1,
     )
 
     parser.add_option_group(algo_opt)
