@@ -1,0 +1,23 @@
+
+# Run decision trees with max depth of 100 and max considered featues (acc ~=0.678200692042)
+%run Tournament.py -o ../clf_logs/ -n tree1 --save_cm --save_roc --save_perf -k2 -c1  --a=dt -f 10 --max_depth=100
+
+
+# Run logistic regression with L1 penalty (acc ~= 0.891992090954)
+%run Tournament.py -o ../clf_logs/ -n log_reg_l1 --save_cm --save_roc --save_perf -k2 -c1  -a logreg -f 10 --penalty=l1 --tolerance_lr=.001
+
+
+# Run logistic regression with L2 penalty (acc ~= 0.894710825507)
+%run Tournament.py -o ../clf_logs/ -n log_reg_l2 --save_cm --save_roc --save_perf -k2 -c1  -a logreg -f 10 --penalty=l2 --tolerance_lr=.001
+
+
+# Run svc with poly kernel of degree 6 (acc ~=0.316361838853)
+ %run ../ML/Tournament.py --cv_splits=1 -o ../clf_logs/ --save_cm --save_roc --save_perf -k5 -c1 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=6 --gamma=0. --name svm_poly_6
+
+
+# Run svc with poly kernel of degree 2 (acc ~= 0.837864557588)
+%run ../ML/Tournament.py --cv_splits=1 -o ../clf_logs/ --save_cm --save_roc --save_perf -k5 -c1 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=1000 --tolerance=1e-03 --degree=2 --gamma=0. --name svm_poly_6
+
+
+# Run svc with linear kernel (acc ~= 0.932031636184)
+%run ../ML/Tournament.py --cv_splits=1 -o ../clf_logs/ --save_cm --save_roc --save_perf -k5 -c1 -a svm -f 10 --svc_C=1 --kernel=linear  --gamma=0. --name svm_poly_6

@@ -20,8 +20,7 @@ def calc_roc_curves(fname, y_probs, y_binarized):
   plt.clf()
   plt.figure(1)
   for i in range(len(roc_indexes)):
-    plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.4f})'
-      ''.format(roc_indexes[i], roc_auc[i]))
+    plt.plot(fpr[i], tpr[i])
 
   plt.plot([0, 1], [0, 1], 'k--')
   plt.xlim([0.0, 1.0])
