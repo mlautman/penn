@@ -41,6 +41,6 @@ def cmplt(f_name, y_pred, y_true, label_lookup):
     plt.ylabel('True label')
     plt.colorbar()
     # plt.show()
-    plt.save(f_name)
+    plt.savefig(f_name)
 
 

@@ -6,7 +6,6 @@ from __future__ import division
 # module imports
 import sys
 import numpy as np
-import pickle
 from sklearn.externals import joblib
 
 # class imports
@@ -26,6 +25,7 @@ from KNN_DTW import knnDTW
 
 from cmcsv import cmplt, cmcsv
 from roc_curves import calc_roc_curves
+from perf_csv import perf_csv
 
 # own methods
 
@@ -178,13 +178,13 @@ def main(options, args):
 
     # return X, y, label_lookup, Y_test, Y_pred_prob, y_pred, y_test
     if options.save_cm:
-        f_name = options.path+'/'+options.fname+"_cm_"+options.learning_algorithm+".csv"
+        f_name = options.output_path+'/'+options.fname+"_cm_"+options.learning_algorithm
         cmcsv(f_name, y_pred, y_test, label_lookup)
         cmplt(f_name, y_pred, y_test, label_lookup)
 
     if options.save_roc:
-        f_name = options.path+'/'+options.fname+"_roc_"+options.learning_algorithm+".csv"
-        calc_roc_curves(f_name)
+        f_name = options.output_path+'/'+options.fname+"_roc_"+options.learning_algorithm+".csv"
+        calc_roc_curves(f_name, Y_pred_prob, Y_test)
 
 
 
