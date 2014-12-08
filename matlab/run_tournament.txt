@@ -1,183 +1,183 @@
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm1
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm2
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm3
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm4
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm5
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm6
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm7
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm8
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm9
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm10
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm11
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm12
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm13
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm14
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm15
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm16
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm17
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm18
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm19
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm20
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm21
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm22
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm23
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm24
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm25
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm26
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm27
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm28
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm29
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm30
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm31
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm32
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm33
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm34
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm35
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm36
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm37
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm38
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 10 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm39
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm40
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm41
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm42
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm43
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm44
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm45
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm46
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm47
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm48
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm49
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm50
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm51
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm52
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm53
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm54
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm55
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm56
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm57
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm58
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm59
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm60
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm61
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm62
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm63
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm64
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm65
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm66
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm67
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm68
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm69
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm70
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm71
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm72
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm73
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm74
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm75
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm76
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm77
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 100 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm78
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm79
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm80
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm81
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm82
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm83
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm84
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm85
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm86
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm87
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm88
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm89
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm90
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm91
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm92
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm93
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm94
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm95
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm96
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm97
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm98
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm99
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm100
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm101
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm102
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm103
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm104
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm105
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm106
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm107
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm108
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm109
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm110
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm111
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm112
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm113
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm114
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm115
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm116
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a svm -f 1000 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm117
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr1
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr2
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr3
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr4
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr5
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 10 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr6
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr7
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr8
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr9
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr10
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr11
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 100 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr12
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr13
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr14
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr15
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr16
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr17
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a logreg -f 1000 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr18
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab1
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab2
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab3
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab4
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab5
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab6
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab7
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab8
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab9
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab10
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab11
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab12
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab13
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab14
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab15
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab16
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab17
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab18
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab19
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab20
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab21
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab22
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab23
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab24
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 10 --max_features=sqrt --max_depth=4 --name dt1
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 10 --max_features=sqrt --max_depth=5 --name dt2
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 10 --max_features=sqrt --max_depth=7 --name dt3
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 10 --max_features=sqrt --max_depth=100 --name dt4
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 100 --max_features=sqrt --max_depth=4 --name dt5
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 100 --max_features=sqrt --max_depth=5 --name dt6
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 100 --max_features=sqrt --max_depth=7 --name dt7
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 100 --max_features=sqrt --max_depth=100 --name dt8
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 1000 --max_features=sqrt --max_depth=4 --name dt9
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 1000 --max_features=sqrt --max_depth=5 --name dt10
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 1000 --max_features=sqrt --max_depth=7 --name dt11
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a dt -f 1000 --max_features=sqrt --max_depth=100 --name dt12
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 10 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn1
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 10 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn2
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 10 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn3
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 10 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn4
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 100 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn5
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 100 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn6
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 100 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn7
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 100 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn8
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 1000 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn9
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 1000 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn10
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 1000 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn11
-ipython ../ML/Tournament.py -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 10 -a knn -f 1000 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn12
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm1
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm2
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm3
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm4
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm5
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm6
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm7
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm8
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm9
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm10
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm11
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm12
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm13
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm14
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm15
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm16
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm17
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm18
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm19
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm20
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm21
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm22
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm23
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm24
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm25
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm26
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm27
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm28
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm29
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm30
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm31
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm32
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm33
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm34
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm35
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm36
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm37
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm38
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 10 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm39
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm40
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm41
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm42
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm43
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm44
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm45
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm46
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm47
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm48
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm49
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm50
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm51
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm52
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm53
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm54
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm55
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm56
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm57
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm58
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm59
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm60
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm61
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm62
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm63
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm64
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm65
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm66
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm67
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm68
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm69
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm70
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm71
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm72
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm73
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm74
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm75
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm76
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm77
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 100 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm78
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm79
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm80
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm81
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm82
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm83
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm84
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm85
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm86
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm87
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm88
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm89
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm90
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm91
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm92
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm93
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm94
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm95
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm96
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm97
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm98
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm99
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm100
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm101
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm102
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=2 --name svm103
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.5 --name svm104
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=2 --gamma=0.055556 --name svm105
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=2 --name svm106
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.5 --name svm107
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=3 --gamma=0.055556 --name svm108
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=2 --name svm109
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.5 --name svm110
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=5 --gamma=0.055556 --name svm111
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=2 --name svm112
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.5 --name svm113
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=poly --max_iter=100000 --tolerance=1e-05 --degree=8 --gamma=0.055556 --name svm114
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=0.2 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm115
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=1 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm116
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a svm -f 1000 --svc_C=5 --kernel=linear --max_iter=100000 --tolerance=1e-05 --name svm117
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr1
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr2
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr3
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr4
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr5
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 10 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr6
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr7
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr8
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr9
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr10
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr11
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 100 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr12
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l1 --C_lr=0.2 --tolerance=1e-05 --name lr13
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l1 --C_lr=1 --tolerance=1e-05 --name lr14
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l1 --C_lr=5 --tolerance=1e-05 --name lr15
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l2 --C_lr=0.2 --tolerance=1e-05 --name lr16
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l2 --C_lr=1 --tolerance=1e-05 --name lr17
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a logreg -f 1000 --penalty=l2 --C_lr=5 --tolerance=1e-05 --name lr18
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab1
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab2
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab3
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab4
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab5
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab6
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab7
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 10 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab8
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab9
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab10
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab11
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab12
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab13
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab14
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab15
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 100 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab16
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab17
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab18
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab19
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=10 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab20
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=1 --name ab21
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=1 --name ab22
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=1 --max_features=sqrt --max_depth=2 --name ab23
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a boost -f 1000 --base_estimator=DecisionTreeClassifier --n_estimators=50 --learning_rate=2 --max_features=sqrt --max_depth=2 --name ab24
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 10 --max_features=sqrt --max_depth=4 --name dt1
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 10 --max_features=sqrt --max_depth=5 --name dt2
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 10 --max_features=sqrt --max_depth=7 --name dt3
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 10 --max_features=sqrt --max_depth=100 --name dt4
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 100 --max_features=sqrt --max_depth=4 --name dt5
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 100 --max_features=sqrt --max_depth=5 --name dt6
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 100 --max_features=sqrt --max_depth=7 --name dt7
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 100 --max_features=sqrt --max_depth=100 --name dt8
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 1000 --max_features=sqrt --max_depth=4 --name dt9
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 1000 --max_features=sqrt --max_depth=5 --name dt10
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 1000 --max_features=sqrt --max_depth=7 --name dt11
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a dt -f 1000 --max_features=sqrt --max_depth=100 --name dt12
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 10 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn1
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 10 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn2
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 10 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn3
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 10 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn4
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 100 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn5
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 100 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn6
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 100 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn7
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 100 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn8
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 1000 --n_neighbors3 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn9
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 1000 --n_neighbors5 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn10
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 1000 --n_neighbors7 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn11
+../ML/Tournament.py --cv_splits=1 -i ../data/together/proc/ -o ../clf_logs/ -p proc_ -k 6 -a knn -f 1000 --n_neighbors11 --max_warping_window11  11  11 --subsample_step2  2  2 --name knn12

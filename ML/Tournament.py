@@ -143,7 +143,7 @@ def main(options, args):
     cnt = 0
     for cv in range(options.cv_splits):
         cnt +=1
-        print cnt
+        print "cross validation run #: ",cnt
         kf = cross_validation.StratifiedKFold(
             y,
             n_folds=options.folds,
@@ -153,7 +153,7 @@ def main(options, args):
         inner_cnt = 0
         for train, test in kf:
             inner_cnt +=1
-            print '\t',inner_cnt
+            print 'fold #: ',inner_cnt
 
             X_train_fold = X[train]
             y_train_fold = y[train]
@@ -188,7 +188,7 @@ def main(options, args):
 
     if options.save_perf:
         f_name = options.output_path+'/perf_'+options.fname+"_"+options.learning_algorithm
-
+        perf_csv(f_name, y_test, y_pred, label_lookup, beta = 1.0)
 
 
 
