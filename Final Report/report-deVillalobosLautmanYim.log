@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 DEC 2014 22:51
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 DEC 2014 23:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -479,59 +479,63 @@ Overfull \hbox (9.03314pt too wide) in paragraph at lines 247--248
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 257.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 260.
 
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 1178) in paragraph at lines 255--259
+Underfull \hbox (badness 1178) in paragraph at lines 258--261
 \OT1/ptm/m/n/10 The meth-ods and equa-tions listed above have proven
  []
 
 
-Underfull \hbox (badness 3417) in paragraph at lines 255--259
+Underfull \hbox (badness 3417) in paragraph at lines 258--261
 \OT1/ptm/m/n/10 Here you can see a video of our in-ter-face, read-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--259
+Underfull \hbox (badness 10000) in paragraph at lines 258--261
 \OT1/pcr/m/n/10 watch ? v = L0AaqIswKBE&list = UUEdPimfOpE81 _
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--259
+Underfull \hbox (badness 10000) in paragraph at lines 258--261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 258--261
 
  []
 
 [4 <./roc_svm_francisco__svm.png> <./roc_tree1_dt.png> <./cm_svm_francisco__svm
 .png> <./cm_tree1_dt.png>]
-Underfull \hbox (badness 1168) in paragraph at lines 262--266
-[]\OT1/ptm/m/n/10 Attitude es-ti-ma-tion Kalman Fil-ter and ini-tial ap-prox-i-
-
- []
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 267.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 262--266
+(/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 267.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 262--266
-\OT1/ptm/m/n/10 For tra-jec-tory re-con-struc-tion, con-sulted Jeen-Shing
+Underfull \hbox (badness 1117) in paragraph at lines 276--277
+\OT1/ptm/m/n/10 Yu-Liang Hsu, and Jiun-Nan Liu's pa-per en-ti-tled \OT1/ptm/b/n
+/10 An
  []
 
 [5
 
 ] (./report-deVillalobosLautmanYim.aux) ) 
 Here is how much of TeX's memory you used:
- 3950 strings out of 493315
- 53823 string characters out of 6137904
+ 3967 strings out of 493315
+ 54125 string characters out of 6137904
  146620 words of memory out of 5000000
- 7320 multiletter control sequences out of 15000+600000
+ 7334 multiletter control sequences out of 15000+600000
  18991 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,12n,45p,870b,259s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,12n,45p,802b,259s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fo
 nts/enc/dvips/base/8r.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmex10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public
@@ -542,7 +546,7 @@ onts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/courier/
 ucrr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/loc
 al/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report-deVillalobosLautmanYim.pdf (5 pages, 748834 bytes).
+Output written on report-deVillalobosLautmanYim.pdf (5 pages, 750067 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  41 compressed objects within 1 object stream

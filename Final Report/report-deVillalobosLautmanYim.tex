@@ -74,7 +74,7 @@
 ]
 
 \begin{abstract} 
-This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. By calculating the dynamics of the pen from IMU measurements, we are able to estimate the pen tip accelerations and rotations as a function of time. We evaluated SVCs, decision trees, Ada-Boost, and logistic regression learning algorithms based on their ability to recognize handwritten characters and achieved 96.2 \% accuracy using an SVC with a lineal kernel.
+This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. By calculating the dynamics of the pen from IMU measurements, we are able to estimate the pen tip accelerations and rotations as a function of time. We evaluated SVCs, decision trees, Ada-Boost, and logistic regression learning algorithms based on their ability to recognize handwritten characters and achieved 97.9 \% accuracy using an SVC with a lineal kernel.
 \end{abstract} 
 
 \section{Prototype}
@@ -191,7 +191,7 @@ We first tested Support Vector Machines with different Kernels to compare the re
 As we can clearly see, while the linear and polynomial kernel do a pretty good job to classify the characters, the gaussian is VERY prone to subtle variations in the parameters, which makes it a non robust method for character recognition. The gaussian kernel smoothes everything if you don't have the correct parameters, and that is why it's a non reliable method for this application in particular. We can see how the performance for the gaussian kernel goes from 3 to 77\% and then back down to 10\% depending on the choice of gamma. And then once again changing the signal length we get very different performances. \newline
 On the other side, we can see that the accuracy obtained by the polynomial kernel is not even affected by the degree of the same and the variations are little while it runs very fast. Better then, we get the best performance with the linear kernel, were we don't have to worry about the gamma or the polynomial degree.
 
-As expected, decision trees perform poorly on this dataset.  Decision trees in general have lower predictive power than the other methods applied here.  Furthermore, we expect the ideal decision function to be much smoother non axis-aligned than the axes-parallel hyper-rectangles of decision trees can produce.  This is because the integrated time series features are highly correlated with one another.  Despite the smoothing of AdaBoost, AdaBoosted decision trees still underperformed other methods for some settings, and got over 97\% accuracy for some other setting, but taking a lot of extra time that is essential for the quickness of writing and 3\% increase in performance does not justify the speed of AdaBoost at this settings.
+As expected, decision trees perform poorly on this dataset.  Decision trees in general have lower predictive power than the other methods applied here.  Furthermore, we expect the ideal decision function to be much smoother non axis-aligned than the axes-parallel hyper-rectangles of decision trees can produce.  This is because the integrated time series features are highly correlated with one another.  Despite the smoothing of AdaBoost, AdaBoosted decision trees still underperformed other methods for some settings, and got over 97.9\% accuracy for some other setting, but taking a lot of extra time that is essential for the quickness of writing and 3-4\% increase in performance does not justify the speed of AdaBoost at this settings.
 
 % Other algorithms tables
 \begin{center}
@@ -252,15 +252,30 @@ And it is visually clear how different the performance for these two methods is,
 
 
 \section{Results}
+\subsection{Accuracy Conclusions}
+
+\subsection{Real Time Demonstration}
 Character recognition was achieved with a very high accuracy and implemented in real time in a real environment. The methods and equations listed above have proven successful and reliable.\newline
 Here you can see a video of our interface, readings, character tracking, and an example of a "Hello World" recognition: 
 \url{https://www.youtube.com/watch?v=L0AaqIswKBE&list=UUEdPimfOpE81_NbsL7sXQhA&spfreload=10} \newline \newline
-While very satisfied with the results, this is far from being a commercial product. But being that we could get this working in such a short period of time, I believe that with a couple of months of exclusive work on this devise, we could get into market a penn that implements Hidden Markov Models (While on our research we found that this algorithm could lead to smaller percentage errors) and has a very low percentage error, while at the same time is capable of doing some more advanced things like spaces, or math. A penn that could put math into your digital notes would be a great product that we believe can have a great success in real market, competing at a much lower price with products that rely on cameras to get similar results (While at the same time I have not seen one that performs adequately in math environments).
+
+\subsection{Next steps to product development}
+While very satisfied with the results, this is far from being a commercial product. But being that we could get this working in such a short period of time, I believe that with a couple of months of exclusive work on this devise, we could get into market a penn that implements Hidden Markov Models (While on our research we found that this algorithm could lead to smaller percentage errors) and has a very low percentage error, while at the same time is capable of doing some more advanced things like spaces, or math. 
+
+As for next steps to enhance the performance we could implement:
+\begin{itemize}
+  \item Enhancing feature extraction by adding wavelet transforms, fft. Custom kernel that utilizes dynamic time warping. 
+  \item Additional learning on words for spell-checking. (eg. if you write "word" and the pen classifies "w" "Q" "r" "d") we can reclassify "Q" to "o". 
+  \item More test subjects/bigger dataset. 
+\end{itemize}
 
 \section*{Acknowledgments} 
  
-Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\\\
-For trajectory reconstruction, consulted Jeen-Shing Wang, Yu-Liang Hsu, and Jiun-Nan Liu's paper entitled \textbf{An Inertial-Measurement-Unit-Based Pen With a Trajectory Reconstruction Algorithm and Its Applications}.
+Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.
+
+For trajectory reconstruction, consulted Jeen-Shing Wang, Yu-Liang Hsu, and Jiun-Nan Liu's paper entitled \textbf{An Inertial-Measurement-Unit-Based Pen With a Trajectory Reconstruction Algorithm and Its Applications}. 
+
+Learning From Data by Y. S. Abu-Mostafa, M. Magdon-Ismail, and H.T. Lin.
 %\bibliography{example_paper}
 %\bibliographystyle{icml2014}
 
