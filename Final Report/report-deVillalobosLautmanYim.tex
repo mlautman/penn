@@ -74,7 +74,7 @@
 ]
 
 \begin{abstract} 
-This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. By calculating the dynamics of the pen from IMU measurements, we are able to estimate the pen tip accelerations and rotations as a function of time. We evaluated SVCs, decision trees, Ada-Boost, and logistic regression learning algorithms based on their ability to recognize handwritten characters and achieved 93.2 \% accuracy using an SVC with a lineal kernel.
+This paper presents a MEMS based digital pen for handwriting recognition. While there are several devices which are capable of digitizing handwritten notes, all commercially available devices require secondary hardware to function. We propose a single device solution for digitizing text as it is written on a page. By calculating the dynamics of the pen from IMU measurements, we are able to estimate the pen tip accelerations and rotations as a function of time. We evaluated SVCs, decision trees, Ada-Boost, and logistic regression learning algorithms based on their ability to recognize handwritten characters and achieved 96.2 \% accuracy using an SVC with a lineal kernel.
 \end{abstract} 
 
 \section{Prototype}
@@ -95,6 +95,12 @@ An ATMega32u4 microcontroller provides on-board processing and interfaces to the
 \subsection{Filtering the data}
 
 The raw data from the IMU pose issues for learning algorithms. Sources of variance can include posture, handed-ness, roll angle of the pen, and sensor drift. To minimize sources of error, we compute the trajectory of the pen tip on the page to generate features in a four step process.  First, IMU measurements are scaled to engineering units and are low-pass filtered to remove high frequency noise from vibration.  Second, we use Madgwick?s open source Kalman filter attitude estimation to find the orientation of the pen relative to the page.  Third, we transform the IMU measurements into the ground frame relative to the page and double-integrate the acceleration to estimate the displacements of the pen tip.  Fourth and finally, the position and velocity estimates are high-pass filtered to remove drift.  From this IMU data processing we obtain the x,y,z position, velocity, and acceleration of the pen in the page frame as well as the euler angles and angular rates of the pen in the page frame at 300Hz sample rate.
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.5\textwidth, height= 5cm]{interface.png}
+    \caption{Writing interface for character recognition}
+\end{figure}
 
 \begin{figure}[H]
 \centering
@@ -122,7 +128,7 @@ We first tested Support Vector Machines with different Kernels to compare the re
     %Train Time & \multicolumn{2}{|c|}{0.17371 s} & \multicolumn{2}{|c|}{42.37024 s} \\ \hline
     %& Train & Test & Train & Test \\ \hline
     $\textbf{Algo.}$ & $\textbf{Kernel}$  & $\textbf{param}$ & $\textbf{Sig Len}$ & $\textbf{Time(s)}$ & $\textbf{Acc.}$ \\ \hline
-    SVC & linear & - & 10 & 2.114 & 94 $\%$ \\ \hline
+    SVC & linear & - & 10 & 2.114 & 96 $\%$ \\ \hline
     SVC & poly & 2 & 10 & 2.07 & 91 $\%$ \\ \hline
     SVC & poly & 3 & 100 & 6.681 & 91 $\%$ \\ \hline
     SVC & gaussian & 5E-1 & 10 & 5.057 & 3 $\%$ \\ \hline
