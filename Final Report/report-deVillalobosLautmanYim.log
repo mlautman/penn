@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 DEC 2014 21:36
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 DEC 2014 22:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -434,107 +434,100 @@ Overfull \hbox (8.2744pt too wide) in paragraph at lines 175--189
  [] 
  []
 
-<roc_svm_francisco__svm.png, id=22, 578.16pt x 433.62pt>
+[3] <roc_svm_francisco__svm.png, id=25, 578.16pt x 433.62pt>
 File: roc_svm_francisco__svm.png Graphic file (type png)
 
 <use roc_svm_francisco__svm.png>
-Package pdftex.def Info: roc_svm_francisco__svm.png used on input line 214.
+Package pdftex.def Info: roc_svm_francisco__svm.png used on input line 230.
 (pdftex.def)             Requested size: 243.91064pt x 142.26135pt.
 
-Overfull \hbox (9.03314pt too wide) in paragraph at lines 214--215
+Overfull \hbox (9.03314pt too wide) in paragraph at lines 230--231
  [][] 
  []
 
-<roc_tree1_dt.png, id=23, 510.2262pt x 385.9218pt>
+<roc_tree1_dt.png, id=26, 510.2262pt x 385.9218pt>
 File: roc_tree1_dt.png Graphic file (type png)
  <use roc_tree1_dt.png>
-Package pdftex.def Info: roc_tree1_dt.png used on input line 219.
+Package pdftex.def Info: roc_tree1_dt.png used on input line 235.
 (pdftex.def)             Requested size: 243.90926pt x 142.26472pt.
 
-Overfull \hbox (9.03175pt too wide) in paragraph at lines 219--220
+Overfull \hbox (9.03175pt too wide) in paragraph at lines 235--236
  [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
 <cm_svm_francisco__svm.png, id=27, 433.62pt x 433.62pt>
 File: cm_svm_francisco__svm.png Graphic file (type png)
 
 <use cm_svm_francisco__svm.png>
-Package pdftex.def Info: cm_svm_francisco__svm.png used on input line 226.
+Package pdftex.def Info: cm_svm_francisco__svm.png used on input line 242.
 (pdftex.def)             Requested size: 243.91064pt x 142.26135pt.
 
-Overfull \hbox (9.03314pt too wide) in paragraph at lines 226--227
+Overfull \hbox (9.03314pt too wide) in paragraph at lines 242--243
  [][] 
  []
 
 <cm_tree1_dt.png, id=28, 433.62pt x 433.62pt>
 File: cm_tree1_dt.png Graphic file (type png)
  <use cm_tree1_dt.png>
-Package pdftex.def Info: cm_tree1_dt.png used on input line 231.
+Package pdftex.def Info: cm_tree1_dt.png used on input line 247.
 (pdftex.def)             Requested size: 243.91064pt x 142.26135pt.
 
-Overfull \hbox (9.03314pt too wide) in paragraph at lines 231--232
+Overfull \hbox (9.03314pt too wide) in paragraph at lines 247--248
  [][] 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 241.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 257.
 
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 1178) in paragraph at lines 239--243
+Underfull \hbox (badness 1178) in paragraph at lines 255--259
 \OT1/ptm/m/n/10 The meth-ods and equa-tions listed above have proven
  []
 
 
-Underfull \hbox (badness 3417) in paragraph at lines 239--243
+Underfull \hbox (badness 3417) in paragraph at lines 255--259
 \OT1/ptm/m/n/10 Here you can see a video of our in-ter-face, read-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--243
+Underfull \hbox (badness 10000) in paragraph at lines 255--259
 \OT1/pcr/m/n/10 watch ? v = L0AaqIswKBE&list = UUEdPimfOpE81 _
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--243
+Underfull \hbox (badness 10000) in paragraph at lines 255--259
 
  []
 
-
-Underfull \hbox (badness 1168) in paragraph at lines 246--250
+[4 <./roc_svm_francisco__svm.png> <./roc_tree1_dt.png> <./cm_svm_francisco__svm
+.png> <./cm_tree1_dt.png>]
+Underfull \hbox (badness 1168) in paragraph at lines 262--266
 []\OT1/ptm/m/n/10 Attitude es-ti-ma-tion Kalman Fil-ter and ini-tial ap-prox-i-
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 246--250
+Underfull \hbox (badness 10000) in paragraph at lines 262--266
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 246--250
+Underfull \hbox (badness 10000) in paragraph at lines 262--266
 \OT1/ptm/m/n/10 For tra-jec-tory re-con-struc-tion, con-sulted Jeen-Shing
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4 <./roc_svm_francisco__svm.png> <./roc_tree1_dt.png> <./cm_svm_francisco__sv
-m.png> <./cm_tree1_dt.png>] [5
+[5
 
 ] (./report-deVillalobosLautmanYim.aux) ) 
 Here is how much of TeX's memory you used:
  3950 strings out of 493315
  53823 string characters out of 6137904
- 145620 words of memory out of 5000000
+ 146620 words of memory out of 5000000
  7320 multiletter control sequences out of 15000+600000
  18991 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -549,7 +542,7 @@ onts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/courier/
 ucrr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/loc
 al/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report-deVillalobosLautmanYim.pdf (5 pages, 747741 bytes).
+Output written on report-deVillalobosLautmanYim.pdf (5 pages, 748834 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  41 compressed objects within 1 object stream

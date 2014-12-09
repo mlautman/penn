@@ -193,6 +193,22 @@ On the other side, we can see that the accuracy obtained by the polynomial kerne
 
 As expected, decision trees perform poorly on this dataset.  Decision trees in general have lower predictive power than the other methods applied here.  Furthermore, we expect the ideal decision function to be much smoother non axis-aligned than the axes-parallel hyper-rectangles of decision trees can produce.  This is because the integrated time series features are highly correlated with one another.  Despite the smoothing of AdaBoost, AdaBoosted decision trees still underperformed other methods for some settings, and got over 97\% accuracy for some other setting, but taking a lot of extra time that is essential for the quickness of writing and 3\% increase in performance does not justify the speed of AdaBoost at this settings.
 
+% Other algorithms tables
+\begin{center}
+    \begin{tabular}{ | c | c | c | c | c | r |}
+    \hline
+    $\textbf{Algorithm}$ & $\textbf{param}$ & $\textbf{Acc.}$ \\ \hline
+    DT & depth=100 & 67.82 $\%$ \\ \hline
+    DT & depth=200 & 68.24 $\%$ \\ \hline
+    Log Reg & L1 penalty & 89.20 $\%$ \\ \hline
+    Log Reg & L2 penalty & 89.47 $\%$ \\ \hline
+    AdaBoost & k=7 c=1 & 70.11$\%$ \\ \hline
+    AdaBoost & k=5 c=3 & 92.99 $\%$ \\ \hline
+    
+    \end{tabular}
+\end{center}
+In this table we have k being the k-folds and c being cross validation splits. We also tuned the depth of the Decision Tree and the number of estimators and the learning rate for the algorithm. This could all tune the accuracy that we got from it, but also influenced a lot the time that the 
+
 Logistic regression performs well achieving accuracy, precision, and recall of 89\% with both l1 and l2 norm distance metrics.  
  
 Several letters are very similar in stroke trajectory.  All learning algorithms struggled with these sets of letters more than other sets of letters as the confusion matrices reveal.  Similar letter pairs include o and 0, p and b, 9 and q, y and x, h and n, 0 and 6, 5 and 6, 7 and 8, v and r, m and k, and a and u.  Some of these letter pairs look visually different from each other, but are composed of similar stroke patterns (for example a script k and an m share the same vertical beginning stroke, direction reversal, loop and second direction reversal).
