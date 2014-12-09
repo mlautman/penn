@@ -20,6 +20,7 @@
 
 % For citations
 \usepackage{natbib}
+\usepackage{url}
 
 % For algorithms
 \usepackage{algorithm}
@@ -134,9 +135,48 @@ We first tested Support Vector Machines with different Kernels to compare the re
     \end{tabular}
 \end{center}
 
-As we can clearly see, while the linear and polynomial kernel do a pretty good job to classify the characters, the rbf is VERY prone to subtle variations in the parameters, which makes it a non robust method for character recognition. On the other side, we can see that the accuracy obtained
+As we can clearly see, while the linear and polynomial kernel do a pretty good job to classify the characters, the rbf is VERY prone to subtle variations in the parameters, which makes it a non robust method for character recognition. The gaussian kernel smoothes everything if you don?t have the correct parameters, and that is why it?s a non reliable method for this application in particular. We can see how the performance for the gaussian kernel goes from 3 to 77\% and then back down to 10\% depending on the choice of gamma. And then once again changing the signal length we get very different performances.
+On the other side, we can see that the accuracy obtained by the polynomial kernel is not even affected by the degree of the same and the variations are little while it runs very fast. Beer then, we get the best performance with the linear kernel, where we don't have to worry about the gamma or the polynomial degree.
 
- 
+
+\section{Performance}
+\subsection{Tested Algorithms}
+
+\subsection{Final Performance}
+
+ As we can well see, even though the logistic regression gets ~80\% accuracy, the ones that do better are the SVCs with linear kernel. SVCs with linear kernels present a robust machine learning algorithm that is not going to be changed completely if we add a new feature to the feature vector for example. They perform quickly, efficiently, and accurately making them the best algorithm for the task
+
+
+% Precision & recall, ROC, etc.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{roc_svm_francisco__svm.png}
+	\caption{ROC curves of an SVC with linear kernel}
+\end{figure} 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{roc_tree1_dt.png}
+	\caption{ROC curves of a Decision Tree with max depth = 100}
+\end{figure} 
+
+% Confusion matrix
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{cm_svm_francisco__svm.png}
+	\caption{Confusion Matrix of an SVC with linear kernel}
+\end{figure} 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth, height= 5cm]{cm_tree1_dt.png}
+	\caption{Confusion Matrix of a Decision Tree with max depth = 100}
+\end{figure} 
+We can observe in these confusion matrices how the diagonal is much stronger than the sides, meaning that most of the instances of a certain class are classified correctly, and that there are very little false positives and false negatives.
+
+
+\section{Results}
+Here you can see a video of our interface, readings, character tracking, and an example of a "Hello World" recognition: 
+\url{https://www.youtube.com/watch?v=L0AaqIswKBE&list=UUEdPimfOpE81_NbsL7sXQhA&spfreload=10}
+
 \section*{Acknowledgments} 
  
 Attitude estimation Kalman Filter and initial approximation provided by \textbf{open-source} code from Sebastian Madgwick (July 2012), based on his paper \textbf{Estimation of IMU and MARG orientation using a gradient descent algorithm}.\\\\
